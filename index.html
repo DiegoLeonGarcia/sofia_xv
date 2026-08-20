@@ -4,14 +4,23 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mis XV Años · Sofía</title>
-<meta name="description" content="Sofía cumple quince años. Sábado 3 de octubre de 2026.">
+<meta name="description" content="Sofía cumple quince años. Sábado 3 de octubre de 2026 · Toluca.">
+
+<!-- ═══ VISTA PREVIA AL COMPARTIR (WhatsApp, Facebook, iMessage) ═══
+     Crea en Canva una imagen de 1200 x 630 px, guárdala como
+     og-preview.jpg y súbela a la carpeta assets/ del repo.        -->
 <meta property="og:title" content="Mis XV Años · Sofía">
 <meta property="og:description" content="Sábado 3 de octubre de 2026 · Toluca">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://diegoleongarcia.github.io/sofia_xv/">
+<meta property="og:image" content="https://diegoleongarcia.github.io/sofia_xv/assets/og-preview.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Ephesis&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Ephesis&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 /* ══════════════════════════════════════════════════════════════
@@ -22,6 +31,7 @@
   --rosa:       #E8B9B6;
   --rosa-hondo: #C48B87;
   --linea:      #D49E9A;
+  --linea-suave:rgba(212,158,154,.42);
   --olivo:      #3E5232;
   --salvia:     #66755A;
   --tinta:      #46403B;
@@ -54,84 +64,98 @@ main{ position:relative; z-index:1; }
   text-align:center;
 }
 
-/* Textura de papel */
-.papel{
-  background:var(--papel) url('assets/backgrounds/paper_ivory.jpg') center / cover no-repeat;
-}
+.papel{ background:var(--papel) url('assets/backgrounds/paper_ivory.jpg') center / cover no-repeat; }
 
-/* Acuarela rosa, suavizada con un velo crema */
 .blush{
   background:
     linear-gradient(rgba(250,246,241,.5), rgba(250,246,241,.5)),
     url('assets/backgrounds/watercolor_blush.jpg') center / cover no-repeat;
 }
 
-/* El hilo rosa que separa una sección de otra */
+/* Hilo rosa que separa una sección de otra */
 .seccion::before, .pie::before{
-  content:''; position:absolute; top:0; left:0; right:0; height:1px; z-index:4;
+  content:''; position:absolute; top:0; left:0; right:0; height:1px; z-index:5;
   background:linear-gradient(to right, transparent, rgba(212,158,154,.6) 22%, rgba(212,158,154,.6) 78%, transparent);
 }
+/* La portada y el contador son una sola pieza: sin línea entre ellos */
+#cuenta::before{ display:none; }
 
 /* ══════════════════════════════════════════════════════════════
    FLORES
+   Anclaje en píxeles, no en porcentaje: así se quedan pegadas
+   a la esquina aunque la ventana sea enorme.
    ══════════════════════════════════════════════════════════════ */
-.flor{ position:absolute; pointer-events:none; z-index:2; }
+.flor{ position:absolute; pointer-events:none; z-index:4; }
 
-.flor-portada-a{ top:-3%;   right:-13%; width:min(58vw,335px); opacity:.95; }
-.flor-portada-b{ bottom:-4%; left:-15%; width:min(54vw,305px); opacity:.95; transform:scale(-1,-1); }
+.flor-portada-a{ top:0;      right:-52px; width:clamp(210px,52vw,400px); opacity:.95; }
+.flor-portada-b{ bottom:0;   left:-58px;  width:clamp(190px,48vw,360px); opacity:.95; transform:scale(-1,-1); }
 
-.flor-sofia-a{ top:-5%;    left:-14%; width:min(48vw,270px); opacity:.9; transform:scaleX(-1); }
-.flor-sofia-b{ bottom:-6%; right:-14%; width:min(43vw,240px); opacity:.85; transform:scaleY(-1); }
+.flor-sofia-a{  top:-10px;   left:-56px;  width:clamp(165px,42vw,300px); opacity:.9; transform:scaleX(-1); }
+.flor-sofia-b{  bottom:-14px; right:-56px; width:clamp(150px,38vw,270px); opacity:.85; transform:scaleY(-1); }
 
-.flor-dia{     top:-6%;    right:-16%; width:min(40vw,225px); opacity:.75; }
-.flor-cierre{  bottom:-9%; right:-15%; width:min(42vw,235px); opacity:.8; }
+.flor-dia{      top:-16px;   right:-58px; width:clamp(140px,35vw,250px); opacity:.72; }
+.flor-cierre{   bottom:-26px; right:-52px; width:clamp(150px,38vw,265px); opacity:.8; }
 
 /* Línea: marca de agua detrás del texto */
 .marca{ position:absolute; z-index:1; pointer-events:none; opacity:.13; mix-blend-mode:multiply; }
-.marca-mensaje{ top:5%;    right:-18%; width:min(78vw,440px); }
-.marca-vestido{ bottom:0;  left:-20%;  width:min(82vw,460px); }
-.marca-regalos{ top:8%;    left:-18%;  width:min(70vw,390px); transform:scaleX(-1); }
-.marca-confirma{ bottom:2%; right:-20%; width:min(72vw,400px); }
+.marca-mensaje{  top:4%;     right:-90px; width:clamp(260px,72vw,450px); }
+.marca-vestido{  bottom:-10px; left:-110px; width:clamp(280px,76vw,470px); }
+.marca-regalos{  top:6%;     left:-100px; width:clamp(240px,66vw,400px); transform:scaleX(-1); }
+.marca-confirma{ bottom:2%;  right:-110px; width:clamp(250px,68vw,410px); }
 
 .contenido{ position:relative; z-index:3; }
 
 /* ══════════════════════════════════════════════════════════════
    TIPOGRAFÍA
+   El antetítulo es el TÍTULO de la sección: manda él.
    ══════════════════════════════════════════════════════════════ */
 .antetitulo{
-  font-family:var(--texto); font-weight:400;
-  font-size:clamp(12px,3.3vw,14px);
-  letter-spacing:.32em; text-transform:uppercase; padding-left:.32em;
-  color:var(--salvia); line-height:1.6;
+  font-family:var(--texto); font-weight:600;
+  font-size:clamp(14px,3.9vw,17px);
+  letter-spacing:.26em; text-transform:uppercase; padding-left:.26em;
+  color:var(--olivo); line-height:1.6;
 }
 .nombre{
   font-family:var(--script); font-weight:400;
   font-size:clamp(80px,22vw,180px);
   line-height:.9; color:var(--olivo);
 }
+/* Subtítulo: acompaña, no compite */
 .titulo{
-  font-family:var(--display); font-weight:400;
-  font-size:clamp(33px,8vw,50px);
-  line-height:1.25; color:var(--olivo);
+  font-family:var(--display); font-weight:400; font-style:italic;
+  font-size:clamp(26px,6.4vw,36px);
+  line-height:1.3; color:var(--rosa-hondo);
 }
 .parrafo{
   font-size:clamp(14.5px,4vw,16px); font-weight:400;
   color:var(--tinta); max-width:35ch; margin-inline:auto;
 }
+.parrafo-serif{
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(17px,4.7vw,20px); line-height:1.7;
+  color:var(--olivo); max-width:30ch; margin-inline:auto;
+}
 .verso{
   font-family:var(--display); font-style:italic; font-weight:400;
   font-size:clamp(24px,6.4vw,33px);
-  line-height:1.55; color:var(--olivo);
+  line-height:1.5; color:var(--olivo);
   max-width:19ch; margin-inline:auto;
 }
 
+.icono-seccion{ color:var(--rosa-hondo); margin-bottom:18px; }
+
 /* ══════════════════════════════════════════════════════════════
-   ORNAMENTOS: arco con rombo
+   ORNAMENTOS
    ══════════════════════════════════════════════════════════════ */
 .separador{ display:flex; align-items:flex-end; justify-content:center; gap:16px; margin:0 auto; }
 .separador i{ display:block; width:clamp(32px,11vw,64px); height:1px; background:linear-gradient(to right, transparent, var(--linea)); }
 .separador i:last-child{ background:linear-gradient(to left, transparent, var(--linea)); }
 .arco-punto{ width:clamp(86px,26vw,116px); height:auto; display:block; }
+
+/* Separador chico: línea · rombo · línea */
+.mini-sep{ display:flex; align-items:center; justify-content:center; gap:13px; }
+.mini-sep i{ display:block; width:clamp(28px,9vw,44px); height:1px; background:var(--linea); opacity:.75; }
+.mini-sep b{ display:block; width:8px; height:8px; background:var(--rosa-hondo); transform:rotate(45deg); }
 
 .divisor-flor{ display:block; width:clamp(140px,42vw,200px); height:auto; margin:0 auto; opacity:.6; }
 
@@ -143,26 +167,26 @@ main{ position:relative; z-index:1; }
   display:flex; flex-direction:column; align-items:center; justify-content:center;
   padding:26px; text-align:center;
 }
-/* Capa de fondo independiente: se mueve más lento al hacer scroll */
 .fondo-portada{
   position:absolute; top:0; left:0; right:0; height:128%;
   background:var(--papel) url('assets/backgrounds/paper_ivory.jpg') center / cover no-repeat;
   z-index:0; will-change:transform;
 }
+/* El arco vive DEBAJO de las flores */
 .portada .marco{
   position:absolute; top:5svh; left:50%; transform:translateX(-50%);
   width:min(76vw,470px); height:82svh;
   border:1.5px solid var(--linea); border-bottom:none;
-  border-radius:999px 999px 0 0; pointer-events:none; z-index:2;
+  border-radius:999px 999px 0 0; pointer-events:none; z-index:1;
 }
-.portada .marco::before{                 /* el rombo en la cima del arco */
+.portada .marco::before{
   content:''; position:absolute; top:-6px; left:50%;
   width:11px; height:11px; background:var(--rosa-hondo);
   transform:translateX(-50%) rotate(45deg);
 }
 .portada .antetitulo{
   margin-bottom:26px;
-  font-size:clamp(15px,4.4vw,20px); font-weight:400;
+  font-size:clamp(15px,4.4vw,20px); font-weight:500;
   letter-spacing:.36em; padding-left:.36em;
   color:var(--rosa-hondo);
 }
@@ -175,7 +199,7 @@ main{ position:relative; z-index:1; }
 
 .baja{
   position:absolute; bottom:22px; left:50%; transform:translateX(-50%);
-  z-index:4; color:var(--rosa-hondo); display:block; padding:16px;
+  z-index:5; color:var(--rosa-hondo); display:block; padding:16px;
   background:none; border:none; cursor:pointer;
   animation:flotar 2.8s ease-in-out infinite;
 }
@@ -196,37 +220,37 @@ main{ position:relative; z-index:1; }
   letter-spacing:.2em; text-transform:uppercase; padding-left:.2em;
   color:var(--salvia);
 }
-/* Altura fija para que la línea nunca se colapse en pantallas angostas */
+/* Más discretas: sin degradado duro y con menos altura */
 .hilo{
   flex:0 0 1px; width:1px; min-width:1px;
-  height:clamp(58px,16vw,88px); margin-top:8px;
-  background:linear-gradient(to bottom, transparent, var(--linea) 22%, var(--linea) 78%, transparent);
+  height:clamp(44px,12vw,66px); margin-top:14px;
+  background:linear-gradient(to bottom, transparent, var(--linea-suave) 30%, var(--linea-suave) 70%, transparent);
 }
 
 /* ══════════════════════════════════════════════════════════════
    MOMENTOS
    ══════════════════════════════════════════════════════════════ */
-.momentos{ display:flex; flex-wrap:wrap; justify-content:center; gap:clamp(56px,8vw,84px); margin-top:56px; }
+.momentos{ display:flex; flex-wrap:wrap; justify-content:center; gap:clamp(56px,8vw,84px); margin-top:54px; }
 .momento{ flex:1 1 270px; max-width:330px; }
-.momento .icono{ color:var(--rosa-hondo); margin-bottom:18px; }
+.momento .icono{ color:var(--rosa-hondo); margin-bottom:16px; }
 .momento h3{
   font-family:var(--display); font-style:italic; font-weight:500;
-  font-size:clamp(24px,5.8vw,29px); color:var(--olivo); margin-bottom:6px;
+  font-size:clamp(23px,5.6vw,28px); color:var(--rosa-hondo); margin-bottom:6px;
 }
 .momento .hora{
-  font-family:var(--display); font-weight:400;
+  font-family:var(--display); font-weight:500;
   font-size:clamp(36px,8.8vw,46px); color:var(--olivo); line-height:1.1; margin:12px 0 14px;
 }
 .momento .lugar{ font-size:clamp(14px,3.8vw,15px); font-weight:600; color:var(--tinta); margin-bottom:6px; }
-.momento .direccion{ font-size:clamp(12.5px,3.4vw,13.5px); font-weight:300; color:var(--salvia); line-height:1.7; }
+.momento .direccion{ font-size:clamp(12.5px,3.4vw,13.5px); font-weight:400; color:var(--salvia); line-height:1.7; }
 
 /* ══════════════════════════════════════════════════════════════
-   BOTONES — todos con icono a la izquierda
+   BOTONES
    ══════════════════════════════════════════════════════════════ */
 .boton-linea, .boton-solido{
   display:inline-flex; align-items:center; justify-content:center; gap:11px;
   border-radius:999px; cursor:pointer; text-decoration:none;
-  font-family:var(--texto); font-size:clamp(10.5px,2.9vw,11.5px); font-weight:500;
+  font-family:var(--texto); font-size:clamp(10.5px,2.9vw,11.5px); font-weight:600;
   letter-spacing:.18em; text-transform:uppercase;
   transition:background .35s ease, color .35s ease, transform .3s ease, box-shadow .3s ease;
 }
@@ -235,16 +259,19 @@ main{ position:relative; z-index:1; }
   border:1.4px solid var(--rosa-hondo);
   color:var(--olivo); background:rgba(255,255,255,.45);
 }
-.boton-linea:hover{ background:var(--rosa-hondo); color:var(--papel); }
-.boton-linea svg{ flex-shrink:0; }
+.boton-linea svg, .boton-solido svg{ flex-shrink:0; }
 
 .boton-solido{
   margin-top:26px; padding:17px 38px; border:none;
   color:var(--papel); background:var(--olivo);
   box-shadow:0 5px 18px rgba(62,82,50,.26);
 }
-.boton-solido:hover{ transform:translateY(-2px); box-shadow:0 9px 26px rgba(62,82,50,.34); }
-.boton-solido svg{ flex-shrink:0; }
+
+/* El hover solo con mouse: en iPhone se quedaba pegado al tocar */
+@media (hover:hover){
+  .boton-linea:hover{ background:var(--rosa-hondo); color:var(--papel); }
+  .boton-solido:hover{ transform:translateY(-2px); box-shadow:0 9px 26px rgba(62,82,50,.34); }
+}
 
 /* ══════════════════════════════════════════════════════════════
    VESTIMENTA
@@ -264,9 +291,9 @@ main{ position:relative; z-index:1; }
 }
 
 /* ══════════════════════════════════════════════════════════════
-   GALERÍA — marco de arco con rombo
+   GALERÍA
    ══════════════════════════════════════════════════════════════ */
-.galeria{ display:grid; grid-template-columns:1fr; gap:34px; max-width:320px; margin:56px auto 0; }
+.galeria{ display:grid; grid-template-columns:1fr; gap:34px; max-width:320px; margin:52px auto 0; }
 .marco-foto{
   position:relative; padding:9px;
   border:1.4px solid var(--linea);
@@ -289,7 +316,7 @@ main{ position:relative; z-index:1; }
 /* ══════════════════════════════════════════════════════════════
    FORMULARIO
    ══════════════════════════════════════════════════════════════ */
-.formulario{ max-width:330px; margin:44px auto 0; }
+.formulario{ max-width:330px; margin:42px auto 0; }
 .campo{ position:relative; margin-bottom:16px; }
 .campo .icono-campo{
   position:absolute; left:20px; top:50%; transform:translateY(-50%);
@@ -304,40 +331,40 @@ main{ position:relative; z-index:1; }
 }
 .campo input::placeholder{ color:#A79E97; }
 .campo select{
-  color:var(--tinta);
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C48B87' stroke-width='1.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat:no-repeat; background-position:right 20px center;
 }
 .campo select:invalid{ color:#A79E97; }
 .campo input:focus, .campo select:focus{ outline:none; border-color:var(--olivo); }
-.nota-campo{ margin-top:14px; font-size:12.5px; font-weight:300; color:var(--salvia); line-height:1.6; text-align:center; }
+.nota-campo{ margin-top:14px; font-size:12.5px; font-weight:400; color:var(--salvia); line-height:1.6; text-align:center; }
 .recado{ margin-top:14px; font-size:13px; color:var(--rosa-hondo); min-height:20px; }
 
 /* ══════════════════════════════════════════════════════════════
-   PIE
+   CIERRE
    ══════════════════════════════════════════════════════════════ */
 .pie{
-  position:relative; padding:clamp(78px,15vw,120px) 26px 60px; text-align:center; overflow:hidden;
+  position:relative; padding:clamp(78px,15vw,120px) 26px 64px; text-align:center; overflow:hidden;
   background:var(--papel) url('assets/backgrounds/paper_ivory.jpg') center / cover no-repeat;
 }
 .pie .gracias{
-  font-family:var(--texto); font-weight:400;
-  font-size:clamp(12px,3.3vw,14px); letter-spacing:.32em;
-  text-transform:uppercase; padding-left:.32em; color:var(--rosa-hondo);
+  font-family:var(--texto); font-weight:600;
+  font-size:clamp(15px,4.2vw,19px); letter-spacing:.28em;
+  text-transform:uppercase; padding-left:.28em; color:var(--olivo);
 }
 .pie .despedida{
-  margin-top:22px; font-size:clamp(14.5px,4vw,16px);
-  color:var(--tinta); max-width:28ch; margin-inline:auto;
+  margin-top:18px; font-family:var(--display); font-weight:400;
+  font-size:clamp(17px,4.7vw,20px); line-height:1.7;
+  color:var(--tinta); max-width:26ch; margin-inline:auto;
 }
-.pie .firma{ font-family:var(--script); font-size:clamp(58px,15vw,76px); color:var(--rosa-hondo); line-height:1; margin-top:14px; }
+.pie .firma{ font-family:var(--script); font-size:clamp(62px,16vw,82px); color:var(--rosa-hondo); line-height:1; }
 .pie small{
-  display:block; margin-top:20px;
-  font-size:11.5px; font-weight:400; letter-spacing:.26em;
+  display:block; margin-top:18px;
+  font-size:11.5px; font-weight:500; letter-spacing:.26em;
   text-transform:uppercase; padding-left:.26em; color:var(--salvia);
 }
 
 /* ══════════════════════════════════════════════════════════════
-   BOTONES DE VIDRIO (menú y música)
+   BOTONES DE VIDRIO
    ══════════════════════════════════════════════════════════════ */
 .btn-vidrio{
   position:relative; width:52px; height:52px;
@@ -349,12 +376,11 @@ main{ position:relative; z-index:1; }
   box-shadow:inset 0 1px 1px #fff, inset 0 -1px 2px rgba(196,139,135,.18), 0 5px 16px rgba(60,45,45,.18);
   transition:transform .35s cubic-bezier(.2,.8,.3,1);
 }
-.btn-vidrio::after{ content:''; position:absolute; inset:0; border-radius:50%; border:1.4px solid rgba(196,139,135,.55); }
-.btn-vidrio:hover{ transform:translateY(-2px); }
+.btn-vidrio::after{ content:''; position:absolute; top:0; left:0; right:0; bottom:0; border-radius:50%; border:1.4px solid rgba(196,139,135,.55); }
 .btn-vidrio:active{ transform:scale(.95); }
 .btn-vidrio:focus-visible{ outline:2px solid var(--rosa-hondo); outline-offset:5px; }
+@media (hover:hover){ .btn-vidrio:hover{ transform:translateY(-2px); } }
 
-/* ── Hamburguesa: líneas juntas y X limpia ── */
 .btn-menu{ position:fixed; top:20px; left:20px; z-index:95; }
 .btn-menu span{
   position:absolute; left:50%; width:19px; height:1.4px;
@@ -373,7 +399,7 @@ main{ position:relative; z-index:1; }
    MENÚ LATERAL
    ══════════════════════════════════════════════════════════════ */
 .velo{
-  position:fixed; inset:0; z-index:88;
+  position:fixed; top:0; left:0; right:0; bottom:0; z-index:88;
   background:rgba(70,64,59,.32);
   -webkit-backdrop-filter:blur(3px); backdrop-filter:blur(3px);
   opacity:0; visibility:hidden; transition:opacity .5s ease, visibility .5s;
@@ -382,57 +408,72 @@ main{ position:relative; z-index:1; }
 
 .panel{
   position:fixed; top:0; left:0; bottom:0; z-index:90;
-  width:min(80vw,318px);
+  width:min(82vw,332px);
   background:var(--papel) url('assets/backgrounds/paper_ivory.jpg') center / cover no-repeat;
   box-shadow:6px 0 34px rgba(70,50,48,.18);
   border-right:1px solid rgba(212,158,154,.5);
   transform:translateX(-102%);
   transition:transform .55s cubic-bezier(.35,.85,.35,1);
   display:flex; flex-direction:column; justify-content:center;
-  padding:88px 0 40px; overflow-y:auto;
+  padding:96px 0 40px;
+  /* Sin barras de desplazamiento visibles */
+  overflow-x:hidden; overflow-y:auto;
+  scrollbar-width:none; -ms-overflow-style:none;
 }
+.panel::-webkit-scrollbar{ width:0; height:0; display:none; }
 .menu-abierto .panel{ transform:none; }
 
-.panel .flor-panel{ position:absolute; bottom:-4%; right:-22%; width:min(58vw,215px); opacity:.42; pointer-events:none; }
+.panel .flor-panel{ position:absolute; bottom:-30px; right:-70px; width:min(64vw,235px); opacity:.42; pointer-events:none; }
+
 .panel .titulo-panel{
-  position:absolute; top:30px; left:0; right:0; text-align:center;
-  font-family:var(--script); font-size:40px; color:var(--rosa-hondo); line-height:1;
+  font-family:var(--script); font-size:58px; color:var(--rosa-hondo);
+  line-height:1; text-align:center; margin-bottom:26px;
+  position:relative; z-index:2;
+  opacity:0; transform:translateY(-10px);
+  transition:opacity .5s ease, transform .5s ease;
 }
+.menu-abierto .panel .titulo-panel{ opacity:1; transform:none; transition-delay:.1s; }
 
 .panel a{
   position:relative; z-index:2;
-  display:flex; align-items:center; gap:15px;
-  padding:14px 30px;
-  font-family:var(--texto); font-weight:400;
-  font-size:12.5px; letter-spacing:.2em; text-transform:uppercase;
+  display:flex; align-items:center; gap:16px;
+  padding:13px 32px;
+  font-family:var(--texto); font-weight:500;
+  font-size:13.5px; letter-spacing:.16em; text-transform:uppercase;
   color:var(--olivo); text-decoration:none;
   opacity:0; transform:translateX(-16px);
   transition:opacity .5s ease, transform .5s cubic-bezier(.2,.8,.3,1), color .3s ease;
 }
 .panel a svg{ color:var(--rosa-hondo); flex-shrink:0; transition:transform .3s ease; }
-.panel a:hover{ color:var(--rosa-hondo); }
-.panel a:hover svg{ transform:translateX(2px); }
+@media (hover:hover){
+  .panel a:hover{ color:var(--rosa-hondo); }
+  .panel a:hover svg{ transform:translateX(2px); }
+}
 .menu-abierto .panel a{ opacity:1; transform:none; }
-.menu-abierto .panel a:nth-child(2){ transition-delay:.14s }
-.menu-abierto .panel a:nth-child(3){ transition-delay:.19s }
-.menu-abierto .panel a:nth-child(4){ transition-delay:.24s }
-.menu-abierto .panel a:nth-child(5){ transition-delay:.29s }
-.menu-abierto .panel a:nth-child(6){ transition-delay:.34s }
-.menu-abierto .panel a:nth-child(7){ transition-delay:.39s }
-.menu-abierto .panel a:nth-child(8){ transition-delay:.44s }
-.menu-abierto .panel a:nth-child(9){ transition-delay:.49s }
+.menu-abierto .panel a:nth-of-type(1){ transition-delay:.16s }
+.menu-abierto .panel a:nth-of-type(2){ transition-delay:.21s }
+.menu-abierto .panel a:nth-of-type(3){ transition-delay:.26s }
+.menu-abierto .panel a:nth-of-type(4){ transition-delay:.31s }
+.menu-abierto .panel a:nth-of-type(5){ transition-delay:.36s }
+.menu-abierto .panel a:nth-of-type(6){ transition-delay:.41s }
+.menu-abierto .panel a:nth-of-type(7){ transition-delay:.46s }
 
 /* ══════════════════════════════════════════════════════════════
    MÚSICA
+   El aro gira como SVG completo: Safari en iPhone calculaba mal
+   el centro de rotación cuando giraba solo el círculo.
    ══════════════════════════════════════════════════════════════ */
 .musica{ position:fixed; top:20px; right:20px; z-index:95; }
 .musica .ancla{ position:relative; display:grid; place-items:center; }
 
-.aro{ position:absolute; inset:-8px; pointer-events:none; opacity:0; transition:opacity .7s ease; }
-.aro circle{ fill:none; stroke:var(--rosa-hondo); stroke-width:1.5; stroke-linecap:round; stroke-dasharray:34 190; transform-origin:50% 50%; }
-.sonando .aro{ opacity:1; }
-.sonando .aro circle{ animation:girar 9s linear infinite; }
-@keyframes girar{ to{ transform:rotate(360deg); } }
+.aro{
+  position:absolute; top:-10px; left:-10px; width:72px; height:72px;
+  pointer-events:none; opacity:0;
+  transition:opacity .7s ease;
+}
+.aro circle{ fill:none; stroke:var(--rosa-hondo); stroke-width:1.4; stroke-linecap:round; stroke-dasharray:36 200; }
+.sonando .aro{ opacity:1; animation:girar 9s linear infinite; }
+@keyframes girar{ from{ transform:rotate(0deg); } to{ transform:rotate(360deg); } }
 
 .sonando{ animation:respirar 4.6s ease-in-out infinite; }
 @keyframes respirar{
@@ -447,7 +488,7 @@ main{ position:relative; z-index:1; }
 .susurro{
   position:absolute; top:100%; left:50%; margin-top:13px;
   transform:translateX(-50%) translateY(5px);
-  font-size:8.5px; font-weight:400; letter-spacing:.26em;
+  font-size:8.5px; font-weight:500; letter-spacing:.26em;
   text-transform:uppercase; padding-left:.26em;
   color:var(--salvia); white-space:nowrap;
   opacity:0; pointer-events:none; user-select:none;
@@ -456,7 +497,7 @@ main{ position:relative; z-index:1; }
 .susurro.visible{ opacity:1; transform:translateX(-50%) translateY(0); }
 
 /* ══════════════════════════════════════════════════════════════
-   ANIMACIONES — se ejecutan una sola vez y se quedan
+   ANIMACIONES — una sola vez y se quedan
    ══════════════════════════════════════════════════════════════ */
 .anim{
   opacity:0; transform:translateY(24px);
@@ -466,11 +507,11 @@ main{ position:relative; z-index:1; }
 }
 .anim.visto{ opacity:1; transform:none; }
 
-.anim.abre{ transform:none; letter-spacing:.6em; }
-.anim.abre.visto{ letter-spacing:.32em; }
+.anim.abre{ transform:none; letter-spacing:.52em; }
+.anim.abre.visto{ letter-spacing:.26em; }
 .portada .antetitulo.anim.abre.visto{ letter-spacing:.36em; }
 .portada .fecha.anim.abre.visto{ letter-spacing:.3em; }
-.pie small.anim.abre.visto{ letter-spacing:.26em; }
+.pie .gracias.anim.abre.visto{ letter-spacing:.28em; }
 
 .anim.difumina{ transform:none; filter:blur(8px); }
 .anim.difumina.visto{ filter:blur(0); }
@@ -496,35 +537,35 @@ main{ position:relative; z-index:1; }
 <div class="velo" id="velo"></div>
 
 <nav class="panel" id="panel" aria-label="Secciones">
-  <p class="titulo-panel">Sofía</p>
   <img class="flor-panel" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
+  <p class="titulo-panel">Sofía</p>
 
   <a href="#cuenta" data-ir="cuenta">
-    <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"><circle cx="10" cy="10" r="8.4"/><path d="M10 5.4V10l3.1 2.1"/></svg>
+    <svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><circle cx="10" cy="10" r="8.2"/><path d="M10 5.6V10l3 2"/></svg>
     Cuenta regresiva
   </a>
   <a href="#mensaje" data-ir="mensaje">
-    <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17s-6.6-4.1-6.6-8.4A3.5 3.5 0 0110 6.6a3.5 3.5 0 016.6 2c0 4.3-6.6 8.4-6.6 8.4z"/></svg>
+    <svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 16.8S3.6 12.9 3.6 8.8A3.4 3.4 0 0110 6.7a3.4 3.4 0 016.4 2.1c0 4.1-6.4 8-6.4 8z"/></svg>
     El mensaje
   </a>
   <a href="#dia" data-ir="dia">
-    <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2.8" y="4.2" width="14.4" height="13" rx="2"/><path d="M6.6 2.2v3.6M13.4 2.2v3.6M2.8 8.4h14.4"/></svg>
+    <svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="2.8" y="4.4" width="14.4" height="12.8" rx="2"/><path d="M6.6 2.4v3.6M13.4 2.4v3.6M2.8 8.6h14.4"/></svg>
     El día
   </a>
   <a href="#vestimenta" data-ir="vestimenta">
-    <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M7.4 2.4L10 4.8l2.6-2.4 4 2.6-2 3.2-1.4-.7V17.6H6.8V7.5l-1.4.7-2-3.2z"/></svg>
+    <svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M7.6 2.6L10 4.9l2.4-2.3 3.9 2.5-1.9 3.1-1.4-.7v10.1H7v-10l-1.4.7-1.9-3.1z"/></svg>
     Vestimenta
   </a>
   <a href="#regalos" data-ir="regalos">
-    <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2.6" y="7.6" width="14.8" height="9.8" rx="1.4"/><path d="M1.6 7.6h16.8M10 7.6v9.8M10 7.6S8.4 2.6 6.2 3.6 8.6 7.6 10 7.6zM10 7.6s1.6-5 3.8-4-1.6 4-3.8 4z"/></svg>
+    <svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="2.8" y="7.8" width="14.4" height="9.4" rx="1.4"/><path d="M1.8 7.8h16.4M10 7.8v9.4M10 7.8S8.5 3 6.4 3.9 8.7 7.8 10 7.8zM10 7.8s1.5-4.8 3.6-3.9S11.3 7.8 10 7.8z"/></svg>
     Mesa de regalos
   </a>
   <a href="#sofia" data-ir="sofia">
-    <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5.4" width="16" height="11.4" rx="2"/><circle cx="10" cy="11.1" r="3.2"/><path d="M6.8 5.4l1.2-2.2h4l1.2 2.2"/></svg>
+    <svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="2.2" y="5.6" width="15.6" height="11" rx="2"/><circle cx="10" cy="11.1" r="3.1"/><path d="M6.9 5.6l1.2-2.1h3.8l1.2 2.1"/></svg>
     Sofía
   </a>
   <a href="#confirmar" data-ir="confirmar">
-    <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2.2" y="4.4" width="15.6" height="11.2" rx="2"/><path d="M2.8 5.6L10 10.8l7.2-5.2"/></svg>
+    <svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="2.4" y="4.6" width="15.2" height="10.8" rx="2"/><path d="M3 5.8L10 10.8l7-5"/></svg>
     Confirmar
   </a>
 </nav>
@@ -533,7 +574,7 @@ main{ position:relative; z-index:1; }
 <div class="musica">
   <div class="ancla">
     <button class="btn-vidrio" id="btnMusica" aria-label="Reproducir música" aria-pressed="false">
-      <svg class="aro" viewBox="0 0 68 68" aria-hidden="true"><circle cx="34" cy="34" r="33"/></svg>
+      <svg class="aro" viewBox="0 0 72 72" aria-hidden="true"><circle cx="36" cy="36" r="35"/></svg>
       <svg class="icono-m" id="iPlay" width="14" height="16" viewBox="0 0 15 17" aria-hidden="true">
         <path d="M1.6 1.1c0-.7.8-1.2 1.4-.8l11 7.2c.6.4.6 1.2 0 1.6l-11 7.2c-.6.4-1.4 0-1.4-.8V1.1z"/>
       </svg>
@@ -547,14 +588,15 @@ main{ position:relative; z-index:1; }
 
 <main>
 
-  <!-- ═══════ PORTADA · papel con parallax + flores fuertes ═══════ -->
+  <!-- ═══════ PORTADA ═══════ -->
   <header class="portada" id="portada">
     <div class="fondo-portada" id="fondoPortada"></div>
+
+    <div class="marco"></div>
 
     <img class="flor flor-portada-a" id="florA" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
     <img class="flor flor-portada-b" id="florB" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
 
-    <div class="marco"></div>
     <div class="contenido" id="heroTexto">
       <p class="antetitulo anim abre" style="--r:0">Mis XV Años</p>
       <h1 class="nombre anim difumina" style="--r:1">Sofía</h1>
@@ -568,10 +610,10 @@ main{ position:relative; z-index:1; }
     </button>
   </header>
 
-  <!-- ═══════ CONTADOR · papel, sigue a la portada ═══════ -->
+  <!-- ═══════ CONTADOR ═══════ -->
   <section class="seccion papel" id="cuenta">
     <div class="contenido">
-      <div class="separador anim crece" style="--r:0; margin-bottom:34px">
+      <div class="separador anim crece" style="--r:0; margin-bottom:32px">
         <i></i>
         <svg class="arco-punto" viewBox="0 0 120 46" fill="none" aria-hidden="true">
           <path d="M8 40 A65 65 0 0 1 112 40" stroke="var(--linea)" stroke-width="1.3"/>
@@ -594,32 +636,37 @@ main{ position:relative; z-index:1; }
     </div>
   </section>
 
-  <!-- ═══════ EL MENSAJE · acuarela rosa ═══════ -->
+  <!-- ═══════ EL MENSAJE ═══════ -->
   <section class="seccion blush" id="mensaje">
     <img class="marca marca-mensaje" src="assets/florals/floral_line_branch.png" alt="" onerror="this.remove()">
     <div class="contenido">
       <p class="verso anim difumina" style="--r:0">Hay días que uno guarda para siempre.<br>Este quiero guardarlo contigo.</p>
 
-      <img class="divisor-flor anim crece" style="--r:1; margin:40px auto 36px"
-           src="assets/florals/floral_line_branch.png" alt="" onerror="this.remove()">
+      <div class="mini-sep anim crece" style="--r:1; margin:30px auto 28px"><i></i><b></b><i></i></div>
 
-      <p class="parrafo anim" style="--r:2">
+      <p class="parrafo-serif anim" style="--r:2">
         Con la bendición de Dios y el amor de mis padres,
         celebro quince años de vida. Me haría muy feliz
         que estuvieras ahí para verlo.
       </p>
+
+      <img class="divisor-flor anim crece" style="--r:3; margin:38px auto 0"
+           src="assets/florals/floral_line_branch.png" alt="" onerror="this.remove()">
     </div>
   </section>
 
-  <!-- ═══════ EL DÍA · papel ═══════ -->
+  <!-- ═══════ EL DÍA ═══════ -->
   <section class="seccion papel" id="dia">
     <img class="flor flor-dia" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
     <div class="contenido">
-      <p class="antetitulo anim abre" style="--r:0">Sábado 3 de octubre</p>
-      <h2 class="titulo anim" style="--r:1; margin-top:16px">El día</h2>
+      <svg class="icono-seccion anim crece" style="--r:0" width="34" height="34" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="2.8" y="4.4" width="14.4" height="12.8" rx="2"/><path d="M6.6 2.4v3.6M13.4 2.4v3.6M2.8 8.6h14.4"/>
+      </svg>
+      <p class="antetitulo anim abre" style="--r:1">Sábado 3 de octubre</p>
+      <h2 class="titulo anim" style="--r:2; margin-top:12px">El día</h2>
 
       <div class="momentos">
-        <article class="momento anim" style="--r:2">
+        <article class="momento anim" style="--r:3">
           <svg class="icono" width="30" height="34" viewBox="0 0 26 30" fill="none" aria-hidden="true">
             <path d="M13 1v7M9.5 4.5h7M4 29V13l9-6 9 6v16M10 29v-7h6v7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -634,7 +681,7 @@ main{ position:relative; z-index:1; }
           </a>
         </article>
 
-        <article class="momento anim" style="--r:3">
+        <article class="momento anim" style="--r:4">
           <svg class="icono" width="30" height="34" viewBox="0 0 26 30" fill="none" aria-hidden="true">
             <path d="M6 3h14M7 3l1.5 9a4.5 4.5 0 009 0L19 3M13 21v6M8 27h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -652,35 +699,38 @@ main{ position:relative; z-index:1; }
     </div>
   </section>
 
-  <!-- ═══════ VESTIMENTA · acuarela rosa ═══════ -->
+  <!-- ═══════ VESTIMENTA ═══════ -->
   <section class="seccion blush" id="vestimenta">
     <img class="marca marca-vestido" src="assets/florals/floral_line_rose.png" alt="" onerror="this.remove()">
     <div class="contenido">
-      <p class="antetitulo anim abre" style="--r:0">Código de vestimenta</p>
-      <h2 class="titulo anim" style="--r:1; margin-top:16px">Formal</h2>
-      <p class="parrafo anim" style="--r:2; margin-top:20px">
+      <svg class="icono-seccion anim crece" style="--r:0" width="36" height="36" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M7.6 2.6L10 4.9l2.4-2.3 3.9 2.5-1.9 3.1-1.4-.7v10.1H7v-10l-1.4.7-1.9-3.1z"/>
+      </svg>
+      <p class="antetitulo anim abre" style="--r:1">Código de vestimenta</p>
+      <h2 class="titulo anim" style="--r:2; margin-top:12px">Formal</h2>
+      <p class="parrafo anim" style="--r:3; margin-top:20px">
         Nos encantará verte de gala esa noche. Y si al elegir tu
         atuendo puedes dejar de lado los tonos rosas, te lo
         agradeceremos muchísimo: es el color que Sofía llevará
         en su día.
       </p>
-      <div class="aviso-color anim crece" style="--r:3">
+      <div class="aviso-color anim crece" style="--r:4">
         <span class="muestra"></span>
         Con cariño, reservemos el rosa para Sofía
       </div>
     </div>
   </section>
 
-  <!-- ═══════ MESA DE REGALOS · papel ═══════ -->
+  <!-- ═══════ MESA DE REGALOS ═══════ -->
   <section class="seccion papel oculta" id="regalos">
     <img class="marca marca-regalos" src="assets/florals/floral_line_rose.png" alt="" onerror="this.remove()">
     <div class="contenido">
-      <svg class="anim crece" style="--r:0; color:var(--rosa-hondo); margin-bottom:20px" width="36" height="36" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <rect x="2.6" y="7.6" width="14.8" height="9.8" rx="1.4"/>
-        <path d="M1.6 7.6h16.8M10 7.6v9.8M10 7.6S8.4 2.6 6.2 3.6 8.6 7.6 10 7.6zM10 7.6s1.6-5 3.8-4-1.6 4-3.8 4z"/>
+      <svg class="icono-seccion anim crece" style="--r:0" width="36" height="36" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="2.8" y="7.8" width="14.4" height="9.4" rx="1.4"/>
+        <path d="M1.8 7.8h16.4M10 7.8v9.4M10 7.8S8.5 3 6.4 3.9 8.7 7.8 10 7.8zM10 7.8s1.5-4.8 3.6-3.9S11.3 7.8 10 7.8z"/>
       </svg>
       <p class="antetitulo anim abre" style="--r:1">Mesa de regalos</p>
-      <h2 class="titulo anim" style="--r:2; margin-top:16px">Tu presencia es el regalo</h2>
+      <h2 class="titulo anim" style="--r:2; margin-top:12px">Tu presencia es el regalo</h2>
       <p class="parrafo anim" style="--r:3; margin-top:20px">
         Y si además quieres tener un detalle con Sofía,
         aquí te dejamos la mesa de regalos.
@@ -692,43 +742,34 @@ main{ position:relative; z-index:1; }
     </div>
   </section>
 
-  <!-- ═══════ SOFÍA · acuarela rosa + flores fuertes ═══════ -->
+  <!-- ═══════ SOFÍA ═══════ -->
   <section class="seccion blush" id="sofia">
     <img class="flor flor-sofia-a" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
     <img class="flor flor-sofia-b" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
     <div class="contenido">
-      <p class="antetitulo anim abre" style="--r:0">Sofía</p>
-      <h2 class="titulo anim" style="--r:1; margin-top:16px">Quince años en un suspiro</h2>
+      <svg class="icono-seccion anim crece" style="--r:0" width="36" height="36" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="2.2" y="5.6" width="15.6" height="11" rx="2"/><circle cx="10" cy="11.1" r="3.1"/><path d="M6.9 5.6l1.2-2.1h3.8l1.2 2.1"/>
+      </svg>
+      <p class="antetitulo anim abre" style="--r:1">Sofía</p>
+      <h2 class="titulo anim" style="--r:2; margin-top:12px">Quince años en un suspiro</h2>
 
       <div class="galeria">
-        <figure class="marco-foto anim crece" style="--r:2">
-          <img src="assets/photos/placeholder_01.jpg" alt="Sofía">
-        </figure>
-        <figure class="marco-foto anim crece" style="--r:3">
-          <img src="assets/photos/placeholder_02.jpg" alt="Sofía">
-        </figure>
-        <figure class="marco-foto anim crece" style="--r:4">
-          <img src="assets/photos/placeholder_03.jpg" alt="Sofía">
-        </figure>
+        <figure class="marco-foto anim crece" style="--r:3"><img src="assets/photos/placeholder_01.jpg" alt="Sofía"></figure>
+        <figure class="marco-foto anim crece" style="--r:4"><img src="assets/photos/placeholder_02.jpg" alt="Sofía"></figure>
+        <figure class="marco-foto anim crece" style="--r:5"><img src="assets/photos/placeholder_03.jpg" alt="Sofía"></figure>
       </div>
     </div>
   </section>
 
-  <!-- ═══════ CONFIRMACIÓN · papel ═══════ -->
+  <!-- ═══════ CONFIRMACIÓN ═══════ -->
   <section class="seccion papel" id="confirmar">
     <img class="marca marca-confirma" src="assets/florals/floral_line_branch.png" alt="" onerror="this.remove()">
     <div class="contenido">
-      <div class="separador anim crece" style="--r:0; margin-bottom:34px">
-        <i></i>
-        <svg class="arco-punto" viewBox="0 0 120 46" fill="none" aria-hidden="true">
-          <path d="M8 40 A65 65 0 0 1 112 40" stroke="var(--linea)" stroke-width="1.3"/>
-          <path d="M60 7l5 7-5 7-5-7z" fill="var(--rosa-hondo)"/>
-        </svg>
-        <i></i>
-      </div>
-
+      <svg class="icono-seccion anim crece" style="--r:0" width="36" height="36" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="2.4" y="4.6" width="15.2" height="10.8" rx="2"/><path d="M3 5.8L10 10.8l7-5"/>
+      </svg>
       <p class="antetitulo anim abre" style="--r:1">Confirma tu asistencia</p>
-      <h2 class="titulo anim" style="--r:2; margin-top:16px">Te esperamos</h2>
+      <h2 class="titulo anim" style="--r:2; margin-top:12px">Te esperamos</h2>
       <p class="parrafo anim" style="--r:3; margin-top:20px">
         Saber que vienes nos ayuda a cuidar cada detalle.
         Te agradecemos confirmar antes del 15 de septiembre.
@@ -736,12 +777,12 @@ main{ position:relative; z-index:1; }
 
       <div class="formulario anim" style="--r:4">
         <div class="campo">
-          <svg class="icono-campo" width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="6" r="3.2"/><path d="M2.8 15.6c0-3 2.8-4.6 6.2-4.6s6.2 1.6 6.2 4.6"/></svg>
+          <svg class="icono-campo" width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="6" r="3.2"/><path d="M2.8 15.6c0-3 2.8-4.6 6.2-4.6s6.2 1.6 6.2 4.6"/></svg>
           <input type="text" id="invitado" placeholder="Nombre y apellido" autocomplete="name">
         </div>
 
         <div class="campo">
-          <svg class="icono-campo" width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="6" r="2.8"/><path d="M1.6 15.4c0-2.8 2.4-4.3 5.4-4.3s5.4 1.5 5.4 4.3M13 4.2a2.6 2.6 0 010 5M14.4 11.4c1.4.5 2.4 1.6 2.4 3.4"/></svg>
+          <svg class="icono-campo" width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="6" r="2.8"/><path d="M1.6 15.4c0-2.8 2.4-4.3 5.4-4.3s5.4 1.5 5.4 4.3M13 4.2a2.6 2.6 0 010 5M14.4 11.4c1.4.5 2.4 1.6 2.4 3.4"/></svg>
           <select id="cuantos" required>
             <option value="" disabled selected>¿Cuántos asisten?</option>
             <option value="1">1 persona</option>
@@ -767,16 +808,19 @@ main{ position:relative; z-index:1; }
     </div>
   </section>
 
-  <!-- ═══════ FOTOS DEL EVENTO · acuarela rosa ═══════ -->
+  <!-- ═══════ FOTOS DEL EVENTO ═══════ -->
   <section class="seccion blush oculta" id="fotos">
     <div class="contenido">
-      <p class="antetitulo anim abre" style="--r:0">El día de la fiesta</p>
-      <h2 class="titulo anim" style="--r:1; margin-top:16px">Comparte lo que veas</h2>
-      <p class="parrafo anim" style="--r:2; margin-top:20px">
+      <svg class="icono-seccion anim crece" style="--r:0" width="36" height="36" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="2.2" y="5.6" width="15.6" height="11" rx="2"/><circle cx="10" cy="11.1" r="3.1"/><path d="M6.9 5.6l1.2-2.1h3.8l1.2 2.1"/>
+      </svg>
+      <p class="antetitulo anim abre" style="--r:1">El día de la fiesta</p>
+      <h2 class="titulo anim" style="--r:2; margin-top:12px">Comparte lo que veas</h2>
+      <p class="parrafo anim" style="--r:3; margin-top:20px">
         Las mejores fotos de la noche siempre las toman los invitados.
         Sube las tuyas al álbum y ayúdanos a guardar el día completo.
       </p>
-      <a class="boton-linea anim" style="--r:3" id="btnFotos" target="_blank" rel="noopener">
+      <a class="boton-linea anim" style="--r:4" id="btnFotos" target="_blank" rel="noopener">
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="1.4" y="4.4" width="13.2" height="9.4" rx="1.6"/><circle cx="8" cy="9.1" r="2.6"/><path d="M5.4 4.4l1-1.8h3.2l1 1.8"/></svg>
         Subir mis fotos
       </a>
@@ -787,14 +831,14 @@ main{ position:relative; z-index:1; }
   <footer class="pie">
     <img class="flor flor-cierre" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
     <div class="contenido">
-      <p class="gracias anim abre" style="--r:0">Gracias</p>
-      <p class="despedida anim" style="--r:1">Por ser parte de este momento tan especial para mí.</p>
-
-      <img class="divisor-flor anim crece" style="--r:2; margin:30px auto 22px"
+      <img class="divisor-flor anim crece" style="--r:0; margin:0 auto 30px"
            src="assets/florals/floral_line_branch.png" alt="" onerror="this.remove()">
 
-      <p class="firma anim difumina" style="--r:3">Sofía</p>
-      <small class="anim abre" style="--r:4">3 de octubre de 2026 · Toluca</small>
+      <p class="gracias anim abre" style="--r:1">Gracias</p>
+      <p class="despedida anim" style="--r:2">Por ser parte de este momento tan especial para mí.</p>
+
+      <p class="firma" style="margin-top:52px">Sofía</p>
+      <small>3 de octubre de 2026 · Toluca</small>
     </div>
   </footer>
 
@@ -802,7 +846,7 @@ main{ position:relative; z-index:1; }
 
 <script>
 /* ══════════════════════════════════════════════════════════════
-   CONFIGURACIÓN — lo único que necesitas tocar
+   CONFIGURACIÓN
    ══════════════════════════════════════════════════════════════ */
 const CONFIG = {
   cancion:  "https://diegoleongarcia.github.io/sofia_xv/cancion.mp3",
@@ -811,7 +855,7 @@ const CONFIG = {
   whatsapp: "525514750107",
 
   liverpool:  "https://www.liverpool.com.mx/tienda/home",
-  albumFotos: ""     // cuando tengas el álbum, pégalo y la sección aparece sola
+  albumFotos: ""     // pega el álbum aquí y la sección aparece sola
 };
 /* ══════════════════════════════════════════════════════════════ */
 
@@ -863,12 +907,11 @@ document.querySelectorAll('[data-ir]').forEach(el => {
   const boton = document.getElementById('btnMenu');
   const velo  = document.getElementById('velo');
 
-  function alternar(){
+  boton.addEventListener('click', () => {
     const abierto = document.body.classList.toggle('menu-abierto');
     boton.setAttribute('aria-expanded', abierto);
     boton.setAttribute('aria-label', abierto ? 'Cerrar menú' : 'Abrir menú');
-  }
-  boton.addEventListener('click', alternar);
+  });
   velo.addEventListener('click', () => document.body.classList.remove('menu-abierto'));
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') document.body.classList.remove('menu-abierto');
@@ -992,7 +1035,7 @@ document.querySelectorAll('[data-ir]').forEach(el => {
 })();
 
 
-/* ── Animaciones: una sola vez, y ahí se quedan ───────────── */
+/* ── Animaciones: una sola vez ────────────────────────────── */
 (function(){
   const ojo = new IntersectionObserver(entradas => {
     entradas.forEach(e => {
@@ -1001,7 +1044,7 @@ document.querySelectorAll('[data-ir]').forEach(el => {
         ojo.unobserve(e.target);
       }
     });
-  }, { threshold:0, rootMargin:'0px 0px -12% 0px' });
+  }, { threshold:0, rootMargin:'0px' });
 
   document.querySelectorAll('.anim').forEach(el => ojo.observe(el));
 })();
