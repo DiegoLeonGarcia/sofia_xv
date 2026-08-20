@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mis XV Años · Sofía</title>
+<meta name="description" content="Sofía cumple quince años. Sábado 3 de octubre de 2026.">
+<meta property="og:title" content="Mis XV Años · Sofía">
+<meta property="og:description" content="Sábado 3 de octubre de 2026 · Toluca">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ephesis&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════════════════════════════════════════════════════
+   PALETA Y TIPOGRAFÍAS
+   ══════════════════════════════════════════════════════════════ */
+:root{
+  --papel:      #FAF6F1;
+  --rosa:       #E8B9B6;
+  --rosa-hondo: #C48B87;
+  --linea:      #D49E9A;
+  --olivo:      #3E5232;
+  --salvia:     #66755A;
+  --tinta:      #46403B;
+
+  --script:  'Ephesis', cursive;
+  --display: 'Cormorant Garamond', Georgia, serif;
+  --texto:   'Montserrat', system-ui, sans-serif;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+
+body{
+  background:var(--papel);
+  color:var(--tinta);
+  font-family:var(--texto);
+  font-weight:400;
+  line-height:1.75;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+main{ position:relative; z-index:1; }
+
+/* ══════════════════════════════════════════════════════════════
+   FONDOS DE SECCIÓN
+   ══════════════════════════════════════════════════════════════ */
+.seccion{
+  position:relative; overflow:hidden;
+  padding:clamp(84px,16vw,140px) 26px;
+  text-align:center;
+}
+
+/* Textura de papel */
+.papel{
+  background:var(--papel) url('assets/backgrounds/paper_ivory.jpg') center / cover no-repeat;
+}
+
+/* Acuarela rosa, suavizada con un velo crema */
+.blush{
+  background:
+    linear-gradient(rgba(250,246,241,.5), rgba(250,246,241,.5)),
+    url('assets/backgrounds/watercolor_blush.jpg') center / cover no-repeat;
+}
+
+/* El hilo rosa que separa una sección de otra */
+.seccion::before, .pie::before{
+  content:''; position:absolute; top:0; left:0; right:0; height:1px; z-index:4;
+  background:linear-gradient(to right, transparent, rgba(212,158,154,.6) 22%, rgba(212,158,154,.6) 78%, transparent);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   FLORES
+   ══════════════════════════════════════════════════════════════ */
+.flor{ position:absolute; pointer-events:none; z-index:2; }
+
+.flor-portada-a{ top:-3%;   right:-13%; width:min(58vw,335px); opacity:.95; }
+.flor-portada-b{ bottom:-4%; left:-15%; width:min(54vw,305px); opacity:.95; transform:scale(-1,-1); }
+
+.flor-sofia-a{ top:-5%;    left:-14%; width:min(48vw,270px); opacity:.9; transform:scaleX(-1); }
+.flor-sofia-b{ bottom:-6%; right:-14%; width:min(43vw,240px); opacity:.85; transform:scaleY(-1); }
+
+.flor-dia{     top:-6%;    right:-16%; width:min(40vw,225px); opacity:.75; }
+.flor-cierre{  bottom:-9%; right:-15%; width:min(42vw,235px); opacity:.8; }
+
+/* Línea: marca de agua detrás del texto */
+.marca{ position:absolute; z-index:1; pointer-events:none; opacity:.13; mix-blend-mode:multiply; }
+.marca-mensaje{ top:5%;    right:-18%; width:min(78vw,440px); }
+.marca-vestido{ bottom:0;  left:-20%;  width:min(82vw,460px); }
+.marca-regalos{ top:8%;    left:-18%;  width:min(70vw,390px); transform:scaleX(-1); }
+.marca-confirma{ bottom:2%; right:-20%; width:min(72vw,400px); }
+
+.contenido{ position:relative; z-index:3; }
+
+/* ══════════════════════════════════════════════════════════════
+   TIPOGRAFÍA
+   ══════════════════════════════════════════════════════════════ */
+.antetitulo{
+  font-family:var(--texto); font-weight:400;
+  font-size:clamp(12px,3.3vw,14px);
+  letter-spacing:.32em; text-transform:uppercase; padding-left:.32em;
+  color:var(--salvia); line-height:1.6;
+}
+.nombre{
+  font-family:var(--script); font-weight:400;
+  font-size:clamp(80px,22vw,180px);
+  line-height:.9; color:var(--olivo);
+}
+.titulo{
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(33px,8vw,50px);
+  line-height:1.25; color:var(--olivo);
+}
+.parrafo{
+  font-size:clamp(14.5px,4vw,16px); font-weight:400;
+  color:var(--tinta); max-width:35ch; margin-inline:auto;
+}
+.verso{
+  font-family:var(--display); font-style:italic; font-weight:400;
+  font-size:clamp(24px,6.4vw,33px);
+  line-height:1.55; color:var(--olivo);
+  max-width:19ch; margin-inline:auto;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ORNAMENTOS: arco con rombo
+   ══════════════════════════════════════════════════════════════ */
+.separador{ display:flex; align-items:flex-end; justify-content:center; gap:16px; margin:0 auto; }
+.separador i{ display:block; width:clamp(32px,11vw,64px); height:1px; background:linear-gradient(to right, transparent, var(--linea)); }
+.separador i:last-child{ background:linear-gradient(to left, transparent, var(--linea)); }
+.arco-punto{ width:clamp(86px,26vw,116px); height:auto; display:block; }
+
+.divisor-flor{ display:block; width:clamp(140px,42vw,200px); height:auto; margin:0 auto; opacity:.6; }
+
+/* ══════════════════════════════════════════════════════════════
+   PORTADA
+   ══════════════════════════════════════════════════════════════ */
+.portada{
+  position:relative; min-height:100svh; overflow:hidden;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:26px; text-align:center;
+}
+/* Capa de fondo independiente: se mueve más lento al hacer scroll */
+.fondo-portada{
+  position:absolute; top:0; left:0; right:0; height:128%;
+  background:var(--papel) url('assets/backgrounds/paper_ivory.jpg') center / cover no-repeat;
+  z-index:0; will-change:transform;
+}
+.portada .marco{
+  position:absolute; top:5svh; left:50%; transform:translateX(-50%);
+  width:min(76vw,470px); height:82svh;
+  border:1.5px solid var(--linea); border-bottom:none;
+  border-radius:999px 999px 0 0; pointer-events:none; z-index:2;
+}
+.portada .marco::before{                 /* el rombo en la cima del arco */
+  content:''; position:absolute; top:-6px; left:50%;
+  width:11px; height:11px; background:var(--rosa-hondo);
+  transform:translateX(-50%) rotate(45deg);
+}
+.portada .antetitulo{
+  margin-bottom:26px;
+  font-size:clamp(15px,4.4vw,20px); font-weight:400;
+  letter-spacing:.36em; padding-left:.36em;
+  color:var(--rosa-hondo);
+}
+.portada .fecha{
+  font-family:var(--texto); font-weight:500;
+  font-size:clamp(14px,3.8vw,17px);
+  letter-spacing:.3em; text-transform:uppercase; padding-left:.3em;
+  color:var(--olivo); margin-top:40px;
+}
+
+.baja{
+  position:absolute; bottom:22px; left:50%; transform:translateX(-50%);
+  z-index:4; color:var(--rosa-hondo); display:block; padding:16px;
+  background:none; border:none; cursor:pointer;
+  animation:flotar 2.8s ease-in-out infinite;
+}
+@keyframes flotar{ 0%,100%{ transform:translateX(-50%) translateY(0); } 50%{ transform:translateX(-50%) translateY(9px); } }
+
+/* ══════════════════════════════════════════════════════════════
+   CUENTA REGRESIVA
+   ══════════════════════════════════════════════════════════════ */
+.reloj{ display:flex; align-items:flex-start; justify-content:center; gap:clamp(12px,4vw,30px); margin-top:40px; }
+.casilla{ display:flex; flex-direction:column; align-items:center; min-width:clamp(50px,15vw,78px); }
+.cifra{
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(46px,13vw,72px); line-height:.92;
+  color:var(--olivo); font-variant-numeric:tabular-nums;
+}
+.rotulo{
+  margin-top:13px; font-size:clamp(9.5px,2.8vw,11px); font-weight:500;
+  letter-spacing:.2em; text-transform:uppercase; padding-left:.2em;
+  color:var(--salvia);
+}
+/* Altura fija para que la línea nunca se colapse en pantallas angostas */
+.hilo{
+  flex:0 0 1px; width:1px; min-width:1px;
+  height:clamp(58px,16vw,88px); margin-top:8px;
+  background:linear-gradient(to bottom, transparent, var(--linea) 22%, var(--linea) 78%, transparent);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   MOMENTOS
+   ══════════════════════════════════════════════════════════════ */
+.momentos{ display:flex; flex-wrap:wrap; justify-content:center; gap:clamp(56px,8vw,84px); margin-top:56px; }
+.momento{ flex:1 1 270px; max-width:330px; }
+.momento .icono{ color:var(--rosa-hondo); margin-bottom:18px; }
+.momento h3{
+  font-family:var(--display); font-style:italic; font-weight:500;
+  font-size:clamp(24px,5.8vw,29px); color:var(--olivo); margin-bottom:6px;
+}
+.momento .hora{
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(36px,8.8vw,46px); color:var(--olivo); line-height:1.1; margin:12px 0 14px;
+}
+.momento .lugar{ font-size:clamp(14px,3.8vw,15px); font-weight:600; color:var(--tinta); margin-bottom:6px; }
+.momento .direccion{ font-size:clamp(12.5px,3.4vw,13.5px); font-weight:300; color:var(--salvia); line-height:1.7; }
+
+/* ══════════════════════════════════════════════════════════════
+   BOTONES — todos con icono a la izquierda
+   ══════════════════════════════════════════════════════════════ */
+.boton-linea, .boton-solido{
+  display:inline-flex; align-items:center; justify-content:center; gap:11px;
+  border-radius:999px; cursor:pointer; text-decoration:none;
+  font-family:var(--texto); font-size:clamp(10.5px,2.9vw,11.5px); font-weight:500;
+  letter-spacing:.18em; text-transform:uppercase;
+  transition:background .35s ease, color .35s ease, transform .3s ease, box-shadow .3s ease;
+}
+.boton-linea{
+  margin-top:24px; padding:14px 30px;
+  border:1.4px solid var(--rosa-hondo);
+  color:var(--olivo); background:rgba(255,255,255,.45);
+}
+.boton-linea:hover{ background:var(--rosa-hondo); color:var(--papel); }
+.boton-linea svg{ flex-shrink:0; }
+
+.boton-solido{
+  margin-top:26px; padding:17px 38px; border:none;
+  color:var(--papel); background:var(--olivo);
+  box-shadow:0 5px 18px rgba(62,82,50,.26);
+}
+.boton-solido:hover{ transform:translateY(-2px); box-shadow:0 9px 26px rgba(62,82,50,.34); }
+.boton-solido svg{ flex-shrink:0; }
+
+/* ══════════════════════════════════════════════════════════════
+   VESTIMENTA
+   ══════════════════════════════════════════════════════════════ */
+.aviso-color{
+  display:inline-flex; align-items:center; gap:13px;
+  margin-top:30px; padding:15px 26px; max-width:330px;
+  border:1.4px solid var(--linea); border-radius:26px;
+  background:rgba(255,255,255,.5);
+  font-size:clamp(12px,3.3vw,13.5px); font-weight:500;
+  letter-spacing:.03em; line-height:1.5; color:var(--rosa-hondo); text-align:left;
+}
+.muestra{ width:16px; height:16px; border-radius:50%; background:var(--rosa); position:relative; flex-shrink:0; }
+.muestra::after{
+  content:''; position:absolute; top:50%; left:-3px; right:-3px; height:1.6px;
+  background:var(--rosa-hondo); transform:rotate(-45deg);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   GALERÍA — marco de arco con rombo
+   ══════════════════════════════════════════════════════════════ */
+.galeria{ display:grid; grid-template-columns:1fr; gap:34px; max-width:320px; margin:56px auto 0; }
+.marco-foto{
+  position:relative; padding:9px;
+  border:1.4px solid var(--linea);
+  border-radius:999px 999px 10px 10px;
+  background:rgba(255,255,255,.3);
+}
+.marco-foto::before{
+  content:''; position:absolute; top:-6px; left:50%;
+  width:11px; height:11px; background:var(--rosa-hondo);
+  transform:translateX(-50%) rotate(45deg);
+}
+.marco-foto img{
+  width:100%; aspect-ratio:3/4; object-fit:cover; display:block;
+  border-radius:999px 999px 5px 5px;
+}
+@media (min-width:780px){
+  .galeria{ grid-template-columns:repeat(3,1fr); max-width:820px; gap:30px; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   FORMULARIO
+   ══════════════════════════════════════════════════════════════ */
+.formulario{ max-width:330px; margin:44px auto 0; }
+.campo{ position:relative; margin-bottom:16px; }
+.campo .icono-campo{
+  position:absolute; left:20px; top:50%; transform:translateY(-50%);
+  color:var(--rosa-hondo); pointer-events:none; z-index:2;
+}
+.campo input, .campo select{
+  width:100%; padding:16px 20px 16px 50px;
+  border:1.4px solid var(--linea); border-radius:999px;
+  background:rgba(255,255,255,.72);
+  font-family:var(--texto); font-size:14.5px; font-weight:400; color:var(--tinta);
+  appearance:none; -webkit-appearance:none;
+}
+.campo input::placeholder{ color:#A79E97; }
+.campo select{
+  color:var(--tinta);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C48B87' stroke-width='1.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 20px center;
+}
+.campo select:invalid{ color:#A79E97; }
+.campo input:focus, .campo select:focus{ outline:none; border-color:var(--olivo); }
+.nota-campo{ margin-top:14px; font-size:12.5px; font-weight:300; color:var(--salvia); line-height:1.6; text-align:center; }
+.recado{ margin-top:14px; font-size:13px; color:var(--rosa-hondo); min-height:20px; }
+
+/* ══════════════════════════════════════════════════════════════
+   PIE
+   ══════════════════════════════════════════════════════════════ */
+.pie{
+  position:relative; padding:clamp(78px,15vw,120px) 26px 60px; text-align:center; overflow:hidden;
+  background:var(--papel) url('assets/backgrounds/paper_ivory.jpg') center / cover no-repeat;
+}
+.pie .gracias{
+  font-family:var(--texto); font-weight:400;
+  font-size:clamp(12px,3.3vw,14px); letter-spacing:.32em;
+  text-transform:uppercase; padding-left:.32em; color:var(--rosa-hondo);
+}
+.pie .despedida{
+  margin-top:22px; font-size:clamp(14.5px,4vw,16px);
+  color:var(--tinta); max-width:28ch; margin-inline:auto;
+}
+.pie .firma{ font-family:var(--script); font-size:clamp(58px,15vw,76px); color:var(--rosa-hondo); line-height:1; margin-top:14px; }
+.pie small{
+  display:block; margin-top:20px;
+  font-size:11.5px; font-weight:400; letter-spacing:.26em;
+  text-transform:uppercase; padding-left:.26em; color:var(--salvia);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   BOTONES DE VIDRIO (menú y música)
+   ══════════════════════════════════════════════════════════════ */
+.btn-vidrio{
+  position:relative; width:52px; height:52px;
+  border:none; padding:0; border-radius:50%; cursor:pointer;
+  display:grid; place-items:center;
+  background:linear-gradient(150deg, rgba(255,255,255,.95), rgba(255,255,255,.82) 50%, rgba(255,255,255,.9));
+  -webkit-backdrop-filter:blur(14px) saturate(170%);
+  backdrop-filter:blur(14px) saturate(170%);
+  box-shadow:inset 0 1px 1px #fff, inset 0 -1px 2px rgba(196,139,135,.18), 0 5px 16px rgba(60,45,45,.18);
+  transition:transform .35s cubic-bezier(.2,.8,.3,1);
+}
+.btn-vidrio::after{ content:''; position:absolute; inset:0; border-radius:50%; border:1.4px solid rgba(196,139,135,.55); }
+.btn-vidrio:hover{ transform:translateY(-2px); }
+.btn-vidrio:active{ transform:scale(.95); }
+.btn-vidrio:focus-visible{ outline:2px solid var(--rosa-hondo); outline-offset:5px; }
+
+/* ── Hamburguesa: líneas juntas y X limpia ── */
+.btn-menu{ position:fixed; top:20px; left:20px; z-index:95; }
+.btn-menu span{
+  position:absolute; left:50%; width:19px; height:1.4px;
+  background:#3C3C3C; border-radius:2px;
+  transform:translateX(-50%);
+  transition:transform .4s cubic-bezier(.2,.8,.3,1), opacity .25s ease;
+}
+.btn-menu span:nth-child(1){ top:20.2px; }
+.btn-menu span:nth-child(2){ top:25.3px; }
+.btn-menu span:nth-child(3){ top:30.4px; }
+.menu-abierto .btn-menu span:nth-child(1){ transform:translateX(-50%) translateY(5.1px) rotate(45deg); }
+.menu-abierto .btn-menu span:nth-child(2){ opacity:0; }
+.menu-abierto .btn-menu span:nth-child(3){ transform:translateX(-50%) translateY(-5.1px) rotate(-45deg); }
+
+/* ══════════════════════════════════════════════════════════════
+   MENÚ LATERAL
+   ══════════════════════════════════════════════════════════════ */
+.velo{
+  position:fixed; inset:0; z-index:88;
+  background:rgba(70,64,59,.32);
+  -webkit-backdrop-filter:blur(3px); backdrop-filter:blur(3px);
+  opacity:0; visibility:hidden; transition:opacity .5s ease, visibility .5s;
+}
+.menu-abierto .velo{ opacity:1; visibility:visible; }
+
+.panel{
+  position:fixed; top:0; left:0; bottom:0; z-index:90;
+  width:min(80vw,318px);
+  background:var(--papel) url('assets/backgrounds/paper_ivory.jpg') center / cover no-repeat;
+  box-shadow:6px 0 34px rgba(70,50,48,.18);
+  border-right:1px solid rgba(212,158,154,.5);
+  transform:translateX(-102%);
+  transition:transform .55s cubic-bezier(.35,.85,.35,1);
+  display:flex; flex-direction:column; justify-content:center;
+  padding:88px 0 40px; overflow-y:auto;
+}
+.menu-abierto .panel{ transform:none; }
+
+.panel .flor-panel{ position:absolute; bottom:-4%; right:-22%; width:min(58vw,215px); opacity:.42; pointer-events:none; }
+.panel .titulo-panel{
+  position:absolute; top:30px; left:0; right:0; text-align:center;
+  font-family:var(--script); font-size:40px; color:var(--rosa-hondo); line-height:1;
+}
+
+.panel a{
+  position:relative; z-index:2;
+  display:flex; align-items:center; gap:15px;
+  padding:14px 30px;
+  font-family:var(--texto); font-weight:400;
+  font-size:12.5px; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--olivo); text-decoration:none;
+  opacity:0; transform:translateX(-16px);
+  transition:opacity .5s ease, transform .5s cubic-bezier(.2,.8,.3,1), color .3s ease;
+}
+.panel a svg{ color:var(--rosa-hondo); flex-shrink:0; transition:transform .3s ease; }
+.panel a:hover{ color:var(--rosa-hondo); }
+.panel a:hover svg{ transform:translateX(2px); }
+.menu-abierto .panel a{ opacity:1; transform:none; }
+.menu-abierto .panel a:nth-child(2){ transition-delay:.14s }
+.menu-abierto .panel a:nth-child(3){ transition-delay:.19s }
+.menu-abierto .panel a:nth-child(4){ transition-delay:.24s }
+.menu-abierto .panel a:nth-child(5){ transition-delay:.29s }
+.menu-abierto .panel a:nth-child(6){ transition-delay:.34s }
+.menu-abierto .panel a:nth-child(7){ transition-delay:.39s }
+.menu-abierto .panel a:nth-child(8){ transition-delay:.44s }
+.menu-abierto .panel a:nth-child(9){ transition-delay:.49s }
+
+/* ══════════════════════════════════════════════════════════════
+   MÚSICA
+   ══════════════════════════════════════════════════════════════ */
+.musica{ position:fixed; top:20px; right:20px; z-index:95; }
+.musica .ancla{ position:relative; display:grid; place-items:center; }
+
+.aro{ position:absolute; inset:-8px; pointer-events:none; opacity:0; transition:opacity .7s ease; }
+.aro circle{ fill:none; stroke:var(--rosa-hondo); stroke-width:1.5; stroke-linecap:round; stroke-dasharray:34 190; transform-origin:50% 50%; }
+.sonando .aro{ opacity:1; }
+.sonando .aro circle{ animation:girar 9s linear infinite; }
+@keyframes girar{ to{ transform:rotate(360deg); } }
+
+.sonando{ animation:respirar 4.6s ease-in-out infinite; }
+@keyframes respirar{
+  0%,100%{ box-shadow:inset 0 1px 1px #fff, 0 5px 16px rgba(60,45,45,.18); }
+  50%    { box-shadow:inset 0 1px 1px #fff, 0 5px 22px rgba(196,139,135,.5); }
+}
+
+.icono-m{ position:absolute; transition:opacity .22s ease, transform .22s ease; }
+.icono-m path, .icono-m rect{ fill:#3C3C3C; }
+.oculto{ opacity:0; transform:scale(.7); pointer-events:none; }
+
+.susurro{
+  position:absolute; top:100%; left:50%; margin-top:13px;
+  transform:translateX(-50%) translateY(5px);
+  font-size:8.5px; font-weight:400; letter-spacing:.26em;
+  text-transform:uppercase; padding-left:.26em;
+  color:var(--salvia); white-space:nowrap;
+  opacity:0; pointer-events:none; user-select:none;
+  transition:opacity .9s ease, transform .9s ease;
+}
+.susurro.visible{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+/* ══════════════════════════════════════════════════════════════
+   ANIMACIONES — se ejecutan una sola vez y se quedan
+   ══════════════════════════════════════════════════════════════ */
+.anim{
+  opacity:0; transform:translateY(24px);
+  transition:opacity .95s ease, transform 1.05s cubic-bezier(.2,.8,.3,1),
+             filter .95s ease, letter-spacing 1.1s cubic-bezier(.2,.8,.3,1);
+  transition-delay:calc(var(--r, 0) * 110ms);
+}
+.anim.visto{ opacity:1; transform:none; }
+
+.anim.abre{ transform:none; letter-spacing:.6em; }
+.anim.abre.visto{ letter-spacing:.32em; }
+.portada .antetitulo.anim.abre.visto{ letter-spacing:.36em; }
+.portada .fecha.anim.abre.visto{ letter-spacing:.3em; }
+.pie small.anim.abre.visto{ letter-spacing:.26em; }
+
+.anim.difumina{ transform:none; filter:blur(8px); }
+.anim.difumina.visto{ filter:blur(0); }
+
+.anim.crece{ transform:scale(.94); }
+.anim.crece.visto{ transform:scale(1); }
+
+.oculta{ display:none; }
+
+@media (prefers-reduced-motion:reduce){
+  *{ animation:none !important; transition:none !important; }
+  .anim{ opacity:1 !important; transform:none !important; filter:none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ MENÚ ═══════════ -->
+<button class="btn-vidrio btn-menu" id="btnMenu" aria-label="Abrir menú" aria-expanded="false">
+  <span></span><span></span><span></span>
+</button>
+
+<div class="velo" id="velo"></div>
+
+<nav class="panel" id="panel" aria-label="Secciones">
+  <p class="titulo-panel">Sofía</p>
+  <img class="flor-panel" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
+
+  <a href="#cuenta" data-ir="cuenta">
+    <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"><circle cx="10" cy="10" r="8.4"/><path d="M10 5.4V10l3.1 2.1"/></svg>
+    Cuenta regresiva
+  </a>
+  <a href="#mensaje" data-ir="mensaje">
+    <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17s-6.6-4.1-6.6-8.4A3.5 3.5 0 0110 6.6a3.5 3.5 0 016.6 2c0 4.3-6.6 8.4-6.6 8.4z"/></svg>
+    El mensaje
+  </a>
+  <a href="#dia" data-ir="dia">
+    <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2.8" y="4.2" width="14.4" height="13" rx="2"/><path d="M6.6 2.2v3.6M13.4 2.2v3.6M2.8 8.4h14.4"/></svg>
+    El día
+  </a>
+  <a href="#vestimenta" data-ir="vestimenta">
+    <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M7.4 2.4L10 4.8l2.6-2.4 4 2.6-2 3.2-1.4-.7V17.6H6.8V7.5l-1.4.7-2-3.2z"/></svg>
+    Vestimenta
+  </a>
+  <a href="#regalos" data-ir="regalos">
+    <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2.6" y="7.6" width="14.8" height="9.8" rx="1.4"/><path d="M1.6 7.6h16.8M10 7.6v9.8M10 7.6S8.4 2.6 6.2 3.6 8.6 7.6 10 7.6zM10 7.6s1.6-5 3.8-4-1.6 4-3.8 4z"/></svg>
+    Mesa de regalos
+  </a>
+  <a href="#sofia" data-ir="sofia">
+    <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5.4" width="16" height="11.4" rx="2"/><circle cx="10" cy="11.1" r="3.2"/><path d="M6.8 5.4l1.2-2.2h4l1.2 2.2"/></svg>
+    Sofía
+  </a>
+  <a href="#confirmar" data-ir="confirmar">
+    <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2.2" y="4.4" width="15.6" height="11.2" rx="2"/><path d="M2.8 5.6L10 10.8l7.2-5.2"/></svg>
+    Confirmar
+  </a>
+</nav>
+
+<!-- ═══════════ MÚSICA ═══════════ -->
+<div class="musica">
+  <div class="ancla">
+    <button class="btn-vidrio" id="btnMusica" aria-label="Reproducir música" aria-pressed="false">
+      <svg class="aro" viewBox="0 0 68 68" aria-hidden="true"><circle cx="34" cy="34" r="33"/></svg>
+      <svg class="icono-m" id="iPlay" width="14" height="16" viewBox="0 0 15 17" aria-hidden="true">
+        <path d="M1.6 1.1c0-.7.8-1.2 1.4-.8l11 7.2c.6.4.6 1.2 0 1.6l-11 7.2c-.6.4-1.4 0-1.4-.8V1.1z"/>
+      </svg>
+      <svg class="icono-m oculto" id="iPause" width="12" height="15" viewBox="0 0 13 16" aria-hidden="true">
+        <rect x="0.5" y="0" width="4" height="16" rx="1.4"/><rect x="8.5" y="0" width="4" height="16" rx="1.4"/>
+      </svg>
+    </button>
+    <span class="susurro" id="susurro">música</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- ═══════ PORTADA · papel con parallax + flores fuertes ═══════ -->
+  <header class="portada" id="portada">
+    <div class="fondo-portada" id="fondoPortada"></div>
+
+    <img class="flor flor-portada-a" id="florA" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
+    <img class="flor flor-portada-b" id="florB" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
+
+    <div class="marco"></div>
+    <div class="contenido" id="heroTexto">
+      <p class="antetitulo anim abre" style="--r:0">Mis XV Años</p>
+      <h1 class="nombre anim difumina" style="--r:1">Sofía</h1>
+      <p class="fecha anim abre" style="--r:2">3 · Octubre · 2026</p>
+    </div>
+
+    <button class="baja" data-ir="cuenta" aria-label="Ir a la cuenta regresiva">
+      <svg width="26" height="14" viewBox="0 0 22 12" fill="none" aria-hidden="true">
+        <path d="M1 1l10 9 10-9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- ═══════ CONTADOR · papel, sigue a la portada ═══════ -->
+  <section class="seccion papel" id="cuenta">
+    <div class="contenido">
+      <div class="separador anim crece" style="--r:0; margin-bottom:34px">
+        <i></i>
+        <svg class="arco-punto" viewBox="0 0 120 46" fill="none" aria-hidden="true">
+          <path d="M8 40 A65 65 0 0 1 112 40" stroke="var(--linea)" stroke-width="1.3"/>
+          <path d="M60 7l5 7-5 7-5-7z" fill="var(--rosa-hondo)"/>
+        </svg>
+        <i></i>
+      </div>
+
+      <p class="antetitulo anim abre" style="--r:1">Faltan</p>
+
+      <div class="reloj anim" style="--r:2" id="reloj">
+        <div class="casilla"><span class="cifra" id="d">00</span><span class="rotulo">Días</span></div>
+        <div class="hilo"></div>
+        <div class="casilla"><span class="cifra" id="h">00</span><span class="rotulo">Horas</span></div>
+        <div class="hilo"></div>
+        <div class="casilla"><span class="cifra" id="m">00</span><span class="rotulo">Minutos</span></div>
+        <div class="hilo"></div>
+        <div class="casilla"><span class="cifra" id="s">00</span><span class="rotulo">Segundos</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ EL MENSAJE · acuarela rosa ═══════ -->
+  <section class="seccion blush" id="mensaje">
+    <img class="marca marca-mensaje" src="assets/florals/floral_line_branch.png" alt="" onerror="this.remove()">
+    <div class="contenido">
+      <p class="verso anim difumina" style="--r:0">Hay días que uno guarda para siempre.<br>Este quiero guardarlo contigo.</p>
+
+      <img class="divisor-flor anim crece" style="--r:1; margin:40px auto 36px"
+           src="assets/florals/floral_line_branch.png" alt="" onerror="this.remove()">
+
+      <p class="parrafo anim" style="--r:2">
+        Con la bendición de Dios y el amor de mis padres,
+        celebro quince años de vida. Me haría muy feliz
+        que estuvieras ahí para verlo.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════ EL DÍA · papel ═══════ -->
+  <section class="seccion papel" id="dia">
+    <img class="flor flor-dia" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
+    <div class="contenido">
+      <p class="antetitulo anim abre" style="--r:0">Sábado 3 de octubre</p>
+      <h2 class="titulo anim" style="--r:1; margin-top:16px">El día</h2>
+
+      <div class="momentos">
+        <article class="momento anim" style="--r:2">
+          <svg class="icono" width="30" height="34" viewBox="0 0 26 30" fill="none" aria-hidden="true">
+            <path d="M13 1v7M9.5 4.5h7M4 29V13l9-6 9 6v16M10 29v-7h6v7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <h3>Ceremonia religiosa</h3>
+          <p class="hora">4:00 pm</p>
+          <p class="lugar">Iglesia del Carmen</p>
+          <p class="direccion">Santos Degollado 100, Centro<br>Toluca de Lerdo</p>
+          <a class="boton-linea" target="_blank" rel="noopener"
+             href="https://www.google.com/maps/search/?api=1&query=Iglesia%20del%20Carmen%20Toluca&query_place_id=ChIJbWoFG-qJzYURc6QbOrrbdvc">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M13.4 6.6c0 4-5.4 8-5.4 8s-5.4-4-5.4-8a5.4 5.4 0 1110.8 0z"/><circle cx="8" cy="6.5" r="1.9"/></svg>
+            Cómo llegar
+          </a>
+        </article>
+
+        <article class="momento anim" style="--r:3">
+          <svg class="icono" width="30" height="34" viewBox="0 0 26 30" fill="none" aria-hidden="true">
+            <path d="M6 3h14M7 3l1.5 9a4.5 4.5 0 009 0L19 3M13 21v6M8 27h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <h3>Recepción</h3>
+          <p class="hora">5:30 pm</p>
+          <p class="lugar">Salón Chalet del Bosque</p>
+          <p class="direccion">Manzana 20, Delegación Capultitlán<br>Toluca · Estacionamiento en la calle, con vigilancia</p>
+          <a class="boton-linea" target="_blank" rel="noopener"
+             href="https://www.google.com/maps/search/?api=1&query=Chalet%20del%20Bosque%20Capultitlan&query_place_id=ChIJldpO4tWJzYURf1NIVilylV0">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M13.4 6.6c0 4-5.4 8-5.4 8s-5.4-4-5.4-8a5.4 5.4 0 1110.8 0z"/><circle cx="8" cy="6.5" r="1.9"/></svg>
+            Cómo llegar
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ VESTIMENTA · acuarela rosa ═══════ -->
+  <section class="seccion blush" id="vestimenta">
+    <img class="marca marca-vestido" src="assets/florals/floral_line_rose.png" alt="" onerror="this.remove()">
+    <div class="contenido">
+      <p class="antetitulo anim abre" style="--r:0">Código de vestimenta</p>
+      <h2 class="titulo anim" style="--r:1; margin-top:16px">Formal</h2>
+      <p class="parrafo anim" style="--r:2; margin-top:20px">
+        Nos encantará verte de gala esa noche. Y si al elegir tu
+        atuendo puedes dejar de lado los tonos rosas, te lo
+        agradeceremos muchísimo: es el color que Sofía llevará
+        en su día.
+      </p>
+      <div class="aviso-color anim crece" style="--r:3">
+        <span class="muestra"></span>
+        Con cariño, reservemos el rosa para Sofía
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ MESA DE REGALOS · papel ═══════ -->
+  <section class="seccion papel oculta" id="regalos">
+    <img class="marca marca-regalos" src="assets/florals/floral_line_rose.png" alt="" onerror="this.remove()">
+    <div class="contenido">
+      <svg class="anim crece" style="--r:0; color:var(--rosa-hondo); margin-bottom:20px" width="36" height="36" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="2.6" y="7.6" width="14.8" height="9.8" rx="1.4"/>
+        <path d="M1.6 7.6h16.8M10 7.6v9.8M10 7.6S8.4 2.6 6.2 3.6 8.6 7.6 10 7.6zM10 7.6s1.6-5 3.8-4-1.6 4-3.8 4z"/>
+      </svg>
+      <p class="antetitulo anim abre" style="--r:1">Mesa de regalos</p>
+      <h2 class="titulo anim" style="--r:2; margin-top:16px">Tu presencia es el regalo</h2>
+      <p class="parrafo anim" style="--r:3; margin-top:20px">
+        Y si además quieres tener un detalle con Sofía,
+        aquí te dejamos la mesa de regalos.
+      </p>
+      <a class="boton-linea anim" style="--r:4" id="btnRegalos" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="12" height="8" rx="1.2"/><path d="M1.2 6h13.6M8 6v8M8 6S6.7 2 4.9 2.8 6.9 6 8 6zM8 6s1.3-4 3.1-3.2S9.1 6 8 6z"/></svg>
+        Ver mesa en Liverpool
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══════ SOFÍA · acuarela rosa + flores fuertes ═══════ -->
+  <section class="seccion blush" id="sofia">
+    <img class="flor flor-sofia-a" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
+    <img class="flor flor-sofia-b" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
+    <div class="contenido">
+      <p class="antetitulo anim abre" style="--r:0">Sofía</p>
+      <h2 class="titulo anim" style="--r:1; margin-top:16px">Quince años en un suspiro</h2>
+
+      <div class="galeria">
+        <figure class="marco-foto anim crece" style="--r:2">
+          <img src="assets/photos/placeholder_01.jpg" alt="Sofía">
+        </figure>
+        <figure class="marco-foto anim crece" style="--r:3">
+          <img src="assets/photos/placeholder_02.jpg" alt="Sofía">
+        </figure>
+        <figure class="marco-foto anim crece" style="--r:4">
+          <img src="assets/photos/placeholder_03.jpg" alt="Sofía">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ CONFIRMACIÓN · papel ═══════ -->
+  <section class="seccion papel" id="confirmar">
+    <img class="marca marca-confirma" src="assets/florals/floral_line_branch.png" alt="" onerror="this.remove()">
+    <div class="contenido">
+      <div class="separador anim crece" style="--r:0; margin-bottom:34px">
+        <i></i>
+        <svg class="arco-punto" viewBox="0 0 120 46" fill="none" aria-hidden="true">
+          <path d="M8 40 A65 65 0 0 1 112 40" stroke="var(--linea)" stroke-width="1.3"/>
+          <path d="M60 7l5 7-5 7-5-7z" fill="var(--rosa-hondo)"/>
+        </svg>
+        <i></i>
+      </div>
+
+      <p class="antetitulo anim abre" style="--r:1">Confirma tu asistencia</p>
+      <h2 class="titulo anim" style="--r:2; margin-top:16px">Te esperamos</h2>
+      <p class="parrafo anim" style="--r:3; margin-top:20px">
+        Saber que vienes nos ayuda a cuidar cada detalle.
+        Te agradecemos confirmar antes del 15 de septiembre.
+      </p>
+
+      <div class="formulario anim" style="--r:4">
+        <div class="campo">
+          <svg class="icono-campo" width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="6" r="3.2"/><path d="M2.8 15.6c0-3 2.8-4.6 6.2-4.6s6.2 1.6 6.2 4.6"/></svg>
+          <input type="text" id="invitado" placeholder="Nombre y apellido" autocomplete="name">
+        </div>
+
+        <div class="campo">
+          <svg class="icono-campo" width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="6" r="2.8"/><path d="M1.6 15.4c0-2.8 2.4-4.3 5.4-4.3s5.4 1.5 5.4 4.3M13 4.2a2.6 2.6 0 010 5M14.4 11.4c1.4.5 2.4 1.6 2.4 3.4"/></svg>
+          <select id="cuantos" required>
+            <option value="" disabled selected>¿Cuántos asisten?</option>
+            <option value="1">1 persona</option>
+            <option value="2">2 personas</option>
+            <option value="3">3 personas</option>
+            <option value="4">4 personas</option>
+            <option value="5">5 personas</option>
+            <option value="6">6 personas</option>
+            <option value="0">No podré asistir</option>
+          </select>
+        </div>
+
+        <p class="nota-campo">Considera los lugares que apartamos para ti en tu invitación.</p>
+
+        <div style="text-align:center">
+          <button class="boton-solido" id="btnWhats">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm0 18.15c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 01-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 012.41 5.82c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.13-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.13-.56-1.35-.77-1.84-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07s.89 2.4 1.01 2.56c.12.17 1.74 2.66 4.22 3.73.59.25 1.05.4 1.4.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.68-1.18.2-.58.2-1.08.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg>
+            Confirmar por WhatsApp
+          </button>
+          <p class="recado" id="recado"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ FOTOS DEL EVENTO · acuarela rosa ═══════ -->
+  <section class="seccion blush oculta" id="fotos">
+    <div class="contenido">
+      <p class="antetitulo anim abre" style="--r:0">El día de la fiesta</p>
+      <h2 class="titulo anim" style="--r:1; margin-top:16px">Comparte lo que veas</h2>
+      <p class="parrafo anim" style="--r:2; margin-top:20px">
+        Las mejores fotos de la noche siempre las toman los invitados.
+        Sube las tuyas al álbum y ayúdanos a guardar el día completo.
+      </p>
+      <a class="boton-linea anim" style="--r:3" id="btnFotos" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="1.4" y="4.4" width="13.2" height="9.4" rx="1.6"/><circle cx="8" cy="9.1" r="2.6"/><path d="M5.4 4.4l1-1.8h3.2l1 1.8"/></svg>
+        Subir mis fotos
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══════ CIERRE ═══════ -->
+  <footer class="pie">
+    <img class="flor flor-cierre" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
+    <div class="contenido">
+      <p class="gracias anim abre" style="--r:0">Gracias</p>
+      <p class="despedida anim" style="--r:1">Por ser parte de este momento tan especial para mí.</p>
+
+      <img class="divisor-flor anim crece" style="--r:2; margin:30px auto 22px"
+           src="assets/florals/floral_line_branch.png" alt="" onerror="this.remove()">
+
+      <p class="firma anim difumina" style="--r:3">Sofía</p>
+      <small class="anim abre" style="--r:4">3 de octubre de 2026 · Toluca</small>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   CONFIGURACIÓN — lo único que necesitas tocar
+   ══════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  cancion:  "https://diegoleongarcia.github.io/sofia_xv/cancion.mp3",
+  volumen:  0.55,
+  fecha:    "2026-10-03T16:00:00-06:00",   // -06:00 = hora del centro de México
+  whatsapp: "525514750107",
+
+  liverpool:  "https://www.liverpool.com.mx/tienda/home",
+  albumFotos: ""     // cuando tengas el álbum, pégalo y la sección aparece sola
+};
+/* ══════════════════════════════════════════════════════════════ */
+
+
+/* ── Secciones opcionales ─────────────────────────────────── */
+(function(){
+  function activar(seccion, boton, url){
+    if (!url) return;
+    document.getElementById(boton).href = url;
+    document.getElementById(seccion).classList.remove('oculta');
+  }
+  activar('regalos','btnRegalos', CONFIG.liverpool);
+  activar('fotos','btnFotos', CONFIG.albumFotos);
+})();
+
+
+/* ── Desplazamiento lento ─────────────────────────────────── */
+function irA(id, ms){
+  const destino = document.getElementById(id);
+  if (!destino) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    destino.scrollIntoView(); return;
+  }
+  const inicio = window.scrollY;
+  const distancia = destino.getBoundingClientRect().top;
+  const t0 = performance.now();
+  const suave = t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
+
+  function paso(ahora){
+    const t = Math.min(1, (ahora - t0) / ms);
+    window.scrollTo(0, inicio + distancia * suave(t));
+    if (t < 1) requestAnimationFrame(paso);
+  }
+  requestAnimationFrame(paso);
+}
+
+document.querySelectorAll('[data-ir]').forEach(el => {
+  el.addEventListener('click', ev => {
+    ev.preventDefault();
+    const enPanel = !!el.closest('.panel');
+    document.body.classList.remove('menu-abierto');
+    setTimeout(() => irA(el.dataset.ir, 2000), enPanel ? 420 : 0);
+  });
+});
+
+
+/* ── Menú ─────────────────────────────────────────────────── */
+(function(){
+  const boton = document.getElementById('btnMenu');
+  const velo  = document.getElementById('velo');
+
+  function alternar(){
+    const abierto = document.body.classList.toggle('menu-abierto');
+    boton.setAttribute('aria-expanded', abierto);
+    boton.setAttribute('aria-label', abierto ? 'Cerrar menú' : 'Abrir menú');
+  }
+  boton.addEventListener('click', alternar);
+  velo.addEventListener('click', () => document.body.classList.remove('menu-abierto'));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') document.body.classList.remove('menu-abierto');
+  });
+})();
+
+
+/* ── Cuenta regresiva ─────────────────────────────────────── */
+(function(){
+  const meta = new Date(CONFIG.fecha);
+  const dd = n => String(n).padStart(2,'0');
+  const $ = id => document.getElementById(id);
+
+  function latir(){
+    const faltan = meta - new Date();
+    if (faltan <= 0){
+      $('reloj').innerHTML = '<p class="titulo">Hoy es el día</p>';
+      clearInterval(pulso); return;
+    }
+    const s = Math.floor(faltan/1000);
+    $('d').textContent = dd(Math.floor(s/86400));
+    $('h').textContent = dd(Math.floor(s%86400/3600));
+    $('m').textContent = dd(Math.floor(s%3600/60));
+    $('s').textContent = dd(s%60);
+  }
+  latir();
+  const pulso = setInterval(latir, 1000);
+})();
+
+
+/* ── Confirmación ─────────────────────────────────────────── */
+(function(){
+  const boton  = document.getElementById('btnWhats');
+  const recado = document.getElementById('recado');
+  const campo  = document.getElementById('invitado');
+  const lista  = document.getElementById('cuantos');
+
+  boton.addEventListener('click', () => {
+    const nombre  = campo.value.trim();
+    const cuantos = lista.value;
+
+    if (nombre.length < 3){
+      recado.textContent = 'Escribe tu nombre para continuar';
+      campo.focus(); return;
+    }
+    if (cuantos === ''){
+      recado.textContent = 'Indícanos cuántos asisten';
+      lista.focus(); return;
+    }
+    recado.textContent = '';
+
+    const mensaje = (cuantos === '0')
+      ? `¡Hola! Soy ${nombre}. Lamentablemente no podré acompañar a Sofía en sus XV años, pero le mando un abrazo enorme.`
+      : `¡Hola! Soy ${nombre} y confirmo asistencia a los XV años de Sofía. Seremos ${cuantos} ${cuantos === '1' ? 'persona' : 'personas'}.`;
+
+    window.open('https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(mensaje), '_blank');
+  });
+
+  [campo, lista].forEach(el => el.addEventListener('input', () => {
+    if (recado.textContent) recado.textContent = '';
+  }));
+})();
+
+
+/* ── Música ───────────────────────────────────────────────── */
+(function(){
+  const audio = new Audio();
+  audio.src = CONFIG.cancion;
+  audio.loop = true; audio.preload = "auto"; audio.volume = 0;
+  audio.setAttribute('playsinline','');
+
+  const boton   = document.getElementById('btnMusica');
+  const iPlay   = document.getElementById('iPlay');
+  const iPause  = document.getElementById('iPause');
+  const susurro = document.getElementById('susurro');
+
+  let sonando = false, fundido = null, reloj = null;
+
+  function fundir(destino, ms){
+    clearInterval(fundido);
+    const paso = 40, veces = Math.max(1, Math.round(ms/paso));
+    const ini = audio.volume, delta = (destino-ini)/veces;
+    let i = 0;
+    fundido = setInterval(() => {
+      i++;
+      audio.volume = Math.min(1, Math.max(0, ini + delta*i));
+      if (i >= veces){ clearInterval(fundido); audio.volume = destino; }
+    }, paso);
+  }
+  function pintar(a){
+    boton.classList.toggle('sonando', a);
+    iPlay.classList.toggle('oculto', a);
+    iPause.classList.toggle('oculto', !a);
+    boton.setAttribute('aria-pressed', a);
+    boton.setAttribute('aria-label', a ? 'Pausar música' : 'Reproducir música');
+  }
+  function mostrar(){ susurro.classList.add('visible'); reloj = setTimeout(ocultar, 5000); }
+  function ocultar(){ clearTimeout(reloj); susurro.classList.remove('visible'); }
+
+  boton.addEventListener('click', () => {
+    if (sonando){
+      sonando = false; pintar(false); fundir(0,450);
+      setTimeout(() => { if(!sonando) audio.pause(); }, 480);
+      mostrar();
+    } else {
+      sonando = true; pintar(true); ocultar();
+      audio.play().then(() => fundir(CONFIG.volumen,1500))
+        .catch(e => { sonando = false; pintar(false); console.error(e); });
+    }
+  });
+
+  audio.addEventListener('error', () => {
+    sonando = false; pintar(false);
+    susurro.textContent = 'audio no disponible';
+    susurro.classList.add('visible');
+  });
+
+  audio.play()
+    .then(() => { sonando = true; pintar(true); fundir(CONFIG.volumen,1600); })
+    .catch(() => setTimeout(mostrar, 1200));
+})();
+
+
+/* ── Animaciones: una sola vez, y ahí se quedan ───────────── */
+(function(){
+  const ojo = new IntersectionObserver(entradas => {
+    entradas.forEach(e => {
+      if (e.isIntersecting){
+        e.target.classList.add('visto');
+        ojo.unobserve(e.target);
+      }
+    });
+  }, { threshold:0, rootMargin:'0px 0px -12% 0px' });
+
+  document.querySelectorAll('.anim').forEach(el => ojo.observe(el));
+})();
+
+
+/* ── Parallax de la portada ───────────────────────────────── */
+(function(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const fondo = document.getElementById('fondoPortada');
+  const texto = document.getElementById('heroTexto');
+  const florA = document.getElementById('florA');
+  const florB = document.getElementById('florB');
+  let pendiente = false;
+
+  function mover(){
+    const y = window.scrollY;
+    if (y < window.innerHeight * 1.35){
+      if (fondo) fondo.style.transform = 'translateY(' + (y * -0.22) + 'px)';
+      texto.style.transform = 'translateY(' + (y * 0.2) + 'px)';
+      texto.style.opacity   = Math.max(0, 1 - y / (window.innerHeight * 0.8));
+      if (florA) florA.style.transform = 'translateY(' + (y * 0.08) + 'px)';
+      if (florB) florB.style.transform = 'scale(-1,-1) translateY(' + (y * 0.12) + 'px)';
+    }
+    pendiente = false;
+  }
+  window.addEventListener('scroll', () => {
+    if (!pendiente){ pendiente = true; requestAnimationFrame(mover); }
+  }, { passive:true });
+})();
+</script>
+</body>
+</html>
