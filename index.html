@@ -25,9 +25,7 @@
 <style>
 /* ══════════════════════════════════════════════════════════════
    IDENTIDAD
-   Logo:        Ephesis
-   Subtítulos:  Cormorant Garamond
-   Mayúsculas:  Montserrat
+   Logo: Ephesis · Subtítulos: Cormorant Garamond · Caps: Montserrat
    ══════════════════════════════════════════════════════════════ */
 :root{
   --papel:      #FAF6F1;
@@ -60,6 +58,8 @@ main{ position:relative; z-index:1; }
 
 /* ══════════════════════════════════════════════════════════════
    SECCIONES
+   Alternancia: papel · papel · papel · ROSA · papel · ROSA ·
+                papel · ROSA · papel · ROSA · papel
    ══════════════════════════════════════════════════════════════ */
 .seccion{
   position:relative; overflow:hidden;
@@ -92,13 +92,15 @@ main{ position:relative; z-index:1; }
 .flor-sofia-a{  top:-10px;    left:-56px;  width:clamp(165px,42vw,300px); opacity:.9; transform:scaleX(-1); }
 .flor-sofia-b{  bottom:-14px; right:-56px; width:clamp(150px,38vw,270px); opacity:.85; transform:scaleY(-1); }
 
-.flor-dia{      top:-16px;    right:-58px; width:clamp(140px,35vw,250px); opacity:.72; }
+/* El día: más presentes y menos escondidas */
+.flor-dia-a{    top:-22px;    right:-34px; width:clamp(180px,45vw,315px); opacity:.9; }
+.flor-dia-b{    bottom:-26px; left:-38px;  width:clamp(160px,40vw,285px); opacity:.85; transform:scale(-1,-1); }
 
-/* En el cierre la flor va DEBAJO del texto */
 .flor-cierre{   bottom:-24px; right:-58px; width:clamp(145px,36vw,255px); opacity:.78; z-index:2; }
 
 .marca{ position:absolute; z-index:1; pointer-events:none; opacity:.13; mix-blend-mode:multiply; }
 .marca-mensaje{  top:4%;       right:-90px;  width:clamp(260px,72vw,450px); }
+.marca-padrinos{ bottom:-14px; left:-100px;  width:clamp(250px,68vw,420px); }
 .marca-vestido{  bottom:-10px; left:-110px;  width:clamp(280px,76vw,470px); }
 .marca-regalos{  top:6%;       left:-100px;  width:clamp(240px,66vw,400px); transform:scaleX(-1); }
 .marca-confirma{ bottom:2%;    right:-110px; width:clamp(250px,68vw,410px); }
@@ -125,11 +127,15 @@ main{ position:relative; z-index:1; }
   line-height:1.28; color:var(--olivo);
   max-width:16ch; margin-inline:auto;
 }
+/* Para títulos que deben caber en un solo renglón */
+.titulo.una-linea{
+  max-width:none; white-space:nowrap;
+  font-size:clamp(24px,6.2vw,40px);
+}
 .parrafo{
   font-size:clamp(15px,4.1vw,16.5px); font-weight:400;
   color:var(--tinta); max-width:38ch; margin-inline:auto;
 }
-/* Los dos textos de El mensaje: idénticos */
 .mensaje-texto{
   font-family:var(--display); font-style:italic; font-weight:500;
   font-size:clamp(21px,5.7vw,28px); line-height:1.55;
@@ -218,10 +224,28 @@ main{ position:relative; z-index:1; }
   background:linear-gradient(to bottom, transparent, var(--linea-suave) 30%, var(--linea-suave) 70%, transparent);
 }
 
-/* ══════════════════════════════════════════════════════════════
-   EL MENSAJE — más compacto
-   ══════════════════════════════════════════════════════════════ */
 #mensaje{ padding-bottom:clamp(58px,10vw,88px); }
+
+/* ══════════════════════════════════════════════════════════════
+   PADRES Y PADRINOS
+   ══════════════════════════════════════════════════════════════ */
+.familia{ display:flex; flex-wrap:wrap; justify-content:center; gap:clamp(44px,7vw,86px); margin-top:48px; }
+.grupo{ flex:1 1 250px; max-width:330px; }
+.rol{
+  font-family:var(--texto); font-weight:600;
+  font-size:clamp(11px,3vw,12.5px);
+  letter-spacing:.24em; text-transform:uppercase; padding-left:.24em;
+  color:var(--rosa-hondo);
+}
+.rol::after{
+  content:''; display:block; width:36px; height:1px;
+  background:var(--linea); margin:14px auto 18px;
+}
+.persona{
+  font-family:var(--display); font-weight:500;
+  font-size:clamp(19px,5vw,23px); line-height:1.65;
+  color:var(--olivo);
+}
 
 /* ══════════════════════════════════════════════════════════════
    EL DÍA
@@ -288,7 +312,7 @@ main{ position:relative; z-index:1; }
 /* ══════════════════════════════════════════════════════════════
    GALERÍA
    ══════════════════════════════════════════════════════════════ */
-.galeria{ display:grid; grid-template-columns:1fr; gap:34px; max-width:330px; margin:52px auto 0; }
+.galeria{ display:grid; grid-template-columns:1fr; gap:38px; max-width:330px; margin:52px auto 0; }
 .marco-foto{
   position:relative; padding:9px;
   border:1.5px solid var(--linea);
@@ -303,6 +327,12 @@ main{ position:relative; z-index:1; }
 .marco-foto img{
   width:100%; aspect-ratio:3/4; object-fit:cover; display:block;
   border-radius:999px 999px 5px 5px;
+}
+.marco-foto figcaption{
+  margin-top:16px;
+  font-family:var(--texto); font-weight:600;
+  font-size:11px; letter-spacing:.24em; text-transform:uppercase;
+  padding-left:.24em; color:var(--salvia);
 }
 @media (min-width:780px){
   .galeria{ grid-template-columns:repeat(3,1fr); max-width:840px; gap:30px; }
@@ -411,7 +441,7 @@ main{ position:relative; z-index:1; }
   transform:translateX(-102%);
   transition:transform .55s cubic-bezier(.35,.85,.35,1);
   display:flex; flex-direction:column; justify-content:center;
-  padding:92px 0 36px;
+  padding:86px 0 32px;
   overflow-x:hidden; overflow-y:auto;
   scrollbar-width:none; -ms-overflow-style:none;
 }
@@ -421,8 +451,8 @@ main{ position:relative; z-index:1; }
 .panel .flor-panel{ position:absolute; bottom:-30px; right:-70px; width:min(64vw,235px); opacity:.42; pointer-events:none; }
 
 .panel .titulo-panel{
-  font-family:var(--script); font-size:58px; color:var(--rosa-hondo);
-  line-height:1; text-align:center; margin-bottom:22px;
+  font-family:var(--script); font-size:56px; color:var(--rosa-hondo);
+  line-height:1; text-align:center; margin-bottom:18px;
   position:relative; z-index:2;
   opacity:0; transform:translateY(-10px);
   transition:opacity .5s ease, transform .5s ease;
@@ -432,9 +462,9 @@ main{ position:relative; z-index:1; }
 .panel a{
   position:relative; z-index:2;
   display:flex; align-items:center; gap:16px;
-  padding:12px 32px;
+  padding:11px 30px;
   font-family:var(--texto); font-weight:500;
-  font-size:13.5px; letter-spacing:.16em; text-transform:uppercase;
+  font-size:13px; letter-spacing:.15em; text-transform:uppercase;
   color:var(--olivo); text-decoration:none;
   opacity:0; transform:translateX(-16px);
   transition:opacity .5s ease, transform .5s cubic-bezier(.2,.8,.3,1), color .3s ease;
@@ -453,6 +483,7 @@ main{ position:relative; z-index:1; }
 .menu-abierto .panel a:nth-of-type(6){ transition-delay:.36s }
 .menu-abierto .panel a:nth-of-type(7){ transition-delay:.40s }
 .menu-abierto .panel a:nth-of-type(8){ transition-delay:.44s }
+.menu-abierto .panel a:nth-of-type(9){ transition-delay:.48s }
 
 /* ══════════════════════════════════════════════════════════════
    MÚSICA
@@ -545,6 +576,10 @@ main{ position:relative; z-index:1; }
     <svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 16.6S3.8 12.8 3.8 8.8A3.3 3.3 0 0110 6.8a3.3 3.3 0 016.2 2c0 4-6.2 7.8-6.2 7.8z"/></svg>
     El mensaje
   </a>
+  <a href="#padrinos" data-ir="padrinos">
+    <svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7.6" cy="10" r="4.9"/><circle cx="12.4" cy="10" r="4.9"/></svg>
+    Padres y padrinos
+  </a>
   <a href="#dia" data-ir="dia">
     <svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.6" width="14" height="12.4" rx="2"/><path d="M6.8 2.6v3.6M13.2 2.6v3.6M3 8.8h14"/></svg>
     El día
@@ -606,7 +641,7 @@ main{ position:relative; z-index:1; }
     </button>
   </header>
 
-  <!-- ═══════ CONTADOR ═══════ -->
+  <!-- ═══════ CONTADOR · papel ═══════ -->
   <section class="seccion papel" id="cuenta">
     <div class="contenido">
       <div class="separador anim crece" style="--r:0; margin-bottom:32px">
@@ -632,8 +667,8 @@ main{ position:relative; z-index:1; }
     </div>
   </section>
 
-  <!-- ═══════ EL MENSAJE ═══════ -->
-  <section class="seccion blush" id="mensaje">
+  <!-- ═══════ EL MENSAJE · papel ═══════ -->
+  <section class="seccion papel" id="mensaje">
     <img class="marca marca-mensaje" src="assets/florals/floral_line_branch.png" alt="" onerror="this.remove()">
     <div class="contenido">
       <p class="mensaje-texto anim difumina" style="--r:0">Hay días que uno guarda para siempre.<br>Este quiero guardarlo contigo.</p>
@@ -651,12 +686,39 @@ main{ position:relative; z-index:1; }
     </div>
   </section>
 
-  <!-- ═══════ EL DÍA ═══════ -->
+  <!-- ═══════ PADRES Y PADRINOS · rosa ═══════ -->
+  <section class="seccion blush" id="padrinos">
+    <img class="marca marca-padrinos" src="assets/florals/floral_line_rose.png" alt="" onerror="this.remove()">
+    <div class="contenido">
+      <svg class="icono-seccion anim crece" style="--r:0" width="42" height="42" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
+        <circle cx="7.6" cy="10" r="4.9"/><circle cx="12.4" cy="10" r="4.9"/>
+      </svg>
+      <p class="antetitulo anim abre" style="--r:1">Con su bendición</p>
+      <h2 class="titulo anim" style="--r:2; margin-top:12px">Quienes caminan conmigo</h2>
+
+      <div class="familia">
+        <div class="grupo anim" style="--r:3">
+          <p class="rol">Mis padres</p>
+          <p class="persona">Lucio Vázquez Torres</p>
+          <p class="persona">Edith Adriana Pérez González</p>
+        </div>
+
+        <div class="grupo anim" style="--r:4">
+          <p class="rol">Mis padrinos</p>
+          <p class="persona">Mónica Elisa Girón Sánchez</p>
+          <p class="persona">Alejandro González Moreno</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ EL DÍA · papel ═══════ -->
   <section class="seccion papel" id="dia">
-    <img class="flor flor-dia" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
+    <img class="flor flor-dia-a" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
+    <img class="flor flor-dia-b" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
     <div class="contenido">
       <p class="antetitulo anim abre" style="--r:0">El día</p>
-      <h2 class="titulo anim" style="--r:1; margin-top:12px">Sábado 3 de octubre</h2>
+      <h2 class="titulo una-linea anim" style="--r:1; margin-top:12px">Sábado 3 de octubre</h2>
 
       <div class="momentos">
         <article class="momento anim" style="--r:2">
@@ -692,7 +754,7 @@ main{ position:relative; z-index:1; }
     </div>
   </section>
 
-  <!-- ═══════ VESTIMENTA ═══════ -->
+  <!-- ═══════ VESTIMENTA · rosa ═══════ -->
   <section class="seccion blush" id="vestimenta">
     <img class="marca marca-vestido" src="assets/florals/floral_line_rose.png" alt="" onerror="this.remove()">
     <div class="contenido">
@@ -714,7 +776,7 @@ main{ position:relative; z-index:1; }
     </div>
   </section>
 
-  <!-- ═══════ MESA DE REGALOS ═══════ -->
+  <!-- ═══════ MESA DE REGALOS · papel ═══════ -->
   <section class="seccion papel oculta" id="regalos">
     <img class="marca marca-regalos" src="assets/florals/floral_line_rose.png" alt="" onerror="this.remove()">
     <div class="contenido">
@@ -735,7 +797,7 @@ main{ position:relative; z-index:1; }
     </div>
   </section>
 
-  <!-- ═══════ SOFÍA ═══════ -->
+  <!-- ═══════ SOFÍA · rosa ═══════ -->
   <section class="seccion blush" id="sofia">
     <img class="flor flor-sofia-a" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
     <img class="flor flor-sofia-b" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
@@ -747,14 +809,26 @@ main{ position:relative; z-index:1; }
       <h2 class="titulo anim" style="--r:2; margin-top:12px">Quince años en un suspiro</h2>
 
       <div class="galeria">
-        <figure class="marco-foto anim crece" style="--r:3"><img src="assets/photos/placeholder_01.jpg" alt="Sofía"></figure>
-        <figure class="marco-foto anim crece" style="--r:4"><img src="assets/photos/placeholder_02.jpg" alt="Sofía"></figure>
-        <figure class="marco-foto anim crece" style="--r:5"><img src="assets/photos/placeholder_03.jpg" alt="Sofía"></figure>
+        <figure class="marco-foto anim crece" style="--r:3">
+          <img src="assets/photos/sofia_baby.jpg" alt="Sofía de bebé"
+               onerror="this.onerror=null;this.src='assets/photos/sofia_baby.png'">
+          <figcaption>Entonces</figcaption>
+        </figure>
+        <figure class="marco-foto anim crece" style="--r:4">
+          <img src="assets/photos/sofia_childhood.jpg" alt="Sofía de niña"
+               onerror="this.onerror=null;this.src='assets/photos/sofia_childhood.png'">
+          <figcaption>Creciendo</figcaption>
+        </figure>
+        <figure class="marco-foto anim crece" style="--r:5">
+          <img src="assets/photos/sofia_present.jpg" alt="Sofía hoy"
+               onerror="this.onerror=null;this.src='assets/photos/sofia_present.png'">
+          <figcaption>Hoy</figcaption>
+        </figure>
       </div>
     </div>
   </section>
 
-  <!-- ═══════ CONFIRMACIÓN ═══════ -->
+  <!-- ═══════ CONFIRMACIÓN · papel ═══════ -->
   <section class="seccion papel" id="confirmar">
     <img class="marca marca-confirma" src="assets/florals/floral_line_branch.png" alt="" onerror="this.remove()">
     <div class="contenido">
@@ -801,7 +875,7 @@ main{ position:relative; z-index:1; }
     </div>
   </section>
 
-  <!-- ═══════ FOTOS DEL EVENTO ═══════ -->
+  <!-- ═══════ FOTOS DEL EVENTO · rosa ═══════ -->
   <section class="seccion blush oculta" id="fotos">
     <div class="contenido">
       <svg class="icono-seccion anim crece" style="--r:0" width="38" height="38" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -820,7 +894,7 @@ main{ position:relative; z-index:1; }
     </div>
   </section>
 
-  <!-- ═══════ CIERRE ═══════ -->
+  <!-- ═══════ CIERRE · papel ═══════ -->
   <footer class="pie">
     <img class="flor flor-cierre" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
     <div class="contenido">
@@ -850,7 +924,7 @@ const CONFIG = {
 
   whatsapp: "525514750107",
 
-  liverpool:  "https://www.liverpool.com.mx/tienda/home",
+  liverpool:  "https://mesaderegalos.liverpool.com.mx/milistaderegalos/51974761",
   albumFotos: ""     // pega el álbum aquí y la sección aparece sola
 };
 /* ══════════════════════════════════════════════════════════════ */
