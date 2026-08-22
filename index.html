@@ -52,8 +52,8 @@
 *{ box-sizing:border-box; margin:0; padding:0; }
 
 body{
-  /* Este color es el promedio exacto de paper_ivory.jpg: así la franja
-     que asoma en el rebote de Safari no se distingue de la textura. */
+  /* Promedio exacto de paper_ivory.jpg: la franja del rebote de
+     Safari queda indistinguible de la textura. */
   background:#FAF9F6;
   color:var(--tinta);
   font-family:var(--texto);
@@ -67,8 +67,6 @@ main{ position:relative; z-index:1; }
 
 /* ══════════════════════════════════════════════════════════════
    SECCIONES
-   Alternancia: papel · papel · papel · ROSA · papel · ROSA ·
-                papel · ROSA · papel · ROSA · papel
    ══════════════════════════════════════════════════════════════ */
 .seccion{
   position:relative; overflow:hidden;
@@ -97,6 +95,8 @@ main{ position:relative; z-index:1; }
 
 .flor-portada-a{ top:0;       right:-52px; width:clamp(210px,52vw,400px); opacity:.95; }
 .flor-portada-b{ bottom:0;    left:-58px;  width:clamp(190px,48vw,360px); opacity:.95; transform:scale(-1,-1); }
+
+.flor-retrato{  bottom:-20px; left:-48px;  width:clamp(150px,38vw,265px); opacity:.85; transform:scale(-1,-1); }
 
 .flor-sofia-a{  top:-10px;    left:-56px;  width:clamp(165px,42vw,300px); opacity:.9; transform:scaleX(-1); }
 .flor-sofia-b{  bottom:-14px; right:-56px; width:clamp(150px,38vw,270px); opacity:.85; transform:scaleY(-1); }
@@ -150,6 +150,30 @@ main{ position:relative; z-index:1; }
 }
 
 .icono-seccion{ color:var(--rosa-hondo); margin-bottom:18px; }
+
+/* ══════════════════════════════════════════════════════════════
+   AJUSTES SOLO PARA LAPTOP Y ESCRITORIO
+   El celular no ve nada de esto: los anchos de allá se mantienen.
+   ══════════════════════════════════════════════════════════════ */
+@media (min-width:900px){
+  .titulo{
+    max-width:30ch;
+    font-size:clamp(36px,3.6vw,48px);
+  }
+  .mensaje-texto{
+    max-width:38ch;
+    font-size:clamp(25px,2.3vw,31px);
+    line-height:1.6;
+  }
+  .parrafo{
+    max-width:48ch;
+    font-size:17px;
+  }
+  .momento .direccion{ font-size:14.5px; }
+  .persona{ font-size:24px; }
+  .pie .despedida{ max-width:34ch; font-size:25px; }
+  .aviso-color{ max-width:none; }
+}
 
 /* ══════════════════════════════════════════════════════════════
    ORNAMENTOS
@@ -232,6 +256,51 @@ main{ position:relative; z-index:1; }
 }
 
 #mensaje{ padding-bottom:clamp(58px,10vw,88px); }
+
+/* ══════════════════════════════════════════════════════════════
+   RETRATO EN ARCO
+   Para cambiar la foto: reemplaza assets/photos/sofia_dress.jpg
+   ══════════════════════════════════════════════════════════════ */
+#retrato{ padding-top:clamp(70px,12vw,104px); }
+
+.retrato-marco{
+  position:relative;
+  width:min(80vw,420px);
+  margin:0 auto;
+  padding:9px;
+  border:1.5px solid var(--linea);
+  border-radius:999px 999px 12px 12px;
+  background:rgba(255,255,255,.3);
+}
+.retrato-marco::before{
+  content:''; position:absolute; top:-6px; left:50%;
+  width:11px; height:11px; background:var(--rosa-hondo);
+  transform:translateX(-50%) rotate(45deg); z-index:3;
+}
+
+.ventana{
+  position:relative; overflow:hidden;
+  aspect-ratio:3/4;
+  border-radius:999px 999px 6px 6px;
+}
+.ventana img{
+  position:absolute; top:-9%; left:0;
+  width:100%; height:118%;
+  object-fit:cover; display:block;
+  /* Velo crema + menos saturación: la foto se integra a la paleta */
+  filter:saturate(.88) contrast(1.02);
+  will-change:transform;
+}
+.ventana::after{
+  content:''; position:absolute; top:0; left:0; right:0; bottom:0;
+  background:rgba(250,246,241,.12);
+  box-shadow:inset 0 0 46px rgba(120,86,84,.16);
+  border-radius:inherit; pointer-events:none;
+}
+
+@media (min-width:900px){
+  .retrato-marco{ width:min(46vw,440px); }
+}
 
 /* ══════════════════════════════════════════════════════════════
    PADRES Y PADRINOS
@@ -693,6 +762,26 @@ main{ position:relative; z-index:1; }
     </div>
   </section>
 
+  <!-- ═══════ RETRATO · papel
+       Para cambiarla: reemplaza assets/photos/sofia_dress.jpg
+       Si el archivo no existe, la sección desaparece sola.        ═══════ -->
+  <section class="seccion papel" id="retrato">
+    <img class="flor flor-retrato" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
+    <div class="contenido">
+
+      <div class="retrato-marco anim crece" style="--r:0">
+        <div class="ventana">
+          <img id="fotoVestido" src="assets/photos/sofia_dress.jpg" alt="Sofía con su vestido"
+               onerror="if(!this.dataset.r){this.dataset.r=1;this.src='assets/photos/sofia_dress.png';}else{document.getElementById('retrato').remove();}">
+        </div>
+      </div>
+
+      <div class="mini-sep anim crece" style="--r:1; margin:34px auto 24px"><i></i><b></b><i></i></div>
+
+      <p class="mensaje-texto anim" style="--r:2">Y llegó el día de florecer.</p>
+    </div>
+  </section>
+
   <!-- ═══════ PADRES Y PADRINOS · rosa ═══════ -->
   <section class="seccion blush" id="padrinos">
     <img class="marca marca-padrinos" src="assets/florals/floral_line_rose.png" alt="" onerror="this.remove()">
@@ -936,6 +1025,8 @@ const CONFIG = {
 };
 /* ══════════════════════════════════════════════════════════════ */
 
+const SIN_MOVIMIENTO = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 
 /* ── Secciones opcionales ─────────────────────────────────── */
 (function(){
@@ -953,9 +1044,8 @@ const CONFIG = {
 function irA(id, ms){
   const destino = document.getElementById(id);
   if (!destino) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-    destino.scrollIntoView(); return;
-  }
+  if (SIN_MOVIMIENTO){ destino.scrollIntoView(); return; }
+
   const inicio = window.scrollY;
   const distancia = destino.getBoundingClientRect().top;
   const t0 = performance.now();
@@ -1129,7 +1219,7 @@ document.querySelectorAll('[data-ir]').forEach(el => {
 
 /* ── Parallax de la portada ───────────────────────────────── */
 (function(){
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (SIN_MOVIMIENTO) return;
 
   const fondo = document.getElementById('fondoPortada');
   const texto = document.getElementById('heroTexto');
@@ -1151,6 +1241,37 @@ document.querySelectorAll('[data-ir]').forEach(el => {
   window.addEventListener('scroll', () => {
     if (!pendiente){ pendiente = true; requestAnimationFrame(mover); }
   }, { passive:true });
+})();
+
+
+/* ── Parallax del retrato ─────────────────────────────────── */
+(function(){
+  if (SIN_MOVIMIENTO) return;
+
+  const marco = document.querySelector('.retrato-marco');
+  const foto  = document.getElementById('fotoVestido');
+  if (!marco || !foto) return;
+
+  let pendiente = false;
+
+  function mover(){
+    const caja = marco.getBoundingClientRect();
+    const alto = window.innerHeight;
+
+    if (caja.bottom > -200 && caja.top < alto + 200){
+      // -1 cuando viene entrando por abajo, +1 cuando ya va saliendo por arriba
+      const centro = caja.top + caja.height / 2;
+      const avance = (centro - alto / 2) / (alto / 2 + caja.height / 2);
+      foto.style.transform = 'translateY(' + (avance * 7).toFixed(2) + '%)';
+    }
+    pendiente = false;
+  }
+
+  mover();
+  window.addEventListener('scroll', () => {
+    if (!pendiente){ pendiente = true; requestAnimationFrame(mover); }
+  }, { passive:true });
+  window.addEventListener('resize', mover, { passive:true });
 })();
 </script>
 </body>
