@@ -1,0 +1,17 @@
+{
+  "name": "Mis XV Años · Sofía",
+  "short_name": "Sofía XV",
+  "description": "Invitación a los XV años de Sofía · 3 de octubre de 2026 · Toluca",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#FAF6F1",
+  "theme_color": "#FAF6F1",
+  "icons": [
+    {
+      "src": "assets/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
