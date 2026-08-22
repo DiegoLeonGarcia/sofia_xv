@@ -6,17 +6,24 @@
 <title>Mis XV Años · Sofía</title>
 <meta name="description" content="Sofía cumple quince años. Sábado 3 de octubre de 2026 · Toluca.">
 
-<!-- ═══ VISTA PREVIA AL COMPARTIR ═══
-     Crea en Canva una imagen de 1200 x 630 px, guárdala como
-     og-preview.jpg y súbela a la carpeta assets/ del repo.     -->
+<!-- ═══ VISTA PREVIA AL COMPARTIR (WhatsApp, Facebook, iMessage) ═══ -->
 <meta property="og:title" content="Mis XV Años · Sofía">
 <meta property="og:description" content="Sábado 3 de octubre de 2026 · Toluca">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://diegoleongarcia.github.io/sofia_xv/">
-<meta property="og:image" content="https://diegoleongarcia.github.io/sofia_xv/assets/og-preview.jpg">
+<meta property="og:image" content="https://diegoleongarcia.github.io/sofia_xv/assets/open_graph_image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Invitación de XV años de Sofía">
+<meta property="og:locale" content="es_MX">
 <meta name="twitter:card" content="summary_large_image">
+
+<!-- ═══ LOGO EN PESTAÑA, FAVORITOS Y PANTALLA DE INICIO ═══ -->
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Sofía XV">
+<meta name="theme-color" content="#FAF9F6">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,7 +52,9 @@
 *{ box-sizing:border-box; margin:0; padding:0; }
 
 body{
-  background:var(--papel);
+  /* Este color es el promedio exacto de paper_ivory.jpg: así la franja
+     que asoma en el rebote de Safari no se distingue de la textura. */
+  background:#FAF9F6;
   color:var(--tinta);
   font-family:var(--texto);
   font-weight:400;
@@ -92,7 +101,6 @@ main{ position:relative; z-index:1; }
 .flor-sofia-a{  top:-10px;    left:-56px;  width:clamp(165px,42vw,300px); opacity:.9; transform:scaleX(-1); }
 .flor-sofia-b{  bottom:-14px; right:-56px; width:clamp(150px,38vw,270px); opacity:.85; transform:scaleY(-1); }
 
-/* El día: más presentes y menos escondidas */
 .flor-dia-a{    top:-22px;    right:-34px; width:clamp(180px,45vw,315px); opacity:.9; }
 .flor-dia-b{    bottom:-26px; left:-38px;  width:clamp(160px,40vw,285px); opacity:.85; transform:scale(-1,-1); }
 
@@ -127,7 +135,6 @@ main{ position:relative; z-index:1; }
   line-height:1.28; color:var(--olivo);
   max-width:16ch; margin-inline:auto;
 }
-/* Para títulos que deben caber en un solo renglón */
 .titulo.una-linea{
   max-width:none; white-space:nowrap;
   font-size:clamp(24px,6.2vw,40px);
@@ -521,7 +528,7 @@ main{ position:relative; z-index:1; }
 .susurro.visible{ opacity:1; transform:translateX(-50%) translateY(0); }
 
 /* ══════════════════════════════════════════════════════════════
-   ANIMACIONES
+   ANIMACIONES — una sola vez y se quedan
    ══════════════════════════════════════════════════════════════ */
 .anim{
   opacity:0; transform:translateY(24px);
@@ -913,7 +920,7 @@ main{ position:relative; z-index:1; }
 
 <script>
 /* ══════════════════════════════════════════════════════════════
-   CONFIGURACIÓN
+   CONFIGURACIÓN — lo único que necesitas tocar
    ══════════════════════════════════════════════════════════════ */
 const CONFIG = {
   cancion:  "https://diegoleongarcia.github.io/sofia_xv/cancion.mp3",
