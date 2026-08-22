@@ -96,8 +96,8 @@ main{ position:relative; z-index:1; }
 .flor-portada-b{ bottom:0;    left:-58px;  width:clamp(190px,48vw,360px); opacity:.95; transform:scale(-1,-1); }
 
 
-.flor-ret-a{    top:11%;      left:-58px;  width:clamp(150px,37vw,280px); opacity:.9;  transform:scaleX(-1); }
-.flor-ret-b{    bottom:9%;    right:-60px; width:clamp(140px,34vw,255px); opacity:.85; transform:scaleY(-1); }
+.flor-ret-a{    top:-26px;    left:-54px;  width:clamp(195px,48vw,350px); opacity:1;   transform:scaleX(-1); }
+.flor-ret-b{    bottom:-32px; right:-56px; width:clamp(180px,44vw,320px); opacity:.95; transform:scaleY(-1); }
 
 .flor-sofia-a{  top:-10px;    left:-56px;  width:clamp(165px,42vw,300px); opacity:.9; transform:scaleX(-1); }
 .flor-sofia-b{  bottom:-14px; right:-56px; width:clamp(150px,38vw,270px); opacity:.85; transform:scaleY(-1); }
@@ -160,6 +160,7 @@ main{ position:relative; z-index:1; }
   .mensaje-texto{ max-width:38ch; font-size:clamp(25px,2.3vw,31px); line-height:1.6; }
   .parrafo{ max-width:48ch; font-size:17px; }
   .momento .direccion{ font-size:14.5px; }
+  .rol{ font-size:16px; }
   .persona{ font-size:24px; }
   .pie .despedida{ max-width:34ch; font-size:25px; }
   .aviso-color{ max-width:none; }
@@ -255,7 +256,7 @@ main{ position:relative; z-index:1; }
 .retrato-marco{
   position:relative;
   width:min(80vw,420px);
-  margin:clamp(38px,6.5vw,56px) auto 0;
+  margin:0 auto;
   padding:9px;
   border:1.5px solid var(--linea);
   border-radius:999px 999px 12px 12px;
@@ -290,8 +291,8 @@ main{ position:relative; z-index:1; }
 .grupo{ flex:1 1 250px; max-width:330px; }
 .rol{
   font-family:var(--texto); font-weight:600;
-  font-size:clamp(11px,3vw,12.5px);
-  letter-spacing:.24em; text-transform:uppercase; padding-left:.24em;
+  font-size:clamp(13px,3.7vw,15px);
+  letter-spacing:.22em; text-transform:uppercase; padding-left:.22em;
   color:var(--rosa-hondo);
 }
 .rol::after{
@@ -751,24 +752,15 @@ main{ position:relative; z-index:1; }
     <img class="flor flor-ret-b" id="florRetB" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
 
     <div class="contenido">
-      <div class="separador anim crece" style="--r:0">
-        <i></i>
-        <svg class="arco-punto" viewBox="0 0 120 46" fill="none" aria-hidden="true">
-          <path d="M8 40 A65 65 0 0 1 112 40" stroke="var(--linea)" stroke-width="1.3"/>
-          <path d="M60 7l5 7-5 7-5-7z" fill="var(--rosa-hondo)"/>
-        </svg>
-        <i></i>
-      </div>
-
-      <figure class="retrato-marco anim difumina" style="--r:1">
+      <figure class="retrato-marco anim difumina" style="--r:0">
         <div class="ventana">
           <img id="fotoVestido" src="assets/photos/sofia_dress.jpg" alt="Sofía con su vestido"
                onerror="if(!this.dataset.r){this.dataset.r=1;this.src='assets/photos/sofia_dress.png';}else{document.getElementById('retrato').remove();}">
         </div>
       </figure>
 
-      <div class="mini-sep anim crece" style="--r:2; margin:36px auto 24px"><i></i><b></b><i></i></div>
-      <p class="mensaje-texto anim" style="--r:3">Y llegó el día de florecer.</p>
+      <div class="mini-sep anim crece" style="--r:1; margin:36px auto 24px"><i></i><b></b><i></i></div>
+      <p class="mensaje-texto anim" style="--r:2">Y llegó el día de florecer.</p>
     </div>
   </section>
 
@@ -1234,9 +1226,9 @@ document.querySelectorAll('[data-ir]').forEach(el => {
 })();
 
 
-/* ── Parallax del retrato
-   La foto se desliza dentro del arco y las dos flores se mueven
-   a otra velocidad: eso es lo que da la sensación de profundidad. ── */
+/* ── Parallax del retrato · cuatro capas a distinta velocidad
+   Flor izquierda ← · marco · foto dentro del marco · flor derecha →
+   Cada una se mueve diferente, y eso es lo que da la profundidad. ── */
 (function(){
   if (SIN_MOVIMIENTO) return;
 
@@ -1246,22 +1238,24 @@ document.querySelectorAll('[data-ir]').forEach(el => {
   const florB = document.getElementById('florRetB');
   if (!marco || !foto) return;
 
-  const RECORRIDO = 7;   // sube a 9 para más efecto, baja a 5 para más discreto
+  const RECORRIDO = 7;   // cuánto se desliza la foto dentro del arco (%)
   let pendiente = false;
 
   function mover(){
     const caja = marco.getBoundingClientRect();
     const alto = window.innerHeight;
+    if (caja.bottom < -320 || caja.top > alto + 320){ pendiente = false; return; }
 
-    if (caja.bottom > -300 && caja.top < alto + 300){
-      // -1 al entrar por abajo · +1 al salir por arriba
-      const centro = caja.top + caja.height / 2;
-      const avance = (centro - alto / 2) / (alto / 2 + caja.height / 2);
+    // -1 al entrar por abajo · 0 al centro de la pantalla · +1 al salir
+    const centro = caja.top + caja.height / 2;
+    const avance = (centro - alto / 2) / (alto / 2 + caja.height / 2);
 
-      foto.style.transform = 'translateY(' + (avance * RECORRIDO).toFixed(2) + '%)';
-      if (florA) florA.style.transform = 'scaleX(-1) translateY(' + (avance * -36).toFixed(1) + 'px)';
-      if (florB) florB.style.transform = 'scaleY(-1) translateY(' + (avance *  26).toFixed(1) + 'px)';
-    }
+    foto.style.transform  = 'translateY(' + (avance * RECORRIDO).toFixed(2) + '%)';
+    marco.style.transform = 'translateY(' + (avance * -18).toFixed(1) + 'px)';
+
+    if (florA) florA.style.transform = 'scaleX(-1) translateY(' + (avance * -46).toFixed(1) + 'px)';
+    if (florB) florB.style.transform = 'scaleY(-1) translateY(' + (avance *  34).toFixed(1) + 'px)';
+
     pendiente = false;
   }
 
