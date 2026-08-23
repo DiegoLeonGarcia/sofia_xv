@@ -167,6 +167,31 @@ main{ position:relative; z-index:1; }
 }
 
 /* ══════════════════════════════════════════════════════════════
+   TELÉFONO ACOSTADO
+   En horizontal el ancho se dispara y la altura se encoge, así que
+   las medidas en vw crecían de más. Aquí todo se mide contra la
+   ALTURA (vh), que es lo escaso en esta orientación.
+   ══════════════════════════════════════════════════════════════ */
+@media (orientation:landscape) and (max-height:560px){
+  .portada .marco{ top:4svh; height:88svh; width:min(62vw,440px); }
+  .nombre{ font-size:clamp(54px,21vh,96px); }
+  .portada .antetitulo{ font-size:13px; margin-bottom:14px; }
+  .portada .fecha{ font-size:12px; margin-top:20px; }
+  .baja{ bottom:8px; padding:10px; }
+
+  .flor-portada-a{ width:clamp(120px,36vh,230px); right:-34px; }
+  .flor-portada-b{ width:clamp(110px,32vh,210px); left:-36px; }
+
+  .flor-ret-a, .flor-ret-b,
+  .flor-dia-a,  .flor-dia-b,
+  .flor-sofia-a,.flor-sofia-b,
+  .flor-cierre { width:clamp(105px,29vh,195px); }
+
+  .marca{ opacity:.09; }
+  .retrato-marco{ width:min(38vh,330px); }
+}
+
+/* ══════════════════════════════════════════════════════════════
    ORNAMENTOS
    ══════════════════════════════════════════════════════════════ */
 .separador{ display:flex; align-items:flex-end; justify-content:center; gap:16px; margin:0 auto; }
@@ -727,7 +752,7 @@ main{ position:relative; z-index:1; }
 
   <!-- ═══════ EL MENSAJE · papel ═══════ -->
   <section class="seccion papel" id="mensaje">
-    <img class="marca marca-mensaje" src="assets/florals/floral_line_branch.png" alt="" onerror="this.remove()">
+    <img class="marca marca-mensaje" loading="lazy" decoding="async" src="assets/florals/floral_line_branch.png" alt="" onerror="this.remove()">
     <div class="contenido">
       <p class="mensaje-texto anim difumina" style="--r:0">Hay días que uno guarda para siempre.<br>Este quiero guardarlo contigo.</p>
 
@@ -739,7 +764,7 @@ main{ position:relative; z-index:1; }
         que estuvieras ahí para verlo.
       </p>
 
-      <img class="divisor-flor anim crece" style="--r:3; margin:30px auto 0"
+      <img class="divisor-flor anim crece" loading="lazy" decoding="async" style="--r:3; margin:30px auto 0"
            src="assets/florals/floral_line_branch.png" alt="" onerror="this.remove()">
     </div>
   </section>
@@ -748,13 +773,13 @@ main{ position:relative; z-index:1; }
        Para cambiar la foto: reemplaza assets/photos/sofia_dress.jpg
        Si el archivo no existe, la sección se borra sola.        ═══════ -->
   <section class="seccion papel" id="retrato">
-    <img class="flor flor-ret-a" id="florRetA" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
-    <img class="flor flor-ret-b" id="florRetB" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
+    <img class="flor flor-ret-a" id="florRetA" loading="lazy" decoding="async" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
+    <img class="flor flor-ret-b" id="florRetB" loading="lazy" decoding="async" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
 
     <div class="contenido">
       <figure class="retrato-marco anim difumina" style="--r:0">
         <div class="ventana">
-          <img id="fotoVestido" src="assets/photos/sofia_dress.jpg" alt="Sofía con su vestido"
+          <img id="fotoVestido" loading="lazy" decoding="async" src="assets/photos/sofia_dress.jpg" alt="Sofía con su vestido"
                onerror="if(!this.dataset.r){this.dataset.r=1;this.src='assets/photos/sofia_dress.png';}else{document.getElementById('retrato').remove();}">
         </div>
       </figure>
@@ -766,7 +791,7 @@ main{ position:relative; z-index:1; }
 
   <!-- ═══════ PADRES Y PADRINOS · rosa ═══════ -->
   <section class="seccion blush" id="padrinos">
-    <img class="marca marca-padrinos" src="assets/florals/floral_line_rose.png" alt="" onerror="this.remove()">
+    <img class="marca marca-padrinos" loading="lazy" decoding="async" src="assets/florals/floral_line_rose.png" alt="" onerror="this.remove()">
     <div class="contenido">
       <svg class="icono-seccion anim crece" style="--r:0" width="42" height="42" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
         <circle cx="7.6" cy="10" r="4.9"/><circle cx="12.4" cy="10" r="4.9"/>
@@ -792,8 +817,8 @@ main{ position:relative; z-index:1; }
 
   <!-- ═══════ EL DÍA · papel ═══════ -->
   <section class="seccion papel" id="dia">
-    <img class="flor flor-dia-a" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
-    <img class="flor flor-dia-b" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
+    <img class="flor flor-dia-a" loading="lazy" decoding="async" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
+    <img class="flor flor-dia-b" loading="lazy" decoding="async" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
     <div class="contenido">
       <p class="antetitulo anim abre" style="--r:0">El día</p>
       <h2 class="titulo una-linea anim" style="--r:1; margin-top:12px">Sábado 3 de octubre</h2>
@@ -834,7 +859,7 @@ main{ position:relative; z-index:1; }
 
   <!-- ═══════ VESTIMENTA · rosa ═══════ -->
   <section class="seccion blush" id="vestimenta">
-    <img class="marca marca-vestido" src="assets/florals/floral_line_rose.png" alt="" onerror="this.remove()">
+    <img class="marca marca-vestido" loading="lazy" decoding="async" src="assets/florals/floral_line_rose.png" alt="" onerror="this.remove()">
     <div class="contenido">
       <svg class="icono-seccion anim crece" style="--r:0" width="38" height="38" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M7.6 2.6L10 4.9l2.4-2.3 3.9 2.5-1.9 3.1-1.4-.7v10.1H7v-10l-1.4.7-1.9-3.1z"/>
@@ -856,7 +881,7 @@ main{ position:relative; z-index:1; }
 
   <!-- ═══════ MESA DE REGALOS · papel ═══════ -->
   <section class="seccion papel oculta" id="regalos">
-    <img class="marca marca-regalos" src="assets/florals/floral_line_rose.png" alt="" onerror="this.remove()">
+    <img class="marca marca-regalos" loading="lazy" decoding="async" src="assets/florals/floral_line_rose.png" alt="" onerror="this.remove()">
     <div class="contenido">
       <svg class="icono-seccion anim crece" style="--r:0" width="38" height="38" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <rect x="3" y="8" width="14" height="9" rx="1.4"/>
@@ -877,8 +902,8 @@ main{ position:relative; z-index:1; }
 
   <!-- ═══════ SOFÍA · rosa ═══════ -->
   <section class="seccion blush" id="sofia">
-    <img class="flor flor-sofia-a" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
-    <img class="flor flor-sofia-b" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
+    <img class="flor flor-sofia-a" loading="lazy" decoding="async" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
+    <img class="flor flor-sofia-b" loading="lazy" decoding="async" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
     <div class="contenido">
       <svg class="icono-seccion anim crece" style="--r:0" width="38" height="38" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <rect x="2.4" y="5.8" width="15.2" height="10.6" rx="2"/><circle cx="10" cy="11.1" r="3"/><path d="M7 5.8l1.2-2h3.6l1.2 2"/>
@@ -888,17 +913,17 @@ main{ position:relative; z-index:1; }
 
       <div class="galeria">
         <figure class="marco-foto anim crece" style="--r:3">
-          <img src="assets/photos/sofia_baby.jpg" alt="Sofía de bebé"
+          <img loading="lazy" decoding="async" src="assets/photos/sofia_baby.jpg" alt="Sofía de bebé"
                onerror="this.onerror=null;this.src='assets/photos/sofia_baby.png'">
           <figcaption>Entonces</figcaption>
         </figure>
         <figure class="marco-foto anim crece" style="--r:4">
-          <img src="assets/photos/sofia_childhood.jpg" alt="Sofía de niña"
+          <img loading="lazy" decoding="async" src="assets/photos/sofia_childhood.jpg" alt="Sofía de niña"
                onerror="this.onerror=null;this.src='assets/photos/sofia_childhood.png'">
           <figcaption>Creciendo</figcaption>
         </figure>
         <figure class="marco-foto anim crece" style="--r:5">
-          <img src="assets/photos/sofia_present.jpg" alt="Sofía hoy"
+          <img loading="lazy" decoding="async" src="assets/photos/sofia_present.jpg" alt="Sofía hoy"
                onerror="this.onerror=null;this.src='assets/photos/sofia_present.png'">
           <figcaption>Hoy</figcaption>
         </figure>
@@ -908,7 +933,7 @@ main{ position:relative; z-index:1; }
 
   <!-- ═══════ CONFIRMACIÓN · papel ═══════ -->
   <section class="seccion papel" id="confirmar">
-    <img class="marca marca-confirma" src="assets/florals/floral_line_branch.png" alt="" onerror="this.remove()">
+    <img class="marca marca-confirma" loading="lazy" decoding="async" src="assets/florals/floral_line_branch.png" alt="" onerror="this.remove()">
     <div class="contenido">
       <svg class="icono-seccion anim crece" style="--r:0" width="38" height="38" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <rect x="2.6" y="4.8" width="14.8" height="10.4" rx="2"/><path d="M3.2 5.9L10 10.6l6.8-4.7"/>
@@ -974,9 +999,9 @@ main{ position:relative; z-index:1; }
 
   <!-- ═══════ CIERRE · papel ═══════ -->
   <footer class="pie">
-    <img class="flor flor-cierre" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
+    <img class="flor flor-cierre" loading="lazy" decoding="async" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
     <div class="contenido">
-      <img class="divisor-flor anim crece" style="--r:0; margin:0 auto 30px"
+      <img class="divisor-flor anim crece" loading="lazy" decoding="async" style="--r:0; margin:0 auto 30px"
            src="assets/florals/floral_line_branch.png" alt="" onerror="this.remove()">
 
       <p class="gracias anim abre" style="--r:1">Gracias</p>
@@ -1129,7 +1154,9 @@ document.querySelectorAll('[data-ir]').forEach(el => {
 (function(){
   const audio = new Audio();
   audio.src = CONFIG.cancion;
-  audio.loop = true; audio.preload = "auto"; audio.volume = 0;
+  audio.loop = true; audio.volume = 0;
+  // "none": la canción se descarga hasta que la persona presiona play
+  audio.preload = "none";
   audio.setAttribute('playsinline','');
 
   const boton   = document.getElementById('btnMusica');
