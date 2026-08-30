@@ -444,6 +444,32 @@ main{ position:relative; z-index:1; }
 }
 .campo select:invalid{ color:#A2988F; }
 .campo input:focus, .campo select:focus{ outline:none; border-color:var(--olivo); }
+.dedicatoria{
+  margin:30px auto 0; max-width:340px;
+  padding:20px 26px;
+  border:1.5px solid var(--linea); border-radius:24px;
+  background:rgba(255,255,255,.5);
+}
+.dedicatoria .para{
+  display:block;
+  font-family:var(--texto); font-weight:600;
+  font-size:clamp(11px,3vw,12.5px);
+  letter-spacing:.24em; text-transform:uppercase; padding-left:.24em;
+  color:var(--rosa-hondo); margin-bottom:12px;
+}
+.dedicatoria .quien{
+  display:block;
+  font-family:var(--display); font-style:italic; font-weight:600;
+  font-size:clamp(20px,5.4vw,25px); line-height:1.35;
+  color:var(--olivo);
+}
+.dedicatoria .lugares{
+  display:block; margin-top:12px;
+  font-size:clamp(13px,3.6vw,14.5px); font-weight:400;
+  color:var(--tinta); line-height:1.6;
+}
+@media (min-width:900px){ .dedicatoria{ max-width:400px; } }
+
 .nota-campo{ margin-top:14px; font-size:13px; font-weight:400; color:var(--salvia); line-height:1.6; text-align:center; }
 .recado{ margin-top:14px; font-size:13.5px; color:var(--rosa-hondo); min-height:20px; }
 
@@ -949,7 +975,14 @@ main{ position:relative; z-index:1; }
         Te agradecemos confirmar antes del 10 de septiembre de 2026.
       </p>
 
-      <div class="formulario anim" style="--r:4">
+      <!-- Aparece sola cuando el link trae ?f= y &l= -->
+      <p class="dedicatoria oculta anim crece" style="--r:4" id="dedicatoria">
+        <span class="para">Para</span>
+        <span class="quien" id="dedQuien"></span>
+        <span class="lugares" id="dedLugares"></span>
+      </p>
+
+      <div class="formulario anim" style="--r:5">
         <div class="campo">
           <svg class="icono-campo" width="17" height="17" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="6" r="3.1"/><path d="M2.9 15.5c0-2.9 2.8-4.5 6.1-4.5s6.1 1.6 6.1 4.5"/></svg>
           <input type="text" id="invitado" placeholder="Nombre y apellido" autocomplete="name">
@@ -1120,12 +1153,62 @@ document.querySelectorAll('[data-ir]').forEach(el => {
 })();
 
 
+/* ── Invitación personalizada
+   El link puede traer  ?f=NombreDeLaFamilia&l=LugaresApartados
+   Sin esos datos la página funciona genérica, como siempre.     ── */
+const INVITADO = (function(){
+  const p = new URLSearchParams(location.search);
+  const nombre  = (p.get('f') || '').trim().slice(0, 70);
+  const lugares = parseInt(p.get('l'), 10);
+  return {
+    nombre,
+    lugares: (lugares >= 1 && lugares <= 15) ? lugares : null
+  };
+})();
+
+
 /* ── Confirmación ─────────────────────────────────────────── */
 (function(){
   const boton  = document.getElementById('btnWhats');
   const recado = document.getElementById('recado');
   const campo  = document.getElementById('invitado');
   const lista  = document.getElementById('cuantos');
+  const nota   = document.querySelector('.nota-campo');
+
+  /* Si el link trae los datos, se personaliza todo */
+  if (INVITADO.nombre){
+    // textContent, nunca innerHTML: el texto viene de la URL
+    document.getElementById('dedQuien').textContent = INVITADO.nombre;
+    campo.value = INVITADO.nombre;
+
+    if (INVITADO.lugares){
+      document.getElementById('dedLugares').textContent =
+        INVITADO.lugares === 1
+          ? 'Hemos reservado un lugar para ti.'
+          : 'Hemos reservado ' + INVITADO.lugares + ' lugares para ustedes.';
+    }
+    document.getElementById('dedicatoria').classList.remove('oculta');
+    if (nota) nota.remove();
+  }
+
+  /* El selector solo ofrece hasta los lugares apartados */
+  if (INVITADO.lugares){
+    lista.innerHTML = '';
+    const inicial = document.createElement('option');
+    inicial.value = ''; inicial.disabled = true; inicial.selected = true;
+    inicial.textContent = '¿Cuántos asisten?';
+    lista.appendChild(inicial);
+
+    for (let i = 1; i <= INVITADO.lugares; i++){
+      const o = document.createElement('option');
+      o.value = String(i);
+      o.textContent = i + (i === 1 ? ' persona' : ' personas');
+      lista.appendChild(o);
+    }
+    const no = document.createElement('option');
+    no.value = '0'; no.textContent = 'No podré asistir';
+    lista.appendChild(no);
+  }
 
   boton.addEventListener('click', () => {
     const nombre  = campo.value.trim();
@@ -1141,9 +1224,12 @@ document.querySelectorAll('[data-ir]').forEach(el => {
     }
     recado.textContent = '';
 
+    // Si venían lugares apartados, se los recordamos a la mamá
+    const aparte = INVITADO.lugares ? ' (de ' + INVITADO.lugares + ' apartados)' : '';
+
     const mensaje = (cuantos === '0')
       ? `¡Hola! Soy ${nombre}. Lamentablemente no podré acompañar a Sofía en sus XV años, pero le mando un abrazo enorme.`
-      : `¡Hola! Soy ${nombre} y confirmo asistencia a los XV años de Sofía. Seremos ${cuantos} ${cuantos === '1' ? 'persona' : 'personas'}.`;
+      : `¡Hola! Soy ${nombre} y confirmo asistencia a los XV años de Sofía. Seremos ${cuantos} ${cuantos === '1' ? 'persona' : 'personas'}${aparte}.`;
 
     window.open('https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(mensaje), '_blank');
   });
