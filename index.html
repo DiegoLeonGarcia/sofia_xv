@@ -203,7 +203,7 @@ main{ position:relative; z-index:1; }
 .mini-sep i{ display:block; width:clamp(28px,9vw,44px); height:1px; background:var(--linea); opacity:.75; }
 .mini-sep b{ display:block; width:8px; height:8px; background:var(--rosa-hondo); transform:rotate(45deg); }
 
-.divisor-flor{ display:block; width:clamp(140px,42vw,200px); height:auto; margin:0 auto; opacity:.6; }
+.divisor-flor{ display:block; width:clamp(140px,42vw,200px); aspect-ratio:3/4; height:auto; margin:0 auto; opacity:.6; }
 
 /* ══════════════════════════════════════════════════════════════
    PORTADA
@@ -619,15 +619,15 @@ main{ position:relative; z-index:1; }
 .oculto{ opacity:0; transform:scale(.7); pointer-events:none; }
 
 .susurro{
-  position:absolute; top:100%; left:50%; margin-top:13px;
-  transform:translateX(-50%) translateY(5px);
+  position:absolute; top:100%; right:0; margin-top:13px;
+  transform:translateY(5px); text-align:right;
   font-size:8.5px; font-weight:500; letter-spacing:.26em;
-  text-transform:uppercase; padding-left:.26em;
+  text-transform:uppercase; margin-right:-.26em;
   color:var(--salvia); white-space:nowrap;
   opacity:0; pointer-events:none; user-select:none;
   transition:opacity .9s ease, transform .9s ease;
 }
-.susurro.visible{ opacity:1; transform:translateX(-50%) translateY(0); }
+.susurro.visible{ opacity:1; transform:translateY(0); }
 
 /* ══════════════════════════════════════════════════════════════
    ANIMACIONES — una sola vez y se quedan
@@ -1098,13 +1098,16 @@ function irA(id, ms){
   if (SIN_MOVIMIENTO){ destino.scrollIntoView(); return; }
 
   const inicio = window.scrollY;
-  const distancia = destino.getBoundingClientRect().top;
   const t0 = performance.now();
   const suave = t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
 
   function paso(ahora){
     const t = Math.min(1, (ahora - t0) / ms);
-    window.scrollTo(0, inicio + distancia * suave(t));
+    // El destino se vuelve a medir cuadro a cuadro: si la página crece
+    // mientras bajamos (imágenes que terminan de cargar), el recorrido
+    // se corrige solo y siempre aterriza donde debe.
+    const meta = destino.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo(0, inicio + (meta - inicio) * suave(t));
     if (t < 1) requestAnimationFrame(paso);
   }
   requestAnimationFrame(paso);
@@ -1164,14 +1167,31 @@ modulo(function(){
    El link puede traer  ?f=NombreDeLaFamilia&l=LugaresApartados
    Sin esos datos la página funciona genérica, como siempre.     ── */
 const INVITADO = (function(){
-  const p = new URLSearchParams(location.search);
-  const nombre  = (p.get('f') || '').trim().slice(0, 70);
-  const lugares = parseInt(p.get('l'), 10);
-  return {
-    nombre,
-    lugares: (lugares >= 1 && lugares <= 15) ? lugares : null
-  };
-});
+  try {
+    const p = new URLSearchParams(location.search);
+    let nombre = '', lugares = NaN;
+
+    // Formato compacto:  ?i=4-Familia Vázquez Ávila
+    // Un solo parámetro, sin "&" que algún redireccionador pueda cortar.
+    const junto = (p.get('i') || '').trim();
+    const m = junto.match(/^(\d{1,2})-(.+)$/);
+    if (m){
+      lugares = parseInt(m[1], 10);
+      nombre  = m[2].trim();
+    } else {
+      // Formato normal:  ?f=Nombre&l=4
+      nombre  = (p.get('f') || '').trim();
+      lugares = parseInt(p.get('l'), 10);
+    }
+
+    return {
+      nombre: nombre.slice(0, 70),
+      lugares: (lugares >= 1 && lugares <= 15) ? lugares : null
+    };
+  } catch (e) {
+    return { nombre:'', lugares:null };   // sin personalizar, pero la página vive
+  }
+})();
 
 
 /* ── Confirmación ─────────────────────────────────────────── */
