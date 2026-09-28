@@ -81,11 +81,163 @@ main{ position:relative; z-index:1; }
     url('assets/backgrounds/watercolor_blush.jpg') center / cover no-repeat;
 }
 
+/* La costura entre secciones: filete dorado, línea de luz debajo y un
+   cuadrifolio al centro. El mismo lenguaje del arco de la portada. */
 .seccion::before, .pie::before{
   content:''; position:absolute; top:0; left:0; right:0; height:1px; z-index:5;
-  background:linear-gradient(to right, transparent, rgba(212,158,154,.6) 22%, rgba(212,158,154,.6) 78%, transparent);
+  background:linear-gradient(to right, transparent,
+    rgba(186,151,96,.30) 8%, rgba(196,139,135,.62) 26%,
+    rgba(196,139,135,.62) 74%, rgba(186,151,96,.30) 92%, transparent);
 }
+.seccion::after{
+  content:''; position:absolute; top:1px; left:12%; right:12%; height:1px; z-index:5;
+  background:linear-gradient(to right, transparent, rgba(255,255,255,.9) 28%,
+                                        rgba(255,255,255,.9) 72%, transparent);
+  pointer-events:none;
+}
+.cuadrifolio{
+  position:absolute; top:0; left:50%; z-index:6; pointer-events:none;
+  width:22px; height:22px; margin:-11px 0 0 -11px;
+  color:#B08D57;
+}
+#cuenta::before, #cuenta::after{ display:none; }
+
+/* Donde una sección toca la imagen de transición: solo un canto de volumen,
+   muy sutil, como el borde de una hoja de papel. */
+.escena{ position:relative; overflow:hidden;
+  min-height:clamp(440px,74vh,760px); }
+.escena .fondo{ position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; z-index:0; will-change:transform; }
+.escena::after{ content:''; position:absolute; inset:0; z-index:1;
+  background:linear-gradient(180deg, rgba(96,66,64,.10), rgba(96,66,64,0) 40%, rgba(96,66,64,.12)); }
+.escena::before{ content:''; position:absolute; inset:0; z-index:3; pointer-events:none;
+  box-shadow:
+    inset 0  1px 0 rgba(255,252,248,.75), inset 0  4px 7px -5px rgba(150,112,88,.5),
+    inset 0 -1px 0 rgba(255,252,248,.75), inset 0 -4px 7px -5px rgba(150,112,88,.5); }
+
 #cuenta::before{ display:none; }
+
+/* ══════════════════════════════════════════════════════════════
+   LAS PUERTAS
+   entrance_doors.png (1670x942) partido exacto por la mitad.
+   --p: 0 cerradas · 1 abiertas. Sin respiración: quietas hasta que se tocan.
+   ══════════════════════════════════════════════════════════════ */
+#puertas{
+  --p:0;
+  --prop:1.7728;
+  --vw:100vw; --vh:100svh;
+  --imgW:calc(max(var(--vw), var(--vh) * var(--prop)) * 1.004);
+  --imgH:calc(var(--imgW) / var(--prop));
+  --ox:calc((var(--vw) - var(--imgW)) / 2);
+  --oy:calc((var(--vh) - var(--imgH)) / 2);
+  --sello-w:clamp(96px, calc(var(--imgW) * .118), 250px);
+  --salida:calc(var(--vw) / 2 + var(--sello-w));
+  position:fixed; inset:0; z-index:100; overflow:hidden; cursor:pointer;
+  background:transparent;   /* la invitación se ve por la abertura */
+}
+#puertas.fuera{ pointer-events:none; visibility:hidden; }
+
+.hoja{
+  position:absolute; top:0; bottom:0; width:50%;
+  background-image:url("assets/img/entrance_doors.png");
+  background-repeat:no-repeat; background-size:var(--imgW) var(--imgH);
+  will-change:transform;
+}
+.hoja-i{ left:0; width:calc(50% + 1px);
+  background-position:var(--ox) var(--oy);
+  transform:translateX(calc(var(--p) * (0px - var(--salida)))); }
+.hoja-d{ right:0;
+  background-position:calc(var(--ox) - var(--vw) / 2) var(--oy);
+  transform:translateX(calc(var(--p) * var(--salida))); }
+
+/* El sello va pegado a la hoja derecha: al abrir, viaja con ella */
+.sello{
+  position:absolute; left:0; z-index:2;
+  top:calc(var(--oy) + var(--imgH) * .545);
+  width:var(--sello-w); aspect-ratio:1278/1230;
+  transform:translate(-50%,-50%);
+  background:url("assets/img/seal.png") center/contain no-repeat;
+}
+
+.para,.llamada{
+  position:absolute; left:0; right:0; z-index:3; text-align:center;
+  pointer-events:none; opacity:calc((.20 - var(--p)) / .15);
+}
+.para{ top:calc(var(--oy) + var(--imgH) * .715); }
+.para p{ margin:0; text-shadow:0 0 14px rgba(255,252,250,1), 0 0 30px rgba(255,252,250,.92); }
+.para-rotulo{ font-family:var(--texto); font-weight:600; font-size:clamp(10px,2.6vw,12px);
+  letter-spacing:.42em; text-transform:uppercase; color:var(--rosa-hondo); }
+.para-nombre{ font-family:var(--display); font-style:italic; font-weight:600;
+  font-size:clamp(21px,5.4vw,30px); line-height:1.2; color:var(--olivo); margin-top:.25rem!important; }
+.para-lugares{ font-family:var(--texto); font-weight:500; font-size:clamp(10px,2.7vw,12px);
+  letter-spacing:.18em; text-transform:uppercase; color:var(--salvia); margin-top:.45rem!important; }
+
+.llamada{ top:calc(var(--oy) + var(--imgH) * .845);
+  display:flex; align-items:center; justify-content:center; gap:clamp(.9rem,3.4vw,1.8rem); }
+body.con-invitado .llamada{ top:calc(var(--oy) + var(--imgH) * .885); }
+.llamada b{ display:block; font-family:var(--texto); font-weight:600; color:var(--olivo);
+  font-size:clamp(.7rem,2.8vw,.92rem); letter-spacing:.34em; text-transform:uppercase; padding:.55em 1.1em;
+  background:radial-gradient(ellipse 60% 120% at 50% 50%,
+    rgba(255,253,251,.94) 0%, rgba(255,253,251,.64) 46%, rgba(255,253,251,0) 78%);
+  text-shadow:0 0 12px rgba(255,252,250,1), 0 0 26px rgba(255,252,250,.9); }
+.llamada .chev{ color:var(--rosa-hondo); display:block;
+  filter:drop-shadow(0 0 9px rgba(255,252,250,1)); }
+.llamada .chev-i{ animation:abre-i 3.2s ease-in-out infinite; }
+.llamada .chev-d{ animation:abre-d 3.2s ease-in-out infinite; }
+@keyframes abre-i{ 0%,100%{transform:translateX(3px);opacity:.5} 50%{transform:translateX(-4px);opacity:1} }
+@keyframes abre-d{ 0%,100%{transform:translateX(-3px);opacity:.5} 50%{transform:translateX(4px);opacity:1} }
+
+body.sin-scroll{ overflow:hidden; height:100%; }
+.btn-menu, .musica{ opacity:0; visibility:hidden; transition:opacity .6s ease, visibility .6s; }
+body.dentro .btn-menu, body.dentro .musica{ opacity:1; visibility:visible; }
+
+/* ══════════════════════════════════════════════════════════════
+   PÉTALOS — recortados del sprite. Número fijo, se reciclan.
+   ══════════════════════════════════════════════════════════════ */
+.petalo{
+  position:absolute; top:-16%; z-index:4; pointer-events:none;
+  will-change:transform; animation:caer linear infinite;
+}
+.petalo.atras{ z-index:2; opacity:.85; }
+@keyframes caer{
+  0%   { opacity:0; transform:translate3d(0,-14vh,0) rotate(0deg) }
+  9%   { opacity:1 }
+  88%  { opacity:1 }
+  100% { opacity:0; transform:translate3d(var(--deriva,4vw), var(--caida,120vh), 0) rotate(var(--giro,300deg)) }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   EL JUEGO — El vuelo de Sofía
+   ══════════════════════════════════════════════════════════════ */
+.tablero{
+  position:relative; width:min(94vw,720px); margin:34px auto 0;
+  background:rgba(255,255,255,.94);
+  border:1.5px solid var(--linea);
+  border-radius:150px 150px 18px 18px;
+  padding:64px 0 0; overflow:hidden;
+  touch-action:manipulation; user-select:none; -webkit-user-select:none;
+  -webkit-tap-highlight-color:transparent; cursor:pointer;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9), 0 6px 22px rgba(150,112,88,.12);
+}
+@media (max-width:520px){ .tablero{ border-radius:110px 110px 16px 16px; padding-top:52px; } }
+.tablero canvas{ display:block; width:100%; height:236px; }
+.tanteo{
+  position:absolute; top:20px; left:0; right:0; text-align:center; z-index:3;
+  font-family:var(--texto); font-weight:600; font-size:11px;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--salvia); pointer-events:none;
+}
+.tanteo b{ font-family:var(--display); font-style:normal; font-weight:600;
+  font-size:19px; letter-spacing:0; color:var(--rosa-hondo); margin:0 .18em; }
+.velo-juego{
+  position:absolute; inset:64px 0 0; z-index:4; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; text-align:center; gap:7px;
+  pointer-events:none; transition:opacity .25s ease; padding:0 18px;
+}
+@media (max-width:520px){ .velo-juego{ inset:52px 0 0; } }
+.velo-juego.ido{ opacity:0; }
+.velo-juego .grande{ font-family:var(--display); font-style:italic; font-weight:600;
+  font-size:clamp(21px,5.2vw,28px); color:var(--olivo); }
+.velo-juego .chico{ font-size:clamp(13px,3.5vw,15px); color:var(--tinta); max-width:30ch; }
 
 /* ══════════════════════════════════════════════════════════════
    FLORES
@@ -492,6 +644,39 @@ main{ position:relative; z-index:1; }
   color:var(--tinta); max-width:24ch; margin-inline:auto;
 }
 .pie .firma{ font-family:var(--script); font-size:clamp(62px,16vw,82px); color:var(--rosa-hondo); line-height:1; }
+.pie .firma{ margin-top:0; }
+.pie small{ margin-top:14px!important; }
+.gracias-cierre{
+  margin-top:22px; font-family:var(--display); font-style:italic; font-weight:500;
+  font-size:clamp(16px,4.2vw,19px); line-height:1.6;
+  color:var(--salvia); max-width:30ch; margin-inline:auto;
+}
+.barra-celayre{
+  position:relative; z-index:2;
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:center;
+  gap:10px; padding:16px 20px calc(16px + env(safe-area-inset-bottom));
+  background:var(--rosa-hondo);
+  font-family:var(--texto); font-weight:400; font-size:11.5px;
+  letter-spacing:.14em; text-transform:uppercase; color:#FFFFFF;
+}
+.barra-celayre a{ color:#FFFFFF; text-decoration:none; }
+.barra-celayre .punto{ opacity:.55; }
+.barra-celayre .redes{ display:inline-flex; align-items:center; gap:8px; margin-left:4px; }
+.barra-celayre .redes a{
+  display:grid; place-items:center; width:26px; height:26px; border-radius:50%;
+  border:1.2px solid rgba(255,255,255,.7); color:#FFFFFF;
+  transition:background .3s ease, color .3s ease;
+}
+@media (hover:hover){
+  .barra-celayre .redes a:hover{ background:#FFFFFF; color:var(--rosa-hondo); }
+  .barra-celayre a:hover{ text-decoration:underline; }
+}
+.firma-celayre{
+  display:block; margin-top:clamp(32px,7vw,48px);
+  font-family:var(--texto); font-weight:500; font-size:10.5px;
+  letter-spacing:.42em; text-transform:uppercase; padding-left:.42em;
+  color:rgba(102,117,90,.7); text-decoration:none;
+}
 .pie small{
   display:block; margin-top:18px;
   font-size:12px; font-weight:600; letter-spacing:.24em;
@@ -545,8 +730,13 @@ main{ position:relative; z-index:1; }
   position:fixed; top:0; left:0; bottom:0; z-index:90;
   width:min(82vw,332px);
   background:var(--papel) url('assets/backgrounds/paper_ivory.jpg') center / cover no-repeat;
-  box-shadow:6px 0 34px rgba(70,50,48,.18);
-  border-right:1px solid rgba(212,158,154,.5);
+  /* canto de papel: una línea de luz, un filete y la sombra que proyecta */
+  box-shadow:
+    inset -1px 0 0 rgba(255,255,255,.85),
+    1px 0 0 rgba(186,151,96,.35),
+    3px 0 10px -4px rgba(150,112,88,.30),
+    10px 0 40px rgba(70,50,48,.16);
+  border-right:1px solid rgba(212,158,154,.45);
   transform:translateX(-102%);
   transition:transform .55s cubic-bezier(.35,.85,.35,1);
   display:flex; flex-direction:column; justify-content:center;
@@ -578,7 +768,19 @@ main{ position:relative; z-index:1; }
   opacity:0; transform:translateX(-16px);
   transition:opacity .5s ease, transform .5s cubic-bezier(.2,.8,.3,1), color .3s ease;
 }
-.panel a svg{ color:var(--rosa-hondo); flex-shrink:0; transition:transform .3s ease; }
+.panel button.nav{
+  position:relative; z-index:2; display:flex; align-items:center; gap:16px;
+  padding:11px 30px; width:100%; text-align:left; background:none; border:none; cursor:pointer;
+  font-family:var(--texto); font-weight:500; font-size:13px; letter-spacing:.15em;
+  text-transform:uppercase; color:var(--rosa-hondo);
+  opacity:0; transform:translateX(-16px);
+  transition:opacity .5s ease, transform .5s cubic-bezier(.2,.8,.3,1), color .3s ease;
+}
+.menu-abierto .panel button.nav{ opacity:1; transform:none; transition-delay:.52s; }
+.panel .cerrar-inv{ margin-top:14px; }
+.panel .cerrar-inv::before{ content:''; position:absolute; top:0; left:30px; right:30px; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(196,139,135,.5), transparent); }
+.panel a svg, .panel button.nav svg{ color:var(--rosa-hondo); flex-shrink:0; transition:transform .3s ease; }
 @media (hover:hover){
   .panel a:hover{ color:var(--rosa-hondo); }
   .panel a:hover svg{ transform:translateX(2px); }
@@ -660,9 +862,33 @@ main{ position:relative; z-index:1; }
 }
 </style>
 </head>
-<body>
+<body class="sin-scroll">
 
 <!-- ═══════════ MENÚ ═══════════ -->
+
+
+<!-- ══════════ LAS PUERTAS ══════════ -->
+<div id="puertas" role="button" tabindex="0" aria-label="Abrir la invitación">
+  <div class="hoja hoja-i"></div>
+  <div class="hoja hoja-d"><div class="sello"></div></div>
+
+  <div class="para" id="para" hidden>
+    <p class="para-rotulo">Invitación para</p>
+    <p class="para-nombre" id="para-nombre"></p>
+    <p class="para-lugares" id="para-lugares" hidden></p>
+  </div>
+
+  <div class="llamada">
+    <svg class="chev chev-i" width="17" height="26" viewBox="0 0 17 26" fill="none" aria-hidden="true">
+      <path d="M13 2L4 13l9 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <b>Toca para abrir</b>
+    <svg class="chev chev-d" width="17" height="26" viewBox="0 0 17 26" fill="none" aria-hidden="true">
+      <path d="M4 2l9 11-9 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</div>
+
 <button class="btn-vidrio btn-menu" id="btnMenu" aria-label="Abrir menú" aria-expanded="false">
   <span></span><span></span><span></span>
 </button>
@@ -709,6 +935,14 @@ main{ position:relative; z-index:1; }
     <svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.6" y="4.8" width="14.8" height="10.4" rx="2"/><path d="M3.2 5.9L10 10.6l6.8-4.7"/></svg>
     Confirmar
   </a>
+  <a href="#juego" data-ir="juego">
+    <svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1.8" y="5.6" width="16.4" height="9.4" rx="4.2"/><path d="M6 8.4v3.4M4.3 10.1h3.4M13 9.6h.01M15.2 11.4h.01"/></svg>
+    Mini juego
+  </a>
+  <button class="nav cerrar-inv" id="cerrarInv" type="button">
+    <svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.6" y="2.6" width="14.8" height="14.8" rx="2"/><path d="M10 2.6v14.8"/></svg>
+    Cerrar invitación
+  </button>
 </nav>
 
 <!-- ═══════════ MÚSICA ═══════════ -->
@@ -776,8 +1010,14 @@ main{ position:relative; z-index:1; }
     </div>
   </section>
 
+  <!-- ═══════ IMAGEN DE TRANSICIÓN ═══════ -->
+  <section class="escena">
+    <img class="fondo" src="assets/img/scene-roses.png" alt="" loading="lazy" decoding="async">
+  </section>
+
   <!-- ═══════ EL MENSAJE · papel ═══════ -->
   <section class="seccion papel" id="mensaje">
+    <svg class="cuadrifolio" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M11 2.6c1.5 2.9 3.9 5.3 6.8 6.8-2.9 1.5-5.3 3.9-6.8 6.8-1.5-2.9-3.9-5.3-6.8-6.8C7.1 7.9 9.5 5.5 11 2.6z" stroke="currentColor" stroke-width="1" fill="rgba(255,253,250,.9)"/><circle cx="11" cy="9.4" r="1.5" fill="currentColor"/></svg>
     <img class="marca marca-mensaje" loading="lazy" decoding="async" src="assets/florals/floral_line_branch.png" alt="" onerror="this.remove()">
     <div class="contenido">
       <p class="mensaje-texto anim difumina" style="--r:0">
@@ -803,6 +1043,7 @@ main{ position:relative; z-index:1; }
        Para cambiar la foto: reemplaza assets/photos/sofia_dress.jpg
        Si el archivo no existe, la sección se borra sola.        ═══════ -->
   <section class="seccion papel" id="retrato">
+    <svg class="cuadrifolio" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M11 2.6c1.5 2.9 3.9 5.3 6.8 6.8-2.9 1.5-5.3 3.9-6.8 6.8-1.5-2.9-3.9-5.3-6.8-6.8C7.1 7.9 9.5 5.5 11 2.6z" stroke="currentColor" stroke-width="1" fill="rgba(255,253,250,.9)"/><circle cx="11" cy="9.4" r="1.5" fill="currentColor"/></svg>
     <img class="flor flor-ret-a" id="florRetA" loading="lazy" decoding="async" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
     <img class="flor flor-ret-b" id="florRetB" loading="lazy" decoding="async" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
 
@@ -822,6 +1063,7 @@ main{ position:relative; z-index:1; }
 
   <!-- ═══════ PADRES Y PADRINOS · rosa ═══════ -->
   <section class="seccion blush" id="padrinos">
+    <svg class="cuadrifolio" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M11 2.6c1.5 2.9 3.9 5.3 6.8 6.8-2.9 1.5-5.3 3.9-6.8 6.8-1.5-2.9-3.9-5.3-6.8-6.8C7.1 7.9 9.5 5.5 11 2.6z" stroke="currentColor" stroke-width="1" fill="rgba(255,253,250,.9)"/><circle cx="11" cy="9.4" r="1.5" fill="currentColor"/></svg>
     <img class="marca marca-padrinos" loading="lazy" decoding="async" src="assets/florals/floral_line_rose.png" alt="" onerror="this.remove()">
     <div class="contenido">
       <svg class="icono-seccion anim crece" style="--r:0" width="42" height="42" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
@@ -848,6 +1090,7 @@ main{ position:relative; z-index:1; }
 
   <!-- ═══════ EL DÍA · papel ═══════ -->
   <section class="seccion papel" id="dia">
+    <svg class="cuadrifolio" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M11 2.6c1.5 2.9 3.9 5.3 6.8 6.8-2.9 1.5-5.3 3.9-6.8 6.8-1.5-2.9-3.9-5.3-6.8-6.8C7.1 7.9 9.5 5.5 11 2.6z" stroke="currentColor" stroke-width="1" fill="rgba(255,253,250,.9)"/><circle cx="11" cy="9.4" r="1.5" fill="currentColor"/></svg>
     <img class="flor flor-dia-a" loading="lazy" decoding="async" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
     <img class="flor flor-dia-b" loading="lazy" decoding="async" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
     <div class="contenido">
@@ -890,6 +1133,7 @@ main{ position:relative; z-index:1; }
 
   <!-- ═══════ VESTIMENTA · rosa ═══════ -->
   <section class="seccion blush" id="vestimenta">
+    <svg class="cuadrifolio" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M11 2.6c1.5 2.9 3.9 5.3 6.8 6.8-2.9 1.5-5.3 3.9-6.8 6.8-1.5-2.9-3.9-5.3-6.8-6.8C7.1 7.9 9.5 5.5 11 2.6z" stroke="currentColor" stroke-width="1" fill="rgba(255,253,250,.9)"/><circle cx="11" cy="9.4" r="1.5" fill="currentColor"/></svg>
     <img class="marca marca-vestido" loading="lazy" decoding="async" src="assets/florals/floral_line_rose.png" alt="" onerror="this.remove()">
     <div class="contenido">
       <svg class="icono-seccion anim crece" style="--r:0" width="38" height="38" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -911,6 +1155,7 @@ main{ position:relative; z-index:1; }
 
   <!-- ═══════ MESA DE REGALOS · papel ═══════ -->
   <section class="seccion papel oculta" id="regalos">
+    <svg class="cuadrifolio" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M11 2.6c1.5 2.9 3.9 5.3 6.8 6.8-2.9 1.5-5.3 3.9-6.8 6.8-1.5-2.9-3.9-5.3-6.8-6.8C7.1 7.9 9.5 5.5 11 2.6z" stroke="currentColor" stroke-width="1" fill="rgba(255,253,250,.9)"/><circle cx="11" cy="9.4" r="1.5" fill="currentColor"/></svg>
     <img class="marca marca-regalos" loading="lazy" decoding="async" src="assets/florals/floral_line_rose.png" alt="" onerror="this.remove()">
     <div class="contenido">
       <svg class="icono-seccion anim crece" style="--r:0" width="38" height="38" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -932,6 +1177,7 @@ main{ position:relative; z-index:1; }
 
   <!-- ═══════ SOFÍA · rosa ═══════ -->
   <section class="seccion blush" id="sofia">
+    <svg class="cuadrifolio" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M11 2.6c1.5 2.9 3.9 5.3 6.8 6.8-2.9 1.5-5.3 3.9-6.8 6.8-1.5-2.9-3.9-5.3-6.8-6.8C7.1 7.9 9.5 5.5 11 2.6z" stroke="currentColor" stroke-width="1" fill="rgba(255,253,250,.9)"/><circle cx="11" cy="9.4" r="1.5" fill="currentColor"/></svg>
     <img class="flor flor-sofia-a" loading="lazy" decoding="async" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
     <img class="flor flor-sofia-b" loading="lazy" decoding="async" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
     <div class="contenido">
@@ -963,6 +1209,7 @@ main{ position:relative; z-index:1; }
 
   <!-- ═══════ CONFIRMACIÓN · papel ═══════ -->
   <section class="seccion papel" id="confirmar">
+    <svg class="cuadrifolio" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M11 2.6c1.5 2.9 3.9 5.3 6.8 6.8-2.9 1.5-5.3 3.9-6.8 6.8-1.5-2.9-3.9-5.3-6.8-6.8C7.1 7.9 9.5 5.5 11 2.6z" stroke="currentColor" stroke-width="1" fill="rgba(255,253,250,.9)"/><circle cx="11" cy="9.4" r="1.5" fill="currentColor"/></svg>
     <img class="marca marca-confirma" loading="lazy" decoding="async" src="assets/florals/floral_line_branch.png" alt="" onerror="this.remove()">
     <div class="contenido">
       <svg class="icono-seccion anim crece" style="--r:0" width="38" height="38" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1015,8 +1262,14 @@ main{ position:relative; z-index:1; }
     </div>
   </section>
 
+  <!-- ═══════ IMAGEN DE TRANSICIÓN ═══════ -->
+  <section class="escena">
+    <img class="fondo" src="assets/img/scene-roses-detail.png" alt="" loading="lazy" decoding="async">
+  </section>
+
   <!-- ═══════ FOTOS DEL EVENTO · rosa ═══════ -->
   <section class="seccion blush oculta" id="fotos">
+    <svg class="cuadrifolio" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M11 2.6c1.5 2.9 3.9 5.3 6.8 6.8-2.9 1.5-5.3 3.9-6.8 6.8-1.5-2.9-3.9-5.3-6.8-6.8C7.1 7.9 9.5 5.5 11 2.6z" stroke="currentColor" stroke-width="1" fill="rgba(255,253,250,.9)"/><circle cx="11" cy="9.4" r="1.5" fill="currentColor"/></svg>
     <div class="contenido">
       <svg class="icono-seccion anim crece" style="--r:0" width="38" height="38" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <rect x="2.4" y="5.8" width="15.2" height="10.6" rx="2"/><circle cx="10" cy="11.1" r="3"/><path d="M7 5.8l1.2-2h3.6l1.2 2"/>
@@ -1034,20 +1287,60 @@ main{ position:relative; z-index:1; }
     </div>
   </section>
 
+  <!-- ═══════ EL JUEGO · papel ═══════ -->
+  <section class="seccion papel" id="juego">
+    <svg class="cuadrifolio" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M11 2.6c1.5 2.9 3.9 5.3 6.8 6.8-2.9 1.5-5.3 3.9-6.8 6.8-1.5-2.9-3.9-5.3-6.8-6.8C7.1 7.9 9.5 5.5 11 2.6z" stroke="currentColor" stroke-width="1" fill="rgba(255,253,250,.9)"/><circle cx="11" cy="9.4" r="1.5" fill="currentColor"/></svg>
+    <img class="marca marca-mensaje" loading="lazy" decoding="async" src="assets/florals/floral_line_branch.png" alt="" onerror="this.remove()">
+    <div class="contenido">
+      <p class="antetitulo anim abre" style="--r:0">Mini juego</p>
+      <h2 class="titulo anim" style="--r:1; margin-top:12px">El vuelo de Sofía</h2>
+      <p class="parrafo anim" style="--r:2; margin-top:18px">
+        Ayuda a la mariposa a saltar los regalos y rosales
+        rumbo a la fiesta. Toca la pantalla para saltar.
+      </p>
+
+      <div class="tablero anim crece" style="--r:3" id="tablero" role="application" aria-label="Minijuego: toca para saltar">
+        <div class="tanteo" aria-live="polite">Pétalos <b id="tanteo">0</b> · Récord <span id="record">0</span></div>
+        <canvas id="lienzo"></canvas>
+        <div class="velo-juego" id="veloJuego">
+          <div class="grande" id="vjGrande">Toca para empezar</div>
+          <div class="chico" id="vjChico">Mantén presionado para volar más alto</div>
+        </div>
+      </div>
+
+      <p class="nota-campo anim" style="--r:4; margin-top:20px">
+        En computadora también funciona con la barra espaciadora.
+      </p>
+    </div>
+  </section>
+
   <!-- ═══════ CIERRE · papel ═══════ -->
   <footer class="pie">
     <img class="flor flor-cierre" loading="lazy" decoding="async" src="assets/florals/floral_watercolor_main.png" alt="" onerror="this.remove()">
     <div class="contenido">
-      <img class="divisor-flor anim crece" loading="lazy" decoding="async" style="--r:0; margin:0 auto 30px"
-           src="assets/florals/floral_line_branch.png" alt="" onerror="this.remove()">
-
-      <p class="gracias anim abre" style="--r:1">Gracias</p>
-      <p class="despedida anim" style="--r:2">Por ser parte de este momento tan especial para mí.</p>
-
-      <p class="firma anim difumina" style="--r:3; margin-top:52px">Sofía</p>
-      <small>3 de octubre de 2026 · Toluca</small>
+      <p class="firma anim difumina" style="--r:0">Sofía</p>
+      <small class="anim abre" style="--r:1">3 de octubre de 2026</small>
+      <p class="gracias-cierre anim" style="--r:2">Gracias por ser parte<br>de este momento tan especial para mí.</p>
     </div>
   </footer>
+
+  <!-- ═══════ CELAYRE ═══════ -->
+  <div class="barra-celayre">
+    <span>Creado por Celayre</span>
+    <span class="punto">·</span>
+    <a href="https://celayre.com" target="_blank" rel="noopener">celayre.com</a>
+    <span class="redes">
+      <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5h1.65V3.6c-.29-.04-1.27-.12-2.41-.12-2.38 0-4.02 1.46-4.02 4.13V9.9H7.5V13h2.77v8h3.23z"/></svg>
+      </a>
+      <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><rect x="3.6" y="3.6" width="16.8" height="16.8" rx="4.8"/><circle cx="12" cy="12" r="3.9"/><circle cx="17" cy="7" r="1.1" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://whatsapp.com" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm0 18.15c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 01-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 012.41 5.82c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.13-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.13-.56-1.35-.77-1.84-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07s.89 2.4 1.01 2.56c.12.17 1.74 2.66 4.22 3.73.59.25 1.05.4 1.4.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.68-1.18.2-.58.2-1.08.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg>
+      </a>
+    </span>
+  </div>
 
 </main>
 
@@ -1270,7 +1563,7 @@ modulo(function(){
 /* ── Música ───────────────────────────────────────────────── */
 modulo(function(){
   const audio = new Audio();
-  audio.src = CONFIG.cancion;
+  audio.src = CONFIG.cancion;   /* la misma de siempre */
   audio.loop = true; audio.volume = 0;
   // "none": la canción se descarga hasta que la persona presiona play
   audio.preload = "none";
@@ -1281,7 +1574,7 @@ modulo(function(){
   const iPause  = document.getElementById('iPause');
   const susurro = document.getElementById('susurro');
 
-  let sonando = false, fundido = null, reloj = null, avisado = false;
+  let sonando = false, fundido = null, reloj = null, avisado = false, apagadaPorTi = false;
 
   function fundir(destino, ms){
     clearInterval(fundido);
@@ -1306,10 +1599,12 @@ modulo(function(){
 
   boton.addEventListener('click', () => {
     if (sonando){
+      apagadaPorTi = true;
       sonando = false; pintar(false); fundir(0,450);
       setTimeout(() => { if(!sonando) audio.pause(); }, 480);
       mostrar();
     } else {
+      apagadaPorTi = false;
       sonando = true; pintar(true); ocultar();
       audio.play().then(() => {
         fundir(CONFIG.volumen, 1500);
@@ -1329,9 +1624,27 @@ modulo(function(){
     susurro.classList.add('visible');
   });
 
-  audio.play()
-    .then(() => { sonando = true; pintar(true); fundir(CONFIG.volumen,1600); })
-    .catch(() => setTimeout(mostrar, 1200));
+  /* Las puertas mandan sobre la música */
+  window.MUSICA = {
+    sonar: function(){
+      if (apagadaPorTi) return;
+      sonando = true; pintar(true); ocultar();
+      audio.play().then(function(){
+        fundir(CONFIG.volumen, 1500);
+        if (!avisado){
+          avisado = true;
+          susurro.textContent = 'sube el volumen';
+          mostrar();
+          setTimeout(function(){ susurro.textContent = 'música'; }, 5200);
+        }
+      }).catch(function(){ sonando = false; pintar(false); });
+    },
+    callar: function(){
+      if (audio.paused){ sonando = false; pintar(false); return; }
+      sonando = false; pintar(false); fundir(0, 1600);
+      setTimeout(function(){ if (!sonando) audio.pause(); }, 1650);
+    }
+  };
 });
 
 
@@ -1349,6 +1662,360 @@ modulo(function(){
   document.querySelectorAll('.anim').forEach(el => ojo.observe(el));
 });
 
+
+/* ── LAS PUERTAS ───────────────────────────────────────────
+   Quietas hasta que se tocan: sin respiración ni insinuación.
+   ── */
+var PUERTAS = (function(){
+  var escena = document.getElementById('puertas');
+  var cuerpo = document.body;
+  var abierto = false, p = 0, raf = null, relojes = [];
+
+  function setP(v){ p = v<0?0:(v>1?1:v); escena.style.setProperty('--p', p.toFixed(4)); }
+  function animarP(destino, ms, luego){
+    cancelAnimationFrame(raf);
+    if (SIN_MOVIMIENTO){ setP(destino); if (luego) luego(); return; }
+    var ini = p, t0 = null;
+    function paso(ahora){
+      if (t0 === null) t0 = ahora;
+      var k = Math.min(1,(ahora-t0)/ms);
+      var e = k < .5 ? 4*k*k*k : 1 - Math.pow(-2*k+2,3)/2;
+      setP(ini + (destino-ini)*e);
+      if (k < 1) raf = requestAnimationFrame(paso); else if (luego) luego();
+    }
+    raf = requestAnimationFrame(paso);
+  }
+  function medir(){
+    var h = Math.max(escena.clientHeight, window.innerHeight||0, document.documentElement.clientHeight||0);
+    var w = Math.max(escena.clientWidth,  window.innerWidth ||0, document.documentElement.clientWidth ||0);
+    escena.style.setProperty('--vw', w+'px');
+    escena.style.setProperty('--vh', h+'px');
+  }
+  medir();
+  [80,300,700,1500].forEach(function(ms){ setTimeout(medir, ms); });
+  ['load','pageshow','resize'].forEach(function(ev){ window.addEventListener(ev, medir); });
+  window.addEventListener('orientationchange', function(){ setTimeout(medir,260); });
+  if (window.visualViewport){
+    window.visualViewport.addEventListener('resize', medir);
+    window.visualViewport.addEventListener('scroll', medir);
+  }
+
+  function revelar(){
+    document.querySelectorAll('#portada .anim').forEach(function(el){ el.classList.add('visto'); });
+  }
+  function abrir(){
+    if (abierto) return;
+    relojes.forEach(clearTimeout); relojes = [];
+    relojes.push(setTimeout(revelar, 900));
+    animarP(1, 1850, function(){
+      abierto = true;
+      escena.classList.add('fuera');
+      cuerpo.classList.remove('sin-scroll');
+      cuerpo.classList.add('dentro');
+      revelar();
+    });
+    if (window.MUSICA) window.MUSICA.sonar();
+  }
+  function cerrar(){
+    relojes.forEach(clearTimeout); relojes = [];
+    abierto = false;
+    escena.classList.remove('fuera');
+    cuerpo.classList.remove('dentro');
+    if (window.MUSICA) window.MUSICA.callar();
+    animarP(0, 1750, function(){
+      window.scrollTo(0,0);
+      cuerpo.classList.add('sin-scroll');
+      document.querySelectorAll('#portada .anim').forEach(function(el){ el.classList.remove('visto'); });
+    });
+  }
+  escena.addEventListener('click', function(){ if (!abierto) abrir(); });
+  escena.addEventListener('keydown', function(e){
+    if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); abrir(); }
+  });
+
+  if (INVITADO.nombre){
+    document.getElementById('para-nombre').textContent = INVITADO.nombre;
+    document.getElementById('para').hidden = false;
+    cuerpo.classList.add('con-invitado');
+    if (INVITADO.lugares){
+      var pl = document.getElementById('para-lugares');
+      pl.textContent = INVITADO.lugares === 1 ? '1 lugar apartado' : INVITADO.lugares + ' lugares apartados';
+      pl.hidden = false;
+    }
+  }
+  return { abrir:abrir, cerrar:cerrar };
+})();
+
+modulo(function(){
+  var b = document.getElementById('cerrarInv');
+  if (!b) return;
+  b.addEventListener('click', function(){
+    document.body.classList.remove('menu-abierto');
+    setTimeout(PUERTAS.cerrar, 380);
+  });
+});
+
+/* ── Lluvia de pétalos y hojitas ────────────────────────────
+   Dos imágenes, número fijo de elementos que se reciclan por CSS.
+   Se pausan cuando la portada no está a la vista.
+   ── */
+modulo(function(){
+  if (SIN_MOVIMIENTO) return;
+  var zona = document.getElementById('portada');
+  var fuentes = ['assets/img/petal_rose.png', 'assets/img/leave.png'];
+  var amplio = window.innerWidth > 900;
+  var grupos = amplio ? 6 : 4, ciclo = 18, creados = [];
+
+  for (var g = 0; g < grupos; g++){
+    var franja = 92/grupos;
+    var base = 3 + g*franja + Math.random()*franja*.8;
+    var dur = ciclo + Math.random()*6;
+    var arranque = -(g*dur/grupos) - Math.random()*2.5;
+    var cuantos = amplio ? 3 : 2;
+
+    for (var k = 0; k < cuantos; k++){
+      var im = document.createElement('img');
+      im.className = 'petalo' + (k === 0 ? ' atras' : '');
+      im.alt = ''; im.decoding = 'async';
+      im.src = fuentes[Math.random() < .68 ? 0 : 1];
+      im.style.width = (15 + Math.random()*16).toFixed(0) + 'px';
+      im.style.left = Math.max(1, Math.min(94, base + (Math.random()*6-3))).toFixed(1) + '%';
+      im.style.setProperty('--caida',  (106 + k*14 + Math.random()*10).toFixed(0) + 'vh');
+      im.style.setProperty('--deriva', (Math.random()*11-5).toFixed(1) + 'vw');
+      im.style.setProperty('--giro',   Math.round(180 + Math.random()*340) + 'deg');
+      im.style.animationDuration = dur.toFixed(1) + 's';
+      im.style.animationDelay    = (arranque - Math.random()*.5).toFixed(2) + 's';
+      im.onerror = function(){ this.remove(); };
+      zona.appendChild(im); creados.push(im);
+    }
+  }
+  new IntersectionObserver(function(e){
+    var corre = e[0].isIntersecting ? 'running' : 'paused';
+    creados.forEach(function(el){ el.style.animationPlayState = corre; });
+  }, {threshold:0}).observe(zona);
+});
+
+/* ── Parallax de la imagen de transición ── */
+modulo(function(){
+  if (SIN_MOVIMIENTO) return;
+  var fondos = Array.prototype.slice.call(document.querySelectorAll('.escena .fondo'));
+  if (!fondos.length) return;
+  var pendiente = false;
+  function mover(){
+    pendiente = false;
+    var alto = window.innerHeight;
+    fondos.forEach(function(el){
+      var r = el.parentElement.getBoundingClientRect();
+      if (r.bottom < -90 || r.top > alto + 90) return;
+      var centro = r.top + r.height/2 - alto/2;
+      el.style.transform = 'translate3d(0,' + (-centro*.18).toFixed(1) + 'px,0) scale(1.26)';
+    });
+  }
+  window.addEventListener('scroll', function(){
+    if (!pendiente){ pendiente = true; requestAnimationFrame(mover); }
+  }, {passive:true});
+  window.addEventListener('resize', mover, {passive:true});
+  mover();
+});
+
+/* ── EL VUELO DE SOFÍA ─────────────────────────────────────
+   El juego tal cual lo diseñaste, viviendo dentro de la invitación.
+   Solo corre cuando el tablero está a la vista.
+   ── */
+modulo(function(){
+  var canvas = document.getElementById('lienzo');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var stage = document.getElementById('tablero');
+  var overlay = document.getElementById('veloJuego');
+  var ovBig = document.getElementById('vjGrande');
+  var ovSmall = document.getElementById('vjChico');
+  var scoreEl = document.getElementById('tanteo');
+  var bestEl = document.getElementById('record');
+
+  var C = { rose:'#D4868F', deep:'#B8636E', blush:'#F2D4D3',
+            leaf:'#3F4A34', sage:'#A9B892' };
+
+  var W = 0, H = 240, GROUND = 0;
+  function resize(){
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    canvas.width = W*dpr; canvas.height = H*dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    GROUND = H - 38;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  var best = 0;
+  try{ best = parseInt(localStorage.getItem('celayre-lab-best') || '0', 10) || 0; }catch(e){}
+  bestEl.textContent = best;
+
+  var GRAV = 2300, JUMP = -760, CUT = -300;
+  var state = 'ready';                       /* ready · play · over */
+  var player, obstacles, petals, speed, dist, nextGap, t, score, holding;
+
+  function reset(){
+    player = { x:64, y:GROUND, vy:0, onGround:true };
+    obstacles = []; petals = [];
+    speed = 330; dist = 0; nextGap = 380; t = 0; score = 0;
+    scoreEl.textContent = '0';
+  }
+  reset();
+
+  function jump(){
+    if (state === 'ready'){ state = 'play'; overlay.classList.add('ido'); }
+    else if (state === 'over'){ reset(); state = 'play'; overlay.classList.add('ido'); }
+    if (player.onGround){
+      player.vy = JUMP; player.onGround = false;
+      for (var i = 0; i < 6; i++)
+        petals.push({ x:player.x, y:GROUND, vx:-60-Math.random()*120,
+                      vy:-Math.random()*160, r:2+Math.random()*3, life:.7 });
+    }
+  }
+  function release(){ if (player.vy < CUT) player.vy = CUT; }
+
+  stage.addEventListener('pointerdown', function(e){ e.preventDefault(); holding = true; jump(); });
+  window.addEventListener('pointerup', function(){ if (holding){ holding = false; release(); } });
+  window.addEventListener('keydown', function(e){
+    if ((e.code === 'Space' || e.code === 'ArrowUp') && (state === 'play' || aLaVista)){
+      e.preventDefault(); if (!e.repeat) jump();
+    }
+  });
+  window.addEventListener('keyup', function(e){
+    if (e.code === 'Space' || e.code === 'ArrowUp') release();
+  });
+
+  function spawn(){
+    if (Math.random() < .5)
+      obstacles.push({ kind:'gift', x:W+20, w:28+Math.random()*10, h:26+Math.random()*10 });
+    else
+      obstacles.push({ kind:'rose', x:W+20, w:22, h:40+Math.random()*22,
+                       blooms:1+Math.floor(Math.random()*3) });
+  }
+
+  function gameOver(){
+    state = 'over';
+    var sc = Math.floor(score);
+    if (sc > best){ best = sc; bestEl.textContent = best;
+      try{ localStorage.setItem('celayre-lab-best', String(best)); }catch(e){} }
+    ovBig.textContent = (sc >= best && sc > 0) ? '¡Nuevo récord!' : 'Casi llegas a la fiesta';
+    ovSmall.textContent = 'Toca para intentarlo otra vez';
+    overlay.classList.remove('ido');
+    if (navigator.vibrate){ try{ navigator.vibrate(40); }catch(e){} }
+  }
+
+  function update(dt){
+    t += dt;
+    if (state !== 'play') return;
+    speed = Math.min(330 + dist*.012, 720);
+    var dx = speed*dt; dist += dx; score += dx/40;
+    scoreEl.textContent = Math.floor(score);
+
+    player.vy += GRAV*dt; player.y += player.vy*dt;
+    if (player.y >= GROUND){ player.y = GROUND; player.vy = 0; player.onGround = true; }
+
+    nextGap -= dx;
+    if (nextGap <= 0){ spawn(); nextGap = 260 + Math.random()*260 + speed*.35; }
+    obstacles.forEach(function(o){ o.x -= dx; });
+    obstacles = obstacles.filter(function(o){ return o.x + o.w > -20; });
+
+    var px = player.x-12, py = player.y-24, pw = 24, ph = 20;
+    for (var i = 0; i < obstacles.length; i++){
+      var o = obstacles[i];
+      var ox = o.x+4, oy = GROUND-o.h+4, ow = o.w-8, oh = o.h-4;
+      if (px < ox+ow && px+pw > ox && py < oy+oh && py+ph > oy){ gameOver(); break; }
+    }
+    petals.forEach(function(p){ p.x += p.vx*dt; p.y += p.vy*dt; p.vy += 300*dt; p.life -= dt; });
+    petals = petals.filter(function(p){ return p.life > 0; });
+  }
+
+  function drawButterfly(x, y){
+    var flap = Math.sin(t * (player.onGround ? 8 : 22));
+    var sc = .55 + .45*Math.abs(flap);
+    ctx.save(); ctx.translate(x, y-16);
+    ctx.save(); ctx.globalAlpha = .15; ctx.fillStyle = C.leaf;
+    var lift = Math.max(0, GROUND - player.y);
+    ctx.beginPath(); ctx.ellipse(0, 16+lift, 14-Math.min(lift/12,8), 3, 0, 0, Math.PI*2); ctx.fill(); ctx.restore();
+    ctx.fillStyle = C.rose;
+    ctx.beginPath(); ctx.ellipse(-8,-6,11*sc,9,-.5,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse( 8,-6,11*sc,9, .5,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle = C.blush;
+    ctx.beginPath(); ctx.ellipse(-6,5,7*sc,6,-.3,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse( 6,5,7*sc,6, .3,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle = C.leaf;
+    ctx.beginPath(); ctx.ellipse(0,0,2.6,11,0,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle = C.leaf; ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.moveTo(-1,-10); ctx.quadraticCurveTo(-4,-18,-7,-18);
+    ctx.moveTo(1,-10); ctx.quadraticCurveTo(4,-18,7,-18); ctx.stroke();
+    ctx.restore();
+  }
+  function drawGift(o){
+    var x = o.x, y = GROUND - o.h;
+    ctx.fillStyle = C.blush; ctx.strokeStyle = C.rose; ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    if (ctx.roundRect) ctx.roundRect(x,y,o.w,o.h,3); else ctx.rect(x,y,o.w,o.h);
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = C.rose;
+    ctx.fillRect(x+o.w/2-2.5, y, 5, o.h);
+    ctx.fillRect(x, y+o.h*.35, o.w, 4);
+    ctx.beginPath();
+    ctx.ellipse(x+o.w/2-5, y-4, 6,4,-.5,0,Math.PI*2);
+    ctx.ellipse(x+o.w/2+5, y-4, 6,4, .5,0,Math.PI*2); ctx.fill();
+  }
+  function drawRose(o){
+    var cx = o.x + o.w/2, top = GROUND - o.h;
+    ctx.strokeStyle = C.leaf; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(cx,GROUND); ctx.quadraticCurveTo(cx-5, GROUND-o.h/2, cx, top+6); ctx.stroke();
+    ctx.fillStyle = C.sage;
+    ctx.beginPath(); ctx.ellipse(cx-7, GROUND-o.h*.4, 7,3, .6,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(cx+7, GROUND-o.h*.62, 7,3,-.6,0,Math.PI*2); ctx.fill();
+    for (var i = 0; i < o.blooms; i++){
+      var bx = cx + (i-1)*7*(o.blooms>1?1:0), by = top+6+i*5;
+      ctx.fillStyle = C.rose;
+      for (var k = 0; k < 5; k++){
+        var a = k/5*Math.PI*2;
+        ctx.beginPath(); ctx.arc(bx+Math.cos(a)*4.5, by+Math.sin(a)*4.5, 4, 0, Math.PI*2); ctx.fill();
+      }
+      ctx.fillStyle = C.deep; ctx.beginPath(); ctx.arc(bx,by,2.4,0,Math.PI*2); ctx.fill();
+    }
+  }
+  function drawGround(){
+    ctx.strokeStyle = C.rose; ctx.globalAlpha = .5; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(0,GROUND+1); ctx.lineTo(W,GROUND+1); ctx.stroke();
+    ctx.fillStyle = C.sage; ctx.globalAlpha = .55;
+    var off = dist % 46;
+    for (var x = -off; x < W; x += 46){
+      ctx.beginPath(); ctx.arc(x, GROUND+10, 1.5, 0, Math.PI*2);
+      ctx.arc(x+21, GROUND+18, 1.2, 0, Math.PI*2); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    drawGround();
+    obstacles.forEach(function(o){ o.kind === 'gift' ? drawGift(o) : drawRose(o); });
+    ctx.fillStyle = C.rose;
+    petals.forEach(function(p){
+      ctx.globalAlpha = Math.max(p.life/.7, 0);
+      ctx.beginPath(); ctx.ellipse(p.x,p.y,p.r*1.4,p.r,p.x*.05,0,Math.PI*2); ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+    drawButterfly(player.x, player.y);
+  }
+
+  var aLaVista = false;
+  new IntersectionObserver(function(e){ aLaVista = e[0].isIntersecting; }, {threshold:0}).observe(stage);
+
+  var last = performance.now();
+  function loop(now){
+    var dt = Math.min((now - last)/1000, .033);
+    last = now;
+    if (aLaVista){ update(dt); draw(); }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+});
 
 /* ── Parallax de la portada ───────────────────────────────── */
 modulo(function(){
