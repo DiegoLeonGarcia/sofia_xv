@@ -89,16 +89,22 @@ main{ position:relative; z-index:1; }
 /* La costura entre secciones: una sola línea continua de punta a punta,
    con un hueco limpio al centro donde vive el cuadrifolio.
    Mismo lenguaje que la boda, con el rosa de Sofía. */
-.seccion::before, .pie::before{
-  content:''; position:absolute; top:0; left:0; right:0; height:1px; z-index:5;
+.seccion::before{
+  content:''; position:absolute; top:11px; left:0; right:0; height:1px; z-index:5;
   background:linear-gradient(to right,
     rgba(196,139,135,.72) 0,               rgba(196,139,135,.72) calc(50% - 15px),
     transparent            calc(50% - 15px), transparent          calc(50% + 15px),
     rgba(196,139,135,.72) calc(50% + 15px), rgba(196,139,135,.72) 100%);
 }
+.pie::before{
+  content:''; position:absolute; top:0; left:0; right:0; height:1px; z-index:5;
+  background:linear-gradient(to right, transparent, rgba(196,139,135,.55) 22%,
+                                        rgba(196,139,135,.55) 78%, transparent);
+}
 .cuadrifolio{
+  /* top:0 sin margen negativo: el overflow:hidden de la sección ya no lo corta */
   position:absolute; top:0; left:50%; z-index:6; pointer-events:none;
-  width:22px; height:22px; margin:-11px 0 0 -11px;
+  width:22px; height:22px; margin-left:-11px;
   color:var(--rosa-hondo);
 }
 #cuenta::before, #cuenta::after{ display:none; }
@@ -211,7 +217,7 @@ body.dentro .btn-menu, body.dentro .musica{ opacity:1; visibility:visible; }
    EL JUEGO — El vuelo de Sofía
    ══════════════════════════════════════════════════════════════ */
 .tablero{
-  position:relative; width:min(94vw,720px); margin:34px auto 0;
+  position:relative; width:min(100%,720px); max-width:100%; margin:34px auto 0;
   background:rgba(255,255,255,.94);
   border:1.5px solid var(--linea);
   border-radius:150px 150px 18px 18px;
@@ -221,9 +227,16 @@ body.dentro .btn-menu, body.dentro .musica{ opacity:1; visibility:visible; }
   box-shadow:inset 0 1px 0 rgba(255,255,255,.9), 0 6px 22px rgba(150,112,88,.12);
 }
 @media (max-width:520px){ .tablero{ border-radius:110px 110px 16px 16px; padding-top:52px; } }
-.tablero canvas{ display:block; width:100%; height:236px; }
+@media (max-width:380px){
+  .tablero{ border-radius:84px 84px 14px 14px; padding-top:44px; }
+  .velo-juego{ inset:44px 0 0; }
+  .tanteo{ top:13px; font-size:10px; letter-spacing:.14em; }
+  .tanteo b{ font-size:16px; }
+}
+.tablero canvas{ display:block; width:100%; height:clamp(186px,46vw,240px); }
 .tanteo{
   position:absolute; top:20px; left:0; right:0; text-align:center; z-index:3;
+  transform:none!important;
   font-family:var(--texto); font-weight:600; font-size:11px;
   letter-spacing:.2em; text-transform:uppercase; color:var(--salvia); pointer-events:none;
 }
@@ -777,7 +790,7 @@ body.dentro .btn-menu, body.dentro .musica{ opacity:1; visibility:visible; }
   opacity:0; transform:translateX(-16px);
   transition:opacity .5s ease, transform .5s cubic-bezier(.2,.8,.3,1), color .3s ease;
 }
-.menu-abierto .panel button.nav{ opacity:1; transform:none; transition-delay:.52s; }
+.menu-abierto .panel button.nav{ opacity:1; transform:none; transition-delay:.56s; }
 .panel .cerrar-inv{ margin-top:14px; }
 .panel .cerrar-inv::before{ content:''; position:absolute; top:0; left:30px; right:30px; height:1px;
   background:linear-gradient(90deg, transparent, rgba(196,139,135,.5), transparent); }
@@ -796,6 +809,7 @@ body.dentro .btn-menu, body.dentro .musica{ opacity:1; visibility:visible; }
 .menu-abierto .panel a:nth-of-type(7){ transition-delay:.40s }
 .menu-abierto .panel a:nth-of-type(8){ transition-delay:.44s }
 .menu-abierto .panel a:nth-of-type(9){ transition-delay:.48s }
+.menu-abierto .panel a:nth-of-type(10){ transition-delay:.52s }
 
 /* ══════════════════════════════════════════════════════════════
    MÚSICA
@@ -1301,7 +1315,7 @@ body.dentro .btn-menu, body.dentro .musica{ opacity:1; visibility:visible; }
       </p>
 
       <div class="tablero anim crece" style="--r:3" id="tablero" role="application" aria-label="Minijuego: toca para saltar">
-        <div class="tanteo" aria-live="polite">Pétalos <b id="tanteo">0</b> · Récord <span id="record">0</span></div>
+        <div class="tanteo anim" style="--r:4" aria-live="polite">Pétalos <b id="tanteo">0</b> · Récord <span id="record">0</span></div>
         <canvas id="lienzo"></canvas>
         <div class="velo-juego" id="veloJuego">
           <div class="grande" id="vjGrande">Toca para empezar</div>
@@ -1309,7 +1323,7 @@ body.dentro .btn-menu, body.dentro .musica{ opacity:1; visibility:visible; }
         </div>
       </div>
 
-      <p class="nota-campo anim" style="--r:4; margin-top:20px">
+      <p class="nota-campo anim" style="--r:5; margin-top:20px">
         En computadora también funciona con la barra espaciadora.
       </p>
     </div>
@@ -1625,25 +1639,23 @@ modulo(function(){
     susurro.classList.add('visible');
   });
 
-  /* Las puertas mandan sobre la música */
+  /* Las puertas mandan sobre la música, pero nunca la encienden solas:
+     solo la silencian al cerrar y la reanudan donde se quedó al abrir. */
+  var veniaSonando = false;
   window.MUSICA = {
-    sonar: function(){
-      if (apagadaPorTi) return;
-      sonando = true; pintar(true); ocultar();
-      audio.play().then(function(){
-        fundir(CONFIG.volumen, 1500);
-        if (!avisado){
-          avisado = true;
-          susurro.textContent = 'sube el volumen';
-          mostrar();
-          setTimeout(function(){ susurro.textContent = 'música'; }, 5200);
-        }
-      }).catch(function(){ sonando = false; pintar(false); });
+    silenciar: function(){
+      veniaSonando = sonando && !audio.paused;
+      if (!veniaSonando) return;
+      sonando = false; pintar(false);
+      fundir(0, 1500);
+      setTimeout(function(){ if (!sonando) audio.pause(); }, 1550);
     },
-    callar: function(){
-      if (audio.paused){ sonando = false; pintar(false); return; }
-      sonando = false; pintar(false); fundir(0, 1600);
-      setTimeout(function(){ if (!sonando) audio.pause(); }, 1650);
+    reanudar: function(){
+      if (!veniaSonando) return;          /* si nunca la puso, no se enciende */
+      veniaSonando = false;
+      sonando = true; pintar(true);
+      audio.play().then(function(){ fundir(CONFIG.volumen, 1400); })
+                  .catch(function(){ sonando = false; pintar(false); });
     }
   };
 });
@@ -1713,16 +1725,17 @@ var PUERTAS = (function(){
       escena.classList.add('fuera');
       cuerpo.classList.remove('sin-scroll');
       cuerpo.classList.add('dentro');
+      window.scrollTo(0,0);            /* siempre se entra por la portada */
       revelar();
+      if (window.MUSICA) window.MUSICA.reanudar();
     });
-    if (window.MUSICA) window.MUSICA.sonar();
   }
   function cerrar(){
     relojes.forEach(clearTimeout); relojes = [];
     abierto = false;
     escena.classList.remove('fuera');
     cuerpo.classList.remove('dentro');
-    if (window.MUSICA) window.MUSICA.callar();
+    if (window.MUSICA) window.MUSICA.silenciar();
     animarP(0, 1750, function(){
       window.scrollTo(0,0);
       cuerpo.classList.add('sin-scroll');
